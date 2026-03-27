@@ -1,0 +1,3686 @@
+[
+  {
+    "title": "The Vegetarian",
+    "author": "Han Kang",
+    "origin": "South Korea",
+    "mood": [
+      "restless",
+      "defiant",
+      "trapped"
+    ],
+    "doesWhat": [
+      "confronts",
+      "cracks open"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "disturbing",
+      "luminous"
+    ],
+    "obscurity": "mid",
+    "format": "print",
+    "length": "one-sitting",
+    "tags": [
+      "transformation",
+      "body",
+      "rebellion",
+      "surreal",
+      "marriage"
+    ],
+    "reason": "A woman stops eating meat and everyone around her loses their mind. It's really about what happens when someone quietly refuses to keep performing. Unsettling in a way that creeps up on you."
+  },
+  {
+    "title": "A Manual for Cleaning Women",
+    "author": "Lucia Berlin",
+    "origin": "USA",
+    "mood": [
+      "raw",
+      "alive",
+      "restless"
+    ],
+    "doesWhat": [
+      "confronts",
+      "energizes"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "tough",
+      "tender"
+    ],
+    "obscurity": "deep",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "working life",
+      "addiction",
+      "resilience",
+      "short stories",
+      "women"
+    ],
+    "reason": "Short stories about laundromats and emergency rooms and being broke and brilliant. Lucia Berlin lived about nine lives and wrote like she was running out of time. These have a pulse to them."
+  },
+  {
+    "title": "The Memory Police",
+    "author": "Yoko Ogawa",
+    "origin": "Japan",
+    "mood": [
+      "melancholy",
+      "still",
+      "lost"
+    ],
+    "doesWhat": [
+      "slows down",
+      "haunts"
+    ],
+    "pace": "gentle",
+    "density": "lean",
+    "register": [
+      "quiet",
+      "devastating"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "memory",
+      "loss",
+      "totalitarianism",
+      "fable",
+      "disappearance"
+    ],
+    "reason": "Things keep disappearing from an island — objects first, then the memory of them. It's quiet and strange and it settles into you slowly. I think about it more often than books twice its size."
+  },
+  {
+    "title": "Beloved",
+    "author": "Toni Morrison",
+    "origin": "USA",
+    "mood": [
+      "grieving",
+      "haunted",
+      "seeking"
+    ],
+    "doesWhat": [
+      "confronts",
+      "cracks open"
+    ],
+    "pace": "deliberate",
+    "density": "dense",
+    "register": [
+      "shattering",
+      "sacred"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "slavery",
+      "motherhood",
+      "ghost",
+      "trauma",
+      "American",
+      "love"
+    ],
+    "reason": "I won't oversell this — you probably already know it's Morrison. What I'll say is that she narrated the audiobook herself, and there's nothing else that sounds like it. It asks what love costs when everything is designed to take it from you.",
+    "formatNote": "Toni Morrison narrated it herself."
+  },
+  {
+    "title": "The Sentence",
+    "author": "Louise Erdrich",
+    "origin": "USA",
+    "mood": [
+      "searching",
+      "unsettled",
+      "wry"
+    ],
+    "doesWhat": [
+      "confronts",
+      "escapes"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "warm",
+      "sharp"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "bookstore",
+      "ghost",
+      "Indigenous",
+      "pandemic",
+      "humor"
+    ],
+    "reason": "Set in a real bookstore in Minneapolis, haunted by a very specific kind of ghost. It's funny and angry and deeply tender about books and the people who need them. Erdrich is at her most playful here."
+  },
+  {
+    "title": "Piranesi",
+    "author": "Susanna Clarke",
+    "origin": "UK",
+    "mood": [
+      "wonder",
+      "solitude",
+      "peaceful"
+    ],
+    "doesWhat": [
+      "escapes",
+      "restores"
+    ],
+    "pace": "gentle",
+    "density": "lean",
+    "register": [
+      "awe",
+      "tenderness"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "one-sitting",
+    "tags": [
+      "labyrinth",
+      "solitude",
+      "mystery",
+      "otherworldly",
+      "beauty"
+    ],
+    "reason": "A man lives alone in an impossible house full of statues and tides. He's completely happy. Then someone comes looking for him. It's the strangest, most peaceful book I know. I keep giving it away.",
+    "formatNote": "Chiwetel Ejiofor narrates. Extraordinary."
+  },
+  {
+    "title": "The Hour of the Star",
+    "author": "Clarice Lispector",
+    "origin": "Brazil",
+    "mood": [
+      "aching",
+      "alone",
+      "raw"
+    ],
+    "doesWhat": [
+      "cracks open",
+      "confronts"
+    ],
+    "pace": "swift",
+    "density": "dense",
+    "register": [
+      "devastating",
+      "luminous"
+    ],
+    "obscurity": "deep",
+    "format": "print",
+    "length": "one-sitting",
+    "tags": [
+      "poverty",
+      "identity",
+      "metafiction",
+      "female",
+      "Brazil"
+    ],
+    "reason": "Barely a hundred pages. A girl so invisible even the narrator can barely look at her. Lispector writes like someone breaking a fever — it's not comfortable, but you won't forget it."
+  },
+  {
+    "title": "Homegoing",
+    "author": "Yaa Gyasi",
+    "origin": "Ghana/USA",
+    "mood": [
+      "seeking",
+      "expansive",
+      "rooted"
+    ],
+    "doesWhat": [
+      "connects",
+      "confronts"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "epic",
+      "intimate"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "diaspora",
+      "generations",
+      "slavery",
+      "Ghana",
+      "identity",
+      "family"
+    ],
+    "reason": "Two half-sisters, one in a slave castle dungeon, one married to the man upstairs. Then seven generations forward on each side. It covers centuries and somehow stays intimate the whole way through.",
+    "formatNote": "Dominic Hoffman's narration is stunning."
+  },
+  {
+    "title": "Fever Dream",
+    "author": "Samanta Schweblin",
+    "origin": "Argentina",
+    "mood": [
+      "anxious",
+      "urgent",
+      "unmoored"
+    ],
+    "doesWhat": [
+      "destabilizes",
+      "grips"
+    ],
+    "pace": "breathless",
+    "density": "lean",
+    "register": [
+      "dread",
+      "hypnotic"
+    ],
+    "obscurity": "mid",
+    "format": "print",
+    "length": "one-sitting",
+    "tags": [
+      "motherhood",
+      "toxins",
+      "rural",
+      "surreal",
+      "Argentina"
+    ],
+    "reason": "A woman is dying and a child who isn't hers keeps asking her to find the exact moment things went wrong. You'll read it in one sitting. You won't be entirely sure what happened. You'll think about it for weeks."
+  },
+  {
+    "title": "Small Things Like These",
+    "author": "Claire Keegan",
+    "origin": "Ireland",
+    "mood": [
+      "quiet",
+      "moral",
+      "tender"
+    ],
+    "doesWhat": [
+      "slows down",
+      "confronts"
+    ],
+    "pace": "gentle",
+    "density": "lean",
+    "register": [
+      "restrained",
+      "fierce"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "Ireland",
+      "Catholic",
+      "conscience",
+      "winter",
+      "novella"
+    ],
+    "reason": "A coal merchant in a small Irish town finds something he wasn't supposed to find. What he does next is so quiet it could break your heart. You'll finish it in an afternoon and carry it much longer."
+  },
+  {
+    "title": "The Remains of the Day",
+    "author": "Kazuo Ishiguro",
+    "origin": "UK",
+    "mood": [
+      "melancholy",
+      "reflective",
+      "still"
+    ],
+    "doesWhat": [
+      "slows down",
+      "haunts"
+    ],
+    "pace": "gentle",
+    "density": "medium",
+    "register": [
+      "devastating",
+      "restrained"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "one-sitting",
+    "tags": [
+      "duty",
+      "regret",
+      "England",
+      "repression",
+      "dignity",
+      "love"
+    ],
+    "reason": "A butler drives through the English countryside and slowly, without ever quite saying it, tells you about the life he didn't live. It never raises its voice. That's what makes it so devastating.",
+    "formatNote": "Dominic West's narration is masterful."
+  },
+  {
+    "title": "Hurricane Season",
+    "author": "Fernanda Melchor",
+    "origin": "Mexico",
+    "mood": [
+      "furious",
+      "visceral",
+      "alive"
+    ],
+    "doesWhat": [
+      "confronts",
+      "overwhelms"
+    ],
+    "pace": "breathless",
+    "density": "dense",
+    "register": [
+      "brutal",
+      "incandescent"
+    ],
+    "obscurity": "deep",
+    "format": "print",
+    "length": "one-sitting",
+    "tags": [
+      "violence",
+      "rural Mexico",
+      "witchcraft",
+      "poverty",
+      "stream of consciousness"
+    ],
+    "reason": "A witch is found dead in a canal. The whole village pours out in one unbroken stream. This one is intense — brutal, beautiful, relentless. Not for a gentle mood, but nothing else sounds like this."
+  },
+  {
+    "title": "An American Marriage",
+    "author": "Tayari Jones",
+    "origin": "USA",
+    "mood": [
+      "heartbroken",
+      "searching",
+      "conflicted"
+    ],
+    "doesWhat": [
+      "confronts",
+      "connects"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "aching",
+      "intimate"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "marriage",
+      "incarceration",
+      "race",
+      "love",
+      "American South"
+    ],
+    "reason": "A newlywed is wrongly imprisoned and the marriage has to survive something it was never built for. It's about what love owes and whether loving someone is the same as waiting for them. Hits close.",
+    "formatNote": "Full cast narration — Sean Crisden, Eisa Davis."
+  },
+  {
+    "title": "Drive Your Plow Over the Bones of the Dead",
+    "author": "Olga Tokarczuk",
+    "origin": "Poland",
+    "mood": [
+      "defiant",
+      "strange",
+      "darkly amused"
+    ],
+    "doesWhat": [
+      "energizes",
+      "cracks open"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "darkly funny",
+      "fierce"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "ecology",
+      "murder",
+      "astrology",
+      "aging woman",
+      "Poland",
+      "animals"
+    ],
+    "reason": "An eccentric older woman is convinced the local hunters are being killed by the animals they hunted. She might be right. She might be the murderer. She's absolutely magnificent company."
+  },
+  {
+    "title": "The God of Small Things",
+    "author": "Arundhati Roy",
+    "origin": "India",
+    "mood": [
+      "lush",
+      "heartbroken",
+      "nostalgic"
+    ],
+    "doesWhat": [
+      "slows down",
+      "cracks open"
+    ],
+    "pace": "deliberate",
+    "density": "dense",
+    "register": [
+      "gorgeous",
+      "devastating"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "caste",
+      "twins",
+      "forbidden love",
+      "Kerala",
+      "language",
+      "childhood"
+    ],
+    "reason": "Twins in Kerala, a forbidden love, the small things that break a family open. Roy writes sentences you'll want to read out loud. Some of them taste like mangoes. Some of them sting.",
+    "formatNote": "Sneha Mathan's narration captures Kerala perfectly."
+  },
+  {
+    "title": "Detransition, Baby",
+    "author": "Torrey Peters",
+    "origin": "USA",
+    "mood": [
+      "restless",
+      "hungry",
+      "complicated"
+    ],
+    "doesWhat": [
+      "confronts",
+      "energizes"
+    ],
+    "pace": "swift",
+    "density": "medium",
+    "register": [
+      "sharp",
+      "tender"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "trans",
+      "parenthood",
+      "desire",
+      "New York",
+      "identity",
+      "family"
+    ],
+    "reason": "Three people try to figure out if they can make a family out of the most complicated situation imaginable. It's messy and funny and more honest about what people actually want than almost anything I've read lately."
+  },
+  {
+    "title": "The Years",
+    "author": "Annie Ernaux",
+    "origin": "France",
+    "mood": [
+      "reflective",
+      "vast",
+      "nostalgic"
+    ],
+    "doesWhat": [
+      "slows down",
+      "connects"
+    ],
+    "pace": "gentle",
+    "density": "dense",
+    "register": [
+      "collective",
+      "intimate"
+    ],
+    "obscurity": "deep",
+    "format": "print",
+    "length": "weekend",
+    "tags": [
+      "memory",
+      "France",
+      "collective autobiography",
+      "feminist",
+      "time"
+    ],
+    "reason": "Ernaux tells the story of her life without ever saying 'I.' She uses 'she,' then 'we,' then all of postwar France passing through one woman. It's like watching your own memories from a great height."
+  },
+  {
+    "title": "In the Dream House",
+    "author": "Carmen Maria Machado",
+    "origin": "USA",
+    "mood": [
+      "haunted",
+      "defiant",
+      "raw"
+    ],
+    "doesWhat": [
+      "confronts",
+      "cracks open"
+    ],
+    "pace": "swift",
+    "density": "medium",
+    "register": [
+      "brilliant",
+      "aching"
+    ],
+    "obscurity": "mid",
+    "format": "audio",
+    "length": "one-sitting",
+    "tags": [
+      "abuse",
+      "queer",
+      "memoir",
+      "structure",
+      "memory",
+      "inventive"
+    ],
+    "reason": "A memoir about an abusive relationship told through the structure of a haunted house, a choose-your-own-adventure, a Star Trek episode. It shouldn't work at all. It's one of the bravest things I've read.",
+    "formatNote": "Machado narrates it herself. Perfect."
+  },
+  {
+    "title": "The White Book",
+    "author": "Han Kang",
+    "origin": "South Korea",
+    "mood": [
+      "grieving",
+      "still",
+      "meditative"
+    ],
+    "doesWhat": [
+      "slows down",
+      "haunts"
+    ],
+    "pace": "gentle",
+    "density": "lean",
+    "register": [
+      "meditative",
+      "sorrowful"
+    ],
+    "obscurity": "deep",
+    "format": "print",
+    "length": "one-sitting",
+    "tags": [
+      "grief",
+      "white",
+      "sister",
+      "fragments",
+      "Korea",
+      "beauty"
+    ],
+    "reason": "Han Kang lists everything white she can think of — swaddling cloth, snow, blank paper — as a way of mourning a sister who died as an infant. It's barely a book. More like holding something that trembles."
+  },
+  {
+    "title": "Cantoras",
+    "author": "Carolina De Robertis",
+    "origin": "Uruguay",
+    "mood": [
+      "seeking",
+      "defiant",
+      "tender"
+    ],
+    "doesWhat": [
+      "connects",
+      "restores"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "fierce",
+      "tender"
+    ],
+    "obscurity": "deep",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "queer",
+      "dictatorship",
+      "Uruguay",
+      "friendship",
+      "freedom",
+      "women"
+    ],
+    "reason": "Five queer women under a military dictatorship find a beach house and, for the first time, a place to breathe. It spans decades. It's about what freedom actually feels like when you've had to steal it."
+  },
+  {
+    "title": "Outline",
+    "author": "Rachel Cusk",
+    "origin": "UK/Canada",
+    "mood": [
+      "still",
+      "searching",
+      "detached"
+    ],
+    "doesWhat": [
+      "slows down",
+      "cracks open"
+    ],
+    "pace": "gentle",
+    "density": "medium",
+    "register": [
+      "cool",
+      "intense"
+    ],
+    "obscurity": "mid",
+    "format": "audio",
+    "length": "one-sitting",
+    "tags": [
+      "listening",
+      "divorce",
+      "Athens",
+      "identity",
+      "autofiction",
+      "silence"
+    ],
+    "reason": "A woman goes to Athens to teach a writing class. People tell her their stories. She barely tells hers. By the end you realize the book is a portrait made of negative space — and it might be yours.",
+    "formatNote": "Audible edition read by the author — spare and perfect."
+  },
+  {
+    "title": "My Year of Rest and Relaxation",
+    "author": "Ottessa Moshfegh",
+    "origin": "USA",
+    "mood": [
+      "numb",
+      "darkly amused",
+      "exhausted"
+    ],
+    "doesWhat": [
+      "escapes",
+      "confronts"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "caustic",
+      "surprising"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "one-sitting",
+    "tags": [
+      "sleep",
+      "isolation",
+      "pre-9/11",
+      "dark humor",
+      "female",
+      "New York"
+    ],
+    "reason": "A woman with every advantage decides to sleep for a year. It's funny and repulsive and oddly comforting, like watching someone do the thing you've secretly wanted to do. The last page, though. The last page.",
+    "formatNote": "Julia Whelan's deadpan delivery is ideal."
+  },
+  {
+    "title": "The Door",
+    "author": "Magda Szabó",
+    "origin": "Hungary",
+    "mood": [
+      "fierce",
+      "mysterious",
+      "guilty"
+    ],
+    "doesWhat": [
+      "cracks open",
+      "haunts"
+    ],
+    "pace": "deliberate",
+    "density": "medium",
+    "register": [
+      "overwhelming",
+      "fierce"
+    ],
+    "obscurity": "deep",
+    "format": "print",
+    "length": "weekend",
+    "tags": [
+      "friendship",
+      "secrets",
+      "Hungary",
+      "domestic",
+      "trust",
+      "class"
+    ],
+    "reason": "A writer and her housekeeper circle each other for years — one needing to be known, the other refusing. When the door finally opens, you won't be ready. I wasn't."
+  },
+  {
+    "title": "On Earth We're Briefly Gorgeous",
+    "author": "Ocean Vuong",
+    "origin": "Vietnam/USA",
+    "mood": [
+      "tender",
+      "raw",
+      "yearning"
+    ],
+    "doesWhat": [
+      "slows down",
+      "cracks open"
+    ],
+    "pace": "gentle",
+    "density": "dense",
+    "register": [
+      "luminous",
+      "grieving"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "immigration",
+      "mother",
+      "queer",
+      "language",
+      "Vietnamese",
+      "letter"
+    ],
+    "reason": "A son writes a letter to his mother, who can't read. About war and tenderness and what gets lost between languages. Vuong is a poet and it shows — every sentence earns its place."
+  },
+  {
+    "title": "Sharks in the Time of Saviours",
+    "author": "Kawai Strong Washburn",
+    "origin": "Hawai'i/USA",
+    "mood": [
+      "aching",
+      "mythic",
+      "rooted"
+    ],
+    "doesWhat": [
+      "confronts",
+      "connects"
+    ],
+    "pace": "medium",
+    "density": "dense",
+    "register": [
+      "volcanic",
+      "tender"
+    ],
+    "obscurity": "deep",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "Hawaiian",
+      "family",
+      "myth",
+      "ocean",
+      "identity",
+      "healing"
+    ],
+    "reason": "A boy is saved by sharks and given a gift. His family tries to survive what that gift costs. Mythic and modern and rooted in Hawai'i in a way that feels like the island is breathing. This one's a bit of a risk, but I think it's worth it.",
+    "formatNote": "Full Hawaiian cast. Stunning."
+  },
+  {
+    "title": "Who Is Maud Dixon?",
+    "author": "Alexandra Andrews",
+    "origin": "USA",
+    "mood": [
+      "restless",
+      "thrilled",
+      "mischievous"
+    ],
+    "doesWhat": [
+      "escapes",
+      "grips"
+    ],
+    "pace": "breathless",
+    "density": "lean",
+    "register": [
+      "wicked",
+      "pleasurable"
+    ],
+    "obscurity": "deep",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "thriller",
+      "literary world",
+      "Morocco",
+      "identity",
+      "ambition"
+    ],
+    "reason": "A young publishing assistant gets hired by a reclusive famous author and things go sideways in Morocco. It's smart, twisty, and moves like a car with the brakes cut. Great palate cleanser."
+  },
+  {
+    "title": "Such a Fun Age",
+    "author": "Kiley Reid",
+    "origin": "USA",
+    "mood": [
+      "restless",
+      "sharp",
+      "uncomfortable"
+    ],
+    "doesWhat": [
+      "energizes",
+      "confronts"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "smart",
+      "uncomfortable"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "race",
+      "class",
+      "babysitting",
+      "social media",
+      "satire",
+      "Philadelphia"
+    ],
+    "reason": "A young Black woman gets accused of kidnapping the white child she babysits. What follows is sharp and uncomfortable and funnier than it has any right to be. You'll have opinions about everyone in it.",
+    "formatNote": "Nicole Lewis is perfect."
+  },
+  {
+    "title": "Akata Witch",
+    "author": "Nnedi Okofor",
+    "origin": "Nigeria/USA",
+    "mood": [
+      "giddy",
+      "adventurous",
+      "curious"
+    ],
+    "doesWhat": [
+      "escapes",
+      "energizes"
+    ],
+    "pace": "swift",
+    "density": "medium",
+    "register": [
+      "thrilling",
+      "wondrous"
+    ],
+    "obscurity": "mid",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "magic",
+      "Nigeria",
+      "coming-of-age",
+      "Afrofuturist",
+      "adventure"
+    ],
+    "reason": "Imagine Harry Potter set in Nigeria, grounded in Igbo mythology, and ten times more imaginative. A girl discovers she has powers and enters a world that makes Hogwarts look a bit provincial."
+  },
+  {
+    "title": "Summer",
+    "author": "Ali Smith",
+    "origin": "UK",
+    "mood": [
+      "expansive",
+      "playful",
+      "political"
+    ],
+    "doesWhat": [
+      "escapes",
+      "connects"
+    ],
+    "pace": "swift",
+    "density": "medium",
+    "register": [
+      "joyful",
+      "political"
+    ],
+    "obscurity": "mid",
+    "format": "print",
+    "length": "weekend",
+    "tags": [
+      "seasons",
+      "art",
+      "politics",
+      "family",
+      "experimental",
+      "Brexit"
+    ],
+    "reason": "Ali Smith writes like sunlight through a prism. This is about a brother and sister, a summer, and a country falling apart. It's angry and hopeful at the same time, which is a hard trick."
+  },
+  {
+    "title": "The Bluest Eye",
+    "author": "Toni Morrison",
+    "origin": "USA",
+    "mood": [
+      "aching",
+      "angry",
+      "tender"
+    ],
+    "doesWhat": [
+      "confronts",
+      "cracks open"
+    ],
+    "pace": "deliberate",
+    "density": "dense",
+    "register": [
+      "tender",
+      "furious"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "race",
+      "beauty",
+      "childhood",
+      "violence",
+      "American",
+      "girlhood"
+    ],
+    "reason": "A young Black girl prays for blue eyes because the world has taught her that beauty means whiteness. Morrison's first novel. The sentences already cut like nothing else."
+  },
+  {
+    "title": "Beach Read",
+    "author": "Emily Henry",
+    "origin": "USA",
+    "mood": [
+      "restless",
+      "playful",
+      "heartbroken"
+    ],
+    "doesWhat": [
+      "escapes",
+      "energizes"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "witty",
+      "warm"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "romance",
+      "writers",
+      "beach",
+      "humor",
+      "love",
+      "light"
+    ],
+    "reason": "Two writers with opposite genres swap styles for a summer. The banter is great — Henry writes flirting the way some people play tennis. It's smart and warm and the love story sneaks up on you.",
+    "formatNote": "Julia Whelan narrates — perfect comedic timing."
+  },
+  {
+    "title": "The House in the Cerulean Sea",
+    "author": "TJ Klune",
+    "origin": "USA",
+    "mood": [
+      "lonely",
+      "hopeful",
+      "tender"
+    ],
+    "doesWhat": [
+      "restores",
+      "escapes"
+    ],
+    "pace": "gentle",
+    "density": "lean",
+    "register": [
+      "warm",
+      "joyful"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "fantasy",
+      "found family",
+      "queer",
+      "cozy",
+      "magic",
+      "kindness"
+    ],
+    "reason": "A lonely bureaucrat is sent to investigate an orphanage for magical children on a remote island. What he finds is a family. It's the kind of book you want to climb inside and stay.",
+    "formatNote": "Daniel Henning's narration is pure comfort."
+  },
+  {
+    "title": "Anxious People",
+    "author": "Fredrik Backman",
+    "origin": "Sweden",
+    "mood": [
+      "overwhelmed",
+      "lonely",
+      "wry"
+    ],
+    "doesWhat": [
+      "restores",
+      "connects"
+    ],
+    "pace": "medium",
+    "density": "lean",
+    "register": [
+      "funny",
+      "sneakily moving"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "comedy",
+      "hostage",
+      "community",
+      "Swedish",
+      "human nature",
+      "light"
+    ],
+    "reason": "A failed bank robber accidentally takes a group of apartment viewers hostage. Everyone inside is a mess. By the end you love all of them. Backman is sneaky — you're laughing and then suddenly you're not."
+  },
+  {
+    "title": "The Flatshare",
+    "author": "Beth O'Leary",
+    "origin": "UK",
+    "mood": [
+      "lonely",
+      "hopeful",
+      "playful"
+    ],
+    "doesWhat": [
+      "escapes",
+      "energizes"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "charming",
+      "warm"
+    ],
+    "obscurity": "mid",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "romance",
+      "London",
+      "cohabitation",
+      "humor",
+      "post-it notes",
+      "light"
+    ],
+    "reason": "Two strangers share a bed — one sleeps in it at night, the other during the day. They start leaving each other notes. The premise is ridiculous. It completely works.",
+    "formatNote": "Dual narration — both voices are great."
+  },
+  {
+    "title": "Klara and the Sun",
+    "author": "Kazuo Ishiguro",
+    "origin": "UK",
+    "mood": [
+      "tender",
+      "curious",
+      "melancholy"
+    ],
+    "doesWhat": [
+      "slows down",
+      "haunts"
+    ],
+    "pace": "gentle",
+    "density": "medium",
+    "register": [
+      "gentle",
+      "heartbreaking"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "AI",
+      "love",
+      "loneliness",
+      "observation",
+      "future",
+      "devotion"
+    ],
+    "reason": "An artificial friend watches the world from a store window, learning to love by studying sunlight. Ishiguro tells you everything about being human by writing from the perspective of something that isn't."
+  },
+  {
+    "title": "Daisy Jones & The Six",
+    "author": "Taylor Jenkins Reid",
+    "origin": "USA",
+    "mood": [
+      "restless",
+      "alive",
+      "nostalgic"
+    ],
+    "doesWhat": [
+      "escapes",
+      "energizes"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "electric",
+      "addictive"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "rock and roll",
+      "1970s",
+      "band",
+      "fame",
+      "love",
+      "music",
+      "oral history"
+    ],
+    "reason": "An oral history of a fictional band's rise and collapse — Fleetwood Mac energy but messier. The audiobook has a full cast and it plays like a documentary. I burned through it in two days.",
+    "formatNote": "Full cast including Jennifer Beals. This one is made for audio."
+  },
+  {
+    "title": "The Seven Husbands of Evelyn Hugo",
+    "author": "Taylor Jenkins Reid",
+    "origin": "USA",
+    "mood": [
+      "restless",
+      "defiant",
+      "nostalgic"
+    ],
+    "doesWhat": [
+      "escapes",
+      "grips"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "glamorous",
+      "aching"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "Hollywood",
+      "bisexual",
+      "fame",
+      "secrets",
+      "love",
+      "glamour"
+    ],
+    "reason": "An aging movie star finally tells the truth about her seven marriages and who she actually loved. It's glamorous and gossipy and then it pulls the floor out from under you."
+  },
+  {
+    "title": "Circe",
+    "author": "Madeline Miller",
+    "origin": "USA",
+    "mood": [
+      "defiant",
+      "searching",
+      "expansive"
+    ],
+    "doesWhat": [
+      "escapes",
+      "energizes"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "fierce",
+      "lush"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "mythology",
+      "feminism",
+      "witch",
+      "solitude",
+      "transformation",
+      "Greek"
+    ],
+    "reason": "The witch from the Odyssey gets her own story. Exile, power, monsters, and the slow work of figuring out who you are when nobody's watching. It reads the way myth feels — ancient and immediate.",
+    "formatNote": "Perdita Weeks narrates — regal and warm."
+  },
+  {
+    "title": "Tomorrow, and Tomorrow, and Tomorrow",
+    "author": "Gabrielle Zevin",
+    "origin": "USA",
+    "mood": [
+      "nostalgic",
+      "searching",
+      "alive"
+    ],
+    "doesWhat": [
+      "connects",
+      "energizes"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "smart",
+      "moving"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "commitment",
+    "tags": [
+      "video games",
+      "friendship",
+      "creativity",
+      "love",
+      "ambition",
+      "collaboration"
+    ],
+    "reason": "Two friends build video games together across three decades. You don't need to care about gaming — it's really about what it costs to make something with someone you love."
+  },
+  {
+    "title": "Queenie",
+    "author": "Candice Carty-Williams",
+    "origin": "UK",
+    "mood": [
+      "raw",
+      "restless",
+      "lonely"
+    ],
+    "doesWhat": [
+      "confronts",
+      "connects"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "funny",
+      "painful"
+    ],
+    "obscurity": "mid",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "Black British",
+      "dating",
+      "mental health",
+      "London",
+      "identity",
+      "humor"
+    ],
+    "reason": "A Jamaican-British woman in London is spiraling after a breakup, making terrible decisions and texting her group chat about all of them. It's hilarious and then it very much isn't. You'll recognize someone in it."
+  },
+  {
+    "title": "The Midnight Library",
+    "author": "Matt Haig",
+    "origin": "UK",
+    "mood": [
+      "lost",
+      "hopeful",
+      "exhausted"
+    ],
+    "doesWhat": [
+      "restores",
+      "connects"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "gentle",
+      "hopeful"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "parallel lives",
+      "regret",
+      "choices",
+      "hope",
+      "library",
+      "second chances"
+    ],
+    "reason": "A woman between life and death finds a library where every book is a life she could have lived. It's gentle and kind in a way that doesn't feel cheap. Sometimes that's exactly what you need."
+  },
+  {
+    "title": "Exciting Times",
+    "author": "Naoise Dolan",
+    "origin": "Ireland",
+    "mood": [
+      "restless",
+      "sharp",
+      "lonely"
+    ],
+    "doesWhat": [
+      "energizes",
+      "confronts"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "dry",
+      "cutting"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "expat",
+      "Hong Kong",
+      "bisexual",
+      "class",
+      "witty",
+      "millennial"
+    ],
+    "reason": "An Irish woman in Hong Kong gets tangled between a banker and a lawyer. She's mean and smart and a little broken and every sentence has an edge to it. If you like Rooney, you'll like this."
+  },
+  {
+    "title": "Red, White & Royal Blue",
+    "author": "Casey McQuiston",
+    "origin": "USA",
+    "mood": [
+      "giddy",
+      "playful",
+      "hopeful"
+    ],
+    "doesWhat": [
+      "escapes",
+      "energizes"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "joyful",
+      "swoony"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "romance",
+      "queer",
+      "political",
+      "White House",
+      "enemies to lovers",
+      "fun"
+    ],
+    "reason": "The First Son of the United States falls for the Prince of England. It's ridiculous and romantic and politically optimistic. Pure fun with a heart bigger than the premise."
+  },
+  {
+    "title": "Mexican Gothic",
+    "author": "Silvia Moreno-Garcia",
+    "origin": "Mexico",
+    "mood": [
+      "restless",
+      "defiant",
+      "curious"
+    ],
+    "doesWhat": [
+      "escapes",
+      "grips"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "creepy",
+      "stylish"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "gothic",
+      "horror",
+      "Mexico",
+      "1950s",
+      "mansion",
+      "feminist"
+    ],
+    "reason": "A glamorous socialite in 1950s Mexico investigates her cousin's creepy new husband and his decaying English mansion. Atmospheric and unsettling. The heroine is someone you'd want on your side."
+  },
+  {
+    "title": "The Personal Librarian",
+    "author": "Marie Benedict and Victoria Christopher Murray",
+    "origin": "USA",
+    "mood": [
+      "defiant",
+      "searching",
+      "conflicted"
+    ],
+    "doesWhat": [
+      "connects",
+      "confronts"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "fascinating",
+      "tense"
+    ],
+    "obscurity": "mid",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "history",
+      "race",
+      "passing",
+      "art",
+      "library",
+      "secrets",
+      "New York"
+    ],
+    "reason": "The true story of Belle da Costa Greene, who became the most powerful woman in the New York art world while hiding that she was Black. A life lived in two worlds. Fascinating."
+  },
+  {
+    "title": "Lessons in Chemistry",
+    "author": "Bonnie Garmus",
+    "origin": "USA",
+    "mood": [
+      "defiant",
+      "sharp",
+      "alive"
+    ],
+    "doesWhat": [
+      "energizes",
+      "escapes"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "funny",
+      "fierce"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "feminism",
+      "1960s",
+      "science",
+      "cooking show",
+      "humor",
+      "dog"
+    ],
+    "reason": "A chemist in the 1960s gets pushed out of her lab and ends up hosting a cooking show where she teaches housewives organic chemistry. Furious and funny. The dog steals every scene.",
+    "formatNote": "Miranda Raison and Pandora Sykes — brilliant."
+  },
+  {
+    "title": "The Vanishing Half",
+    "author": "Brit Bennett",
+    "origin": "USA",
+    "mood": [
+      "searching",
+      "conflicted",
+      "expansive"
+    ],
+    "doesWhat": [
+      "connects",
+      "confronts"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "absorbing",
+      "thoughtful"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "race",
+      "twins",
+      "passing",
+      "identity",
+      "generations",
+      "American South"
+    ],
+    "reason": "Twin sisters from a small Southern town — one lives as Black, one passes as white. Their daughters' lives eventually collide. It's really about the stories we tell about who we are and what those stories cost."
+  },
+  {
+    "title": "The Thursday Murder Club",
+    "author": "Richard Osman",
+    "origin": "UK",
+    "mood": [
+      "playful",
+      "curious",
+      "wry"
+    ],
+    "doesWhat": [
+      "escapes",
+      "energizes"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "charming",
+      "witty"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "mystery",
+      "elderly",
+      "British",
+      "humor",
+      "cozy",
+      "friendship"
+    ],
+    "reason": "Four retirees in a retirement village investigate cold cases. Then a real murder happens. It's cozy and clever and the characters are an absolute joy. Good for when you want to be charmed."
+  },
+  {
+    "title": "The Immortalists",
+    "author": "Chloe Benjamin",
+    "origin": "USA",
+    "mood": [
+      "searching",
+      "anxious",
+      "alive"
+    ],
+    "doesWhat": [
+      "grips",
+      "confronts"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "propulsive",
+      "philosophical"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "death",
+      "siblings",
+      "fortune teller",
+      "fate",
+      "family",
+      "decades"
+    ],
+    "reason": "Four siblings visit a fortune teller who tells each of them when they'll die. The rest of the book is whether knowing changes anything. Each section is a different world."
+  },
+  {
+    "title": "Sorrow and Bliss",
+    "author": "Meg Mason",
+    "origin": "Australia/UK",
+    "mood": [
+      "raw",
+      "darkly amused",
+      "lonely"
+    ],
+    "doesWhat": [
+      "confronts",
+      "connects"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "devastatingly funny",
+      "aching"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "mental health",
+      "marriage",
+      "family",
+      "humor",
+      "British",
+      "diagnosis"
+    ],
+    "reason": "A woman with an undiagnosed condition watches her marriage and family come apart. It's one of the funniest books about pain I've come across. The humor isn't a defense — it's the whole point."
+  },
+  {
+    "title": "Writers & Lovers",
+    "author": "Lily King",
+    "origin": "USA",
+    "mood": [
+      "searching",
+      "raw",
+      "hopeful"
+    ],
+    "doesWhat": [
+      "connects",
+      "restores"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "tender",
+      "true"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "writing",
+      "grief",
+      "waitressing",
+      "art",
+      "dating",
+      "30s"
+    ],
+    "reason": "A woman in her 30s grieving her mother, writing a novel, waitressing, dating two men. It captures that specific feeling of being broke and talented and heartbroken and still showing up. It rang true for me."
+  },
+  {
+    "title": "Yellowface",
+    "author": "R.F. Kuang",
+    "origin": "USA",
+    "mood": [
+      "restless",
+      "sharp",
+      "darkly amused"
+    ],
+    "doesWhat": [
+      "grips",
+      "confronts"
+    ],
+    "pace": "breathless",
+    "density": "lean",
+    "register": [
+      "wicked",
+      "uncomfortable"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "one-sitting",
+    "tags": [
+      "publishing",
+      "race",
+      "theft",
+      "satire",
+      "social media",
+      "literary world"
+    ],
+    "reason": "A white woman steals her dead friend's manuscript and publishes it as her own. Then the internet finds out. It's a thriller dressed as satire, or maybe the other way around. Either way, it moves fast."
+  },
+  {
+    "title": "Really Good, Actually",
+    "author": "Monica Heisey",
+    "origin": "Canada",
+    "mood": [
+      "heartbroken",
+      "darkly amused",
+      "restless"
+    ],
+    "doesWhat": [
+      "escapes",
+      "connects"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "hilarious",
+      "real"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "divorce",
+      "humor",
+      "millennial",
+      "Toronto",
+      "recovery",
+      "friendship"
+    ],
+    "reason": "A woman gets divorced at 29 and insists she's fine. She is absolutely not fine. Funniest sad book I've read in years. Fleabag energy."
+  },
+  {
+    "title": "Conversations with Friends",
+    "author": "Sally Rooney",
+    "origin": "Ireland",
+    "mood": [
+      "lonely",
+      "sharp",
+      "searching"
+    ],
+    "doesWhat": [
+      "slows down",
+      "confronts"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "precise",
+      "cool"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "Dublin",
+      "class",
+      "friendship",
+      "power",
+      "millennial",
+      "desire"
+    ],
+    "reason": "Two college friends get entangled with a married couple. Rooney writes dialogue the way some people play music. Every silence means something. Her first novel and already fully herself."
+  },
+  {
+    "title": "Bel Canto",
+    "author": "Ann Patchett",
+    "origin": "USA",
+    "mood": [
+      "still",
+      "wonder",
+      "tender"
+    ],
+    "doesWhat": [
+      "escapes",
+      "slows down"
+    ],
+    "pace": "gentle",
+    "density": "medium",
+    "register": [
+      "beautiful",
+      "dreamlike"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "opera",
+      "hostage",
+      "love",
+      "music",
+      "South America",
+      "beauty"
+    ],
+    "reason": "Terrorists take a houseful of diplomats hostage. Then, slowly, everyone starts falling in love — with each other, with music, with the strange suspended time. It's a dream you don't want to end."
+  },
+  {
+    "title": "The Great Believers",
+    "author": "Rebecca Makkai",
+    "origin": "USA",
+    "mood": [
+      "grieving",
+      "alive",
+      "searching"
+    ],
+    "doesWhat": [
+      "connects",
+      "cracks open"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "devastating",
+      "warm"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "commitment",
+    "tags": [
+      "AIDS crisis",
+      "Chicago",
+      "1980s",
+      "Paris",
+      "friendship",
+      "art",
+      "loss"
+    ],
+    "reason": "A group of friends in 1980s Chicago living through the AIDS crisis, and a mother decades later in Paris searching for her daughter. It's about surviving the unsurvivable. Keep tissues nearby."
+  },
+  {
+    "title": "Crying in H Mart",
+    "author": "Michelle Zauner",
+    "origin": "USA/South Korea",
+    "mood": [
+      "grieving",
+      "hungry",
+      "searching"
+    ],
+    "doesWhat": [
+      "cracks open",
+      "connects"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "raw",
+      "beautiful"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "one-sitting",
+    "tags": [
+      "grief",
+      "mother",
+      "Korean",
+      "food",
+      "identity",
+      "memoir",
+      "nonfiction"
+    ],
+    "reason": "Zauner loses her mother and finds her way back through food — the kimchi, the tteokbokki, the grocery aisles. It's a love letter written in recipes. She narrates the audiobook and her voice breaks in the right places.",
+    "formatNote": "Zauner narrates herself. Her voice breaks in the right places."
+  },
+  {
+    "title": "Know My Name",
+    "author": "Chanel Miller",
+    "origin": "USA",
+    "mood": [
+      "furious",
+      "defiant",
+      "raw"
+    ],
+    "doesWhat": [
+      "confronts",
+      "cracks open"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "fierce",
+      "luminous"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "assault",
+      "justice",
+      "identity",
+      "feminism",
+      "memoir",
+      "nonfiction",
+      "courage"
+    ],
+    "reason": "Chanel Miller was 'Emily Doe.' This is her taking her name back. It's furious and funny and impossibly well-written. I think everyone should read it.",
+    "formatNote": "Miller narrates. Powerful."
+  },
+  {
+    "title": "When Breath Becomes Air",
+    "author": "Paul Kalanithi",
+    "origin": "USA",
+    "mood": [
+      "aching",
+      "reflective",
+      "still"
+    ],
+    "doesWhat": [
+      "slows down",
+      "cracks open"
+    ],
+    "pace": "gentle",
+    "density": "medium",
+    "register": [
+      "luminous",
+      "profound"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "one-sitting",
+    "tags": [
+      "death",
+      "meaning",
+      "medicine",
+      "mortality",
+      "memoir",
+      "nonfiction"
+    ],
+    "reason": "A neurosurgeon finds out he's dying and writes about what makes life worth living when you know it's ending. It's short. It will change how you think about time."
+  },
+  {
+    "title": "Educated",
+    "author": "Tara Westover",
+    "origin": "USA",
+    "mood": [
+      "defiant",
+      "searching",
+      "fierce"
+    ],
+    "doesWhat": [
+      "grips",
+      "confronts"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "astonishing",
+      "unflinching"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "survival",
+      "family",
+      "education",
+      "Idaho",
+      "memoir",
+      "nonfiction",
+      "escape"
+    ],
+    "reason": "A woman raised by survivalists in Idaho — no school, no doctors — finds her way to Cambridge. It's not tidy or inspirational. It's about what it costs to leave your family to become yourself.",
+    "formatNote": "Julia Whelan's narration is masterful."
+  },
+  {
+    "title": "H Is for Hawk",
+    "author": "Helen Macdonald",
+    "origin": "UK",
+    "mood": [
+      "grieving",
+      "wild",
+      "searching"
+    ],
+    "doesWhat": [
+      "slows down",
+      "haunts"
+    ],
+    "pace": "deliberate",
+    "density": "dense",
+    "register": [
+      "fierce",
+      "beautiful"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "grief",
+      "hawk",
+      "nature",
+      "father",
+      "training",
+      "memoir",
+      "nonfiction"
+    ],
+    "reason": "Her father dies and she decides to train a goshawk. Part nature writing, part memoir, part fever dream. The hawk doesn't care about your feelings, and that turns out to be the point."
+  },
+  {
+    "title": "The Year of Magical Thinking",
+    "author": "Joan Didion",
+    "origin": "USA",
+    "mood": [
+      "grieving",
+      "still",
+      "lost"
+    ],
+    "doesWhat": [
+      "slows down",
+      "confronts"
+    ],
+    "pace": "gentle",
+    "density": "medium",
+    "register": [
+      "precise",
+      "devastating"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "one-sitting",
+    "tags": [
+      "grief",
+      "marriage",
+      "death",
+      "writing",
+      "memoir",
+      "nonfiction"
+    ],
+    "reason": "Didion's husband dies at dinner. She tries to think her way through grief with the same precision she brought to everything else. The precision is what breaks your heart."
+  },
+  {
+    "title": "Born a Crime",
+    "author": "Trevor Noah",
+    "origin": "South Africa",
+    "mood": [
+      "alive",
+      "playful",
+      "defiant"
+    ],
+    "doesWhat": [
+      "energizes",
+      "connects"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "hilarious",
+      "moving"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "apartheid",
+      "South Africa",
+      "humor",
+      "mother",
+      "identity",
+      "memoir",
+      "nonfiction"
+    ],
+    "reason": "Trevor Noah — mixed-race under apartheid, his existence literally illegal. His mother is one of the greatest characters in any memoir. The audiobook, read by Noah, might be the best performance I've ever heard.",
+    "formatNote": "Noah narrates. Possibly the best audiobook performance ever recorded."
+  },
+  {
+    "title": "Braiding Sweetgrass",
+    "author": "Robin Wall Kimmerer",
+    "origin": "USA (Potawatomi)",
+    "mood": [
+      "peaceful",
+      "wonder",
+      "searching"
+    ],
+    "doesWhat": [
+      "restores",
+      "slows down"
+    ],
+    "pace": "gentle",
+    "density": "medium",
+    "register": [
+      "nourishing",
+      "sacred"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "nature",
+      "Indigenous",
+      "science",
+      "gratitude",
+      "plants",
+      "nonfiction"
+    ],
+    "reason": "A botanist and Potawatomi woman braids together Indigenous knowledge and Western science. It's about what the plants would tell us if we'd listen. Read it slowly. It changes the way you see the ground.",
+    "formatNote": "Kimmerer's voice is exactly what this book needs."
+  },
+  {
+    "title": "The Warmth of Other Suns",
+    "author": "Isabel Wilkerson",
+    "origin": "USA",
+    "mood": [
+      "expansive",
+      "aching",
+      "rooted"
+    ],
+    "doesWhat": [
+      "connects",
+      "confronts"
+    ],
+    "pace": "deliberate",
+    "density": "dense",
+    "register": [
+      "epic",
+      "intimate"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "commitment",
+    "tags": [
+      "Great Migration",
+      "race",
+      "American",
+      "history",
+      "narrative nonfiction"
+    ],
+    "reason": "Three people, three routes out of the Jim Crow South. Wilkerson turns history into something you can feel — the heat, the trains, the impossible choices. Long, but it earns every page.",
+    "formatNote": "Robin Miles narrates beautifully."
+  },
+  {
+    "title": "Becoming",
+    "author": "Michelle Obama",
+    "origin": "USA",
+    "mood": [
+      "hopeful",
+      "reflective",
+      "alive"
+    ],
+    "doesWhat": [
+      "connects",
+      "energizes"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "warm",
+      "honest"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "politics",
+      "family",
+      "Black",
+      "identity",
+      "memoir",
+      "nonfiction",
+      "inspiration"
+    ],
+    "reason": "Not a political memoir — a personal one. South Side of Chicago, Princeton imposter syndrome, marriage under impossible pressure. She narrates the audiobook and it feels like she's talking to you specifically.",
+    "formatNote": "Michelle Obama narrates. It feels like she's talking to you."
+  },
+  {
+    "title": "Say Nothing",
+    "author": "Patrick Radden Keefe",
+    "origin": "USA/Northern Ireland",
+    "mood": [
+      "searching",
+      "fierce",
+      "haunted"
+    ],
+    "doesWhat": [
+      "grips",
+      "confronts"
+    ],
+    "pace": "breathless",
+    "density": "medium",
+    "register": [
+      "gripping",
+      "devastating"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "Troubles",
+      "IRA",
+      "Northern Ireland",
+      "murder",
+      "history",
+      "narrative nonfiction"
+    ],
+    "reason": "A mother of ten disappears from her Belfast home in 1972. Decades later, someone starts talking. It reads like a thriller but it's all true. Keefe is remarkable at this."
+  },
+  {
+    "title": "The Hare with Amber Eyes",
+    "author": "Edmund de Waal",
+    "origin": "UK/Austria",
+    "mood": [
+      "reflective",
+      "curious",
+      "melancholy"
+    ],
+    "doesWhat": [
+      "slows down",
+      "connects"
+    ],
+    "pace": "gentle",
+    "density": "medium",
+    "register": [
+      "exquisite",
+      "intimate"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "family",
+      "art",
+      "Holocaust",
+      "objects",
+      "history",
+      "memoir",
+      "nonfiction"
+    ],
+    "reason": "A ceramicist traces a collection of tiny Japanese carvings through five generations of his family — from Paris salons to Nazi Vienna. It's about the things that survive and what they carry with them."
+  },
+  {
+    "title": "Trick Mirror",
+    "author": "Jia Tolentino",
+    "origin": "USA",
+    "mood": [
+      "sharp",
+      "restless",
+      "searching"
+    ],
+    "doesWhat": [
+      "confronts",
+      "energizes"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "brilliant",
+      "unsettling"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "essays",
+      "internet",
+      "feminism",
+      "culture",
+      "millennials",
+      "nonfiction"
+    ],
+    "reason": "Essays about selfhood in the age of the internet. Tolentino thinks harder and clearer about how we live now than almost anyone. I keep going back to specific passages like they're songs."
+  },
+  {
+    "title": "Priestdaddy",
+    "author": "Patricia Lockwood",
+    "origin": "USA",
+    "mood": [
+      "playful",
+      "darkly amused",
+      "restless"
+    ],
+    "doesWhat": [
+      "energizes",
+      "escapes"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "riotously funny",
+      "surprising"
+    ],
+    "obscurity": "deep",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "Catholic",
+      "family",
+      "humor",
+      "poetry",
+      "memoir",
+      "nonfiction",
+      "father"
+    ],
+    "reason": "A poet moves back in with her parents — her father is a Catholic priest, long story. The funniest memoir I've read. Lockwood writes sentences that make you stop and read them out loud to whoever's nearby."
+  },
+  {
+    "title": "Minor Feelings",
+    "author": "Cathy Park Hong",
+    "origin": "USA/South Korea",
+    "mood": [
+      "angry",
+      "searching",
+      "raw"
+    ],
+    "doesWhat": [
+      "confronts",
+      "cracks open"
+    ],
+    "pace": "medium",
+    "density": "dense",
+    "register": [
+      "sharp",
+      "necessary"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "Asian American",
+      "race",
+      "art",
+      "shame",
+      "identity",
+      "essays",
+      "nonfiction"
+    ],
+    "reason": "Hong names the feelings Asian Americans aren't supposed to have — the shame, the rage, the dissonance. It cracked something open in the conversation about race. Short but it stays with you."
+  },
+  {
+    "title": "The Secret History",
+    "author": "Donna Tartt",
+    "origin": "USA",
+    "mood": [
+      "restless",
+      "darkly amused",
+      "seeking"
+    ],
+    "doesWhat": [
+      "grips",
+      "escapes"
+    ],
+    "pace": "medium",
+    "density": "dense",
+    "register": [
+      "intoxicating",
+      "sinister"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "commitment",
+    "tags": [
+      "campus",
+      "murder",
+      "classics",
+      "elite",
+      "dark academia",
+      "Vermont"
+    ],
+    "reason": "You know from the first page someone's been murdered. The rest is how six brilliant, terrible classics students got there. Intoxicating is the right word. You'll want to drop everything and study Greek."
+  },
+  {
+    "title": "Station Eleven",
+    "author": "Emily St. John Mandel",
+    "origin": "Canada",
+    "mood": [
+      "melancholy",
+      "hopeful",
+      "wonder"
+    ],
+    "doesWhat": [
+      "connects",
+      "restores"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "luminous",
+      "hopeful"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "pandemic",
+      "art",
+      "survival",
+      "Shakespeare",
+      "interconnection",
+      "beauty"
+    ],
+    "reason": "A pandemic ends civilization. Twenty years later, a traveling Shakespeare company performs for the survivors. It's not really about the apocalypse — it's about what survives. The answer is art and each other."
+  },
+  {
+    "title": "Normal People",
+    "author": "Sally Rooney",
+    "origin": "Ireland",
+    "mood": [
+      "aching",
+      "tender",
+      "lonely"
+    ],
+    "doesWhat": [
+      "slows down",
+      "connects"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "intimate",
+      "devastating"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "one-sitting",
+    "tags": [
+      "love",
+      "class",
+      "Dublin",
+      "college",
+      "miscommunication",
+      "Ireland"
+    ],
+    "reason": "Two people who can't figure out how to be together keep circling each other through college. It's so precisely observed it hurts. You'll see your own missed connections in it."
+  },
+  {
+    "title": "Pachinko",
+    "author": "Min Jin Lee",
+    "origin": "South Korea/USA",
+    "mood": [
+      "expansive",
+      "aching",
+      "fierce"
+    ],
+    "doesWhat": [
+      "connects",
+      "confronts"
+    ],
+    "pace": "deliberate",
+    "density": "medium",
+    "register": [
+      "epic",
+      "tender"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "commitment",
+    "tags": [
+      "Korea",
+      "Japan",
+      "generations",
+      "immigration",
+      "identity",
+      "family",
+      "history"
+    ],
+    "reason": "Four generations of a Korean family in Japan. The discrimination, the survival, the stubborn insistence on dignity. It's sweeping and intimate and stays with you the way a family story does."
+  },
+  {
+    "title": "The Covenant of Water",
+    "author": "Abraham Verghese",
+    "origin": "India/USA",
+    "mood": [
+      "expansive",
+      "tender",
+      "rooted"
+    ],
+    "doesWhat": [
+      "escapes",
+      "connects"
+    ],
+    "pace": "deliberate",
+    "density": "dense",
+    "register": [
+      "lush",
+      "immersive"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "commitment",
+    "tags": [
+      "India",
+      "Kerala",
+      "family",
+      "generations",
+      "medicine",
+      "water",
+      "love"
+    ],
+    "reason": "Three generations in Kerala, a mysterious condition tied to water. Verghese writes with the patience of a river — it takes its time, and when it arrives, it arrives completely. Give it the weekend it deserves."
+  },
+  {
+    "title": "Hamnet",
+    "author": "Maggie O'Farrell",
+    "origin": "UK/Ireland",
+    "mood": [
+      "grieving",
+      "lush",
+      "fierce"
+    ],
+    "doesWhat": [
+      "slows down",
+      "cracks open"
+    ],
+    "pace": "deliberate",
+    "density": "medium",
+    "register": [
+      "gorgeous",
+      "heartbreaking"
+    ],
+    "obscurity": "mid",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "Shakespeare",
+      "plague",
+      "child loss",
+      "marriage",
+      "historical",
+      "grief"
+    ],
+    "reason": "Shakespeare's son dies of plague. But this is his wife's story — Agnes, a woman so alive she vibrates off the page. O'Farrell makes grief feel like weather. Something you can't argue with."
+  },
+  {
+    "title": "Intermezzo",
+    "author": "Sally Rooney",
+    "origin": "Ireland",
+    "mood": [
+      "aching",
+      "searching",
+      "complicated"
+    ],
+    "doesWhat": [
+      "slows down",
+      "connects"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "tender",
+      "precise"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "brothers",
+      "grief",
+      "chess",
+      "love",
+      "Ireland",
+      "age gap"
+    ],
+    "reason": "Two brothers grieving their father cope in opposite ways. Rooney's most mature book, I think. It understands that love is not one thing and grief isn't either."
+  },
+  {
+    "title": "All Fours",
+    "author": "Miranda July",
+    "origin": "USA",
+    "mood": [
+      "restless",
+      "defiant",
+      "alive"
+    ],
+    "doesWhat": [
+      "destabilizes",
+      "energizes"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "wild",
+      "liberating"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "midlife",
+      "desire",
+      "marriage",
+      "perimenopause",
+      "freedom",
+      "women"
+    ],
+    "reason": "A woman in her mid-40s sets out on a road trip and gets thirty minutes from home before her life detonates. It's about desire and midlife and the wild refusal to go quietly. Might make you uncomfortable. I think that's the point."
+  },
+  {
+    "title": "James",
+    "author": "Percival Everett",
+    "origin": "USA",
+    "mood": [
+      "defiant",
+      "sharp",
+      "fierce"
+    ],
+    "doesWhat": [
+      "confronts",
+      "energizes"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "brilliant",
+      "subversive"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "Huck Finn",
+      "slavery",
+      "retelling",
+      "American",
+      "voice",
+      "satire"
+    ],
+    "reason": "Huck Finn retold from Jim's perspective — except Jim has been performing ignorance his whole life. The moment he starts thinking in his real voice, the entire American canon shifts. Percival Everett doesn't mess around."
+  },
+  {
+    "title": "Blood Meridian",
+    "author": "Cormac McCarthy",
+    "origin": "USA",
+    "mood": [
+      "fierce",
+      "haunted",
+      "wild"
+    ],
+    "doesWhat": [
+      "overwhelms",
+      "confronts"
+    ],
+    "pace": "deliberate",
+    "density": "dense",
+    "register": [
+      "apocalyptic",
+      "sublime"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "commitment",
+    "tags": [
+      "violence",
+      "western",
+      "American",
+      "war",
+      "philosophy",
+      "wilderness"
+    ],
+    "reason": "This one might be a risk. It's the most violent novel in the English language and somehow also the most beautiful. A teenager rides with scalp hunters across the Mexican border. Not for everyone. For some people, it's the only book."
+  },
+  {
+    "title": "The Road",
+    "author": "Cormac McCarthy",
+    "origin": "USA",
+    "mood": [
+      "aching",
+      "tender",
+      "haunted"
+    ],
+    "doesWhat": [
+      "cracks open",
+      "slows down"
+    ],
+    "pace": "gentle",
+    "density": "lean",
+    "register": [
+      "devastating",
+      "tender"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "one-sitting",
+    "tags": [
+      "father",
+      "son",
+      "apocalypse",
+      "survival",
+      "love",
+      "American"
+    ],
+    "reason": "A father and son walk through the ashes of the world. McCarthy strips language down to almost nothing, and what's left is the purest thing I've read about loving your child. Short. Keep tissues far away, you'll need them."
+  },
+  {
+    "title": "2666",
+    "author": "Roberto Bolaño",
+    "origin": "Chile/Mexico",
+    "mood": [
+      "restless",
+      "haunted",
+      "wild"
+    ],
+    "doesWhat": [
+      "overwhelms",
+      "destabilizes"
+    ],
+    "pace": "medium",
+    "density": "dense",
+    "register": [
+      "hypnotic",
+      "terrifying"
+    ],
+    "obscurity": "mid",
+    "format": "print",
+    "length": "commitment",
+    "tags": [
+      "Mexico",
+      "violence",
+      "literature",
+      "murder",
+      "sprawling",
+      "obsession"
+    ],
+    "reason": "Five sections, a thousand pages, a city in the Mexican desert where women keep disappearing. It rearranges your brain. I'm not going to pretend this is an easy recommendation, but if it's right for you, nothing else comes close."
+  },
+  {
+    "title": "The Savage Detectives",
+    "author": "Roberto Bolaño",
+    "origin": "Chile/Mexico",
+    "mood": [
+      "restless",
+      "alive",
+      "searching"
+    ],
+    "doesWhat": [
+      "energizes",
+      "escapes"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "electric",
+      "romantic"
+    ],
+    "obscurity": "mid",
+    "format": "print",
+    "length": "commitment",
+    "tags": [
+      "poetry",
+      "Mexico City",
+      "youth",
+      "literary",
+      "adventure",
+      "1970s"
+    ],
+    "reason": "Young poets in 1970s Mexico City chase a disappeared poet across the desert. It's a love letter to being young and obsessed with art. If you've ever stayed up all night arguing about something that doesn't matter and does, this."
+  },
+  {
+    "title": "A Little Life",
+    "author": "Hanya Yanagihara",
+    "origin": "USA",
+    "mood": [
+      "aching",
+      "fierce",
+      "tender"
+    ],
+    "doesWhat": [
+      "overwhelms",
+      "cracks open"
+    ],
+    "pace": "deliberate",
+    "density": "dense",
+    "register": [
+      "devastating",
+      "consuming"
+    ],
+    "obscurity": "known",
+    "format": "print",
+    "length": "commitment",
+    "tags": [
+      "friendship",
+      "trauma",
+      "New York",
+      "male friendship",
+      "pain",
+      "love"
+    ],
+    "reason": "Four college friends in New York, and the slow revelation of what one of them has survived. It's 700 pages and people either can't finish it or can't stop talking about it. I'm in the second camp."
+  },
+  {
+    "title": "No Country for Old Men",
+    "author": "Cormac McCarthy",
+    "origin": "USA",
+    "mood": [
+      "anxious",
+      "fierce",
+      "haunted"
+    ],
+    "doesWhat": [
+      "grips",
+      "confronts"
+    ],
+    "pace": "breathless",
+    "density": "lean",
+    "register": [
+      "relentless",
+      "philosophical"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "thriller",
+      "violence",
+      "Texas",
+      "fate",
+      "western",
+      "cat and mouse"
+    ],
+    "reason": "A hunter finds a suitcase of money in the desert. What follows is relentless. McCarthy's leanest book — no fat, no mercy. Underneath the chase there's a quiet question about whether violence is new or we just forgot."
+  },
+  {
+    "title": "The Friend",
+    "author": "Sigrid Nunez",
+    "origin": "USA",
+    "mood": [
+      "grieving",
+      "wry",
+      "tender"
+    ],
+    "doesWhat": [
+      "slows down",
+      "connects"
+    ],
+    "pace": "gentle",
+    "density": "lean",
+    "register": [
+      "quiet",
+      "wise"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "grief",
+      "dog",
+      "writing",
+      "friendship",
+      "New York",
+      "loss"
+    ],
+    "reason": "A writer's best friend dies and leaves her his enormous Great Dane. It's about grief and dogs and literature and it's funnier and lighter than it has any right to be."
+  },
+  {
+    "title": "Lonesome Dove",
+    "author": "Larry McMurtry",
+    "origin": "USA",
+    "mood": [
+      "expansive",
+      "nostalgic",
+      "alive"
+    ],
+    "doesWhat": [
+      "escapes",
+      "connects"
+    ],
+    "pace": "deliberate",
+    "density": "medium",
+    "register": [
+      "epic",
+      "warm"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "commitment",
+    "tags": [
+      "western",
+      "Texas",
+      "friendship",
+      "cattle drive",
+      "adventure",
+      "American"
+    ],
+    "reason": "Two aging Texas Rangers drive cattle from the Rio Grande to Montana. It's the great American friendship novel — funny, violent, heartbreaking. Nine hundred pages and every one of them earns its keep.",
+    "formatNote": "Lee Horsley's narration is definitive."
+  },
+  {
+    "title": "Stoner",
+    "author": "John Williams",
+    "origin": "USA",
+    "mood": [
+      "still",
+      "aching",
+      "reflective"
+    ],
+    "doesWhat": [
+      "slows down",
+      "haunts"
+    ],
+    "pace": "gentle",
+    "density": "medium",
+    "register": [
+      "quiet",
+      "devastating"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "academia",
+      "marriage",
+      "quiet life",
+      "literature",
+      "American",
+      "midcentury"
+    ],
+    "reason": "A farm boy becomes a literature professor and lives a quiet, mostly unhappy life. It sounds like nothing happens. Everything happens. It's about loving something — a book, a person — in a world that doesn't notice."
+  },
+  {
+    "title": "Giovanni's Room",
+    "author": "James Baldwin",
+    "origin": "USA/France",
+    "mood": [
+      "aching",
+      "conflicted",
+      "raw"
+    ],
+    "doesWhat": [
+      "confronts",
+      "cracks open"
+    ],
+    "pace": "medium",
+    "density": "dense",
+    "register": [
+      "burning",
+      "beautiful"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "queer",
+      "Paris",
+      "desire",
+      "shame",
+      "American",
+      "love"
+    ],
+    "reason": "An American in Paris falls in love with an Italian bartender and tries to destroy it. Baldwin writes about desire and shame with a precision that feels physical. Short, and it stays."
+  },
+  {
+    "title": "The Fire Next Time",
+    "author": "James Baldwin",
+    "origin": "USA",
+    "mood": [
+      "furious",
+      "tender",
+      "defiant"
+    ],
+    "doesWhat": [
+      "confronts",
+      "cracks open"
+    ],
+    "pace": "medium",
+    "density": "dense",
+    "register": [
+      "prophetic",
+      "burning"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "one-sitting",
+    "tags": [
+      "race",
+      "America",
+      "religion",
+      "essay",
+      "nonfiction",
+      "justice"
+    ],
+    "reason": "Two essays — one a letter to his nephew, one a reckoning with America. Baldwin writes with the fury of a prophet and the tenderness of a parent. It's sixty years old and it could have been written this morning."
+  },
+  {
+    "title": "Gilead",
+    "author": "Marilynne Robinson",
+    "origin": "USA",
+    "mood": [
+      "still",
+      "tender",
+      "reflective"
+    ],
+    "doesWhat": [
+      "slows down",
+      "restores"
+    ],
+    "pace": "gentle",
+    "density": "dense",
+    "register": [
+      "luminous",
+      "sacred"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "father",
+      "faith",
+      "Iowa",
+      "letter",
+      "aging",
+      "American",
+      "grace"
+    ],
+    "reason": "An old minister in Iowa writes a letter to his young son — everything he knows about life, faith, and light on water. Robinson writes sentences that feel like prayers. It's the quietest, most radiant book I know."
+  },
+  {
+    "title": "Kindred",
+    "author": "Octavia Butler",
+    "origin": "USA",
+    "mood": [
+      "anxious",
+      "fierce",
+      "searching"
+    ],
+    "doesWhat": [
+      "confronts",
+      "grips"
+    ],
+    "pace": "swift",
+    "density": "medium",
+    "register": [
+      "visceral",
+      "essential"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "slavery",
+      "time travel",
+      "sci-fi",
+      "race",
+      "survival",
+      "American"
+    ],
+    "reason": "A Black woman in 1976 is pulled back to a plantation in Maryland. Butler makes slavery feel not like history but like something that could reach out and grab you. The most direct entry into her work."
+  },
+  {
+    "title": "The Left Hand of Darkness",
+    "author": "Ursula K. Le Guin",
+    "origin": "USA",
+    "mood": [
+      "curious",
+      "still",
+      "expansive"
+    ],
+    "doesWhat": [
+      "escapes",
+      "cracks open"
+    ],
+    "pace": "deliberate",
+    "density": "dense",
+    "register": [
+      "profound",
+      "strange"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "sci-fi",
+      "gender",
+      "ice",
+      "politics",
+      "alien",
+      "friendship"
+    ],
+    "reason": "An envoy visits a planet where no one has a fixed gender. Le Guin uses science fiction to ask what we'd be without the categories we've built. The answer is terrifying and beautiful."
+  },
+  {
+    "title": "Annihilation",
+    "author": "Jeff VanderMeer",
+    "origin": "USA",
+    "mood": [
+      "anxious",
+      "curious",
+      "wild"
+    ],
+    "doesWhat": [
+      "destabilizes",
+      "grips"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "eerie",
+      "hypnotic"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "sci-fi",
+      "nature",
+      "expedition",
+      "mystery",
+      "ecological",
+      "horror"
+    ],
+    "reason": "Four women enter a quarantined zone where nature has gone wrong. It's short, creepy, and it burrows into your head. VanderMeer doesn't explain everything and that's what makes it work."
+  },
+  {
+    "title": "The Stranger",
+    "author": "Albert Camus",
+    "origin": "Algeria/France",
+    "mood": [
+      "numb",
+      "detached",
+      "searching"
+    ],
+    "doesWhat": [
+      "confronts",
+      "destabilizes"
+    ],
+    "pace": "swift",
+    "density": "lean",
+    "register": [
+      "cold",
+      "unsettling"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "existentialism",
+      "Algeria",
+      "philosophy",
+      "murder",
+      "absurd",
+      "classic"
+    ],
+    "reason": "A man kills someone on a beach and can't explain why. Camus in 120 pages. You'll read it in an afternoon and argue about it for years."
+  },
+  {
+    "title": "The Name of the Wind",
+    "author": "Patrick Rothfuss",
+    "origin": "USA",
+    "mood": [
+      "wonder",
+      "alive",
+      "nostalgic"
+    ],
+    "doesWhat": [
+      "escapes",
+      "grips"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "intoxicating",
+      "lyrical"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "commitment",
+    "tags": [
+      "fantasy",
+      "music",
+      "magic",
+      "storytelling",
+      "university",
+      "adventure"
+    ],
+    "reason": "A musician-magician tells the true story of his life in a bar over three days. Rothfuss writes fantasy the way some people write literary fiction — every sentence is doing something. Fair warning, the third book isn't out yet.",
+    "formatNote": "Nick Podehl's narration is legendary in fantasy circles."
+  },
+  {
+    "title": "Project Hail Mary",
+    "author": "Andy Weir",
+    "origin": "USA",
+    "mood": [
+      "giddy",
+      "curious",
+      "hopeful"
+    ],
+    "doesWhat": [
+      "escapes",
+      "energizes"
+    ],
+    "pace": "breathless",
+    "density": "lean",
+    "register": [
+      "thrilling",
+      "joyful"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "sci-fi",
+      "space",
+      "science",
+      "friendship",
+      "problem solving",
+      "humor"
+    ],
+    "reason": "A man wakes up on a spaceship with no memory. What follows is pure problem-solving joy and the most unlikely friendship in fiction. Ray Porter's audiobook narration is something special.",
+    "formatNote": "Ray Porter. One of the great audiobook performances."
+  },
+  {
+    "title": "Exhalation",
+    "author": "Ted Chiang",
+    "origin": "USA",
+    "mood": [
+      "curious",
+      "wonder",
+      "reflective"
+    ],
+    "doesWhat": [
+      "cracks open",
+      "slows down"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "profound",
+      "elegant"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "sci-fi",
+      "stories",
+      "philosophy",
+      "technology",
+      "time",
+      "free will"
+    ],
+    "reason": "Short stories about time travel, free will, robot nannies, the nature of consciousness. Chiang thinks more clearly about technology and what it means for us than anyone I've read. Each story is a perfect little machine."
+  },
+  {
+    "title": "The Rings of Saturn",
+    "author": "W.G. Sebald",
+    "origin": "Germany/UK",
+    "mood": [
+      "melancholy",
+      "curious",
+      "still"
+    ],
+    "doesWhat": [
+      "slows down",
+      "haunts"
+    ],
+    "pace": "gentle",
+    "density": "dense",
+    "register": [
+      "hypnotic",
+      "elegiac"
+    ],
+    "obscurity": "deep",
+    "format": "print",
+    "length": "weekend",
+    "tags": [
+      "walking",
+      "history",
+      "memory",
+      "England",
+      "destruction",
+      "meditation"
+    ],
+    "reason": "A man walks along the Suffolk coast and thinks about herring, silk, the Congo, and the nature of destruction. It sounds like nothing. It's one of the most haunting things I've come across. A weird pick, but stay with me on this one."
+  },
+  {
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "origin": "Israel",
+    "mood": [
+      "curious",
+      "expansive",
+      "restless"
+    ],
+    "doesWhat": [
+      "energizes",
+      "destabilizes"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "provocative",
+      "sweeping"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "commitment",
+    "tags": [
+      "history",
+      "humanity",
+      "science",
+      "evolution",
+      "ideas",
+      "nonfiction"
+    ],
+    "reason": "The entire history of our species in one book. You'll disagree with parts of it — everyone does — and you won't stop thinking about it. Harari asks big questions and isn't afraid of uncomfortable answers."
+  },
+  {
+    "title": "The Sixth Extinction",
+    "author": "Elizabeth Kolbert",
+    "origin": "USA",
+    "mood": [
+      "anxious",
+      "curious",
+      "searching"
+    ],
+    "doesWhat": [
+      "confronts",
+      "connects"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "sobering",
+      "fascinating"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "climate",
+      "extinction",
+      "science",
+      "nature",
+      "environment",
+      "nonfiction"
+    ],
+    "reason": "Kolbert travels the world documenting the extinction we're living through. Frogs in Panama, coral in Australia, bats in New York. It's terrifying and fascinating and you should probably read it."
+  },
+  {
+    "title": "Evicted",
+    "author": "Matthew Desmond",
+    "origin": "USA",
+    "mood": [
+      "aching",
+      "furious",
+      "searching"
+    ],
+    "doesWhat": [
+      "confronts",
+      "connects"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "devastating",
+      "necessary"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "poverty",
+      "housing",
+      "American",
+      "Milwaukee",
+      "inequality",
+      "narrative nonfiction"
+    ],
+    "reason": "Eight families in Milwaukee trying to keep a roof over their heads. Desmond follows them through eviction courts and trailer parks. It will change how you see every 'For Rent' sign."
+  },
+  {
+    "title": "Empire of Pain",
+    "author": "Patrick Radden Keefe",
+    "origin": "USA",
+    "mood": [
+      "furious",
+      "searching",
+      "sharp"
+    ],
+    "doesWhat": [
+      "grips",
+      "confronts"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "gripping",
+      "infuriating"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "commitment",
+    "tags": [
+      "Sackler",
+      "opioids",
+      "wealth",
+      "pharma",
+      "American",
+      "narrative nonfiction"
+    ],
+    "reason": "The Sackler family made billions from OxyContin while people died. Keefe follows the money, the lies, and the art world philanthropy. It reads like a thriller about something that actually happened."
+  },
+  {
+    "title": "Between the World and Me",
+    "author": "Ta-Nehisi Coates",
+    "origin": "USA",
+    "mood": [
+      "furious",
+      "tender",
+      "searching"
+    ],
+    "doesWhat": [
+      "confronts",
+      "cracks open"
+    ],
+    "pace": "medium",
+    "density": "dense",
+    "register": [
+      "urgent",
+      "beautiful"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "one-sitting",
+    "tags": [
+      "race",
+      "America",
+      "body",
+      "son",
+      "letter",
+      "nonfiction",
+      "Black"
+    ],
+    "reason": "A letter to his teenage son about what it means to live in a Black body in America. Coates narrates the audiobook himself. It's Baldwin's heir — furious and tender and short enough for a single sitting, dense enough to return to for years.",
+    "formatNote": "Coates narrates. His voice carries everything."
+  },
+  {
+    "title": "The Master and Margarita",
+    "author": "Mikhail Bulgakov",
+    "origin": "Russia",
+    "mood": [
+      "playful",
+      "defiant",
+      "wild"
+    ],
+    "doesWhat": [
+      "escapes",
+      "destabilizes"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "wild",
+      "hilarious"
+    ],
+    "obscurity": "known",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "Satan",
+      "Moscow",
+      "satire",
+      "magic",
+      "love",
+      "Russian",
+      "classic"
+    ],
+    "reason": "The Devil visits 1930s Moscow with a giant cat and a naked witch and destroys everyone's day. The funniest, strangest, most subversive novel Russia ever produced. Stalin banned it. I think that's a recommendation."
+  },
+  {
+    "title": "The Count of Monte Cristo",
+    "author": "Alexandre Dumas",
+    "origin": "France",
+    "mood": [
+      "restless",
+      "fierce",
+      "defiant"
+    ],
+    "doesWhat": [
+      "escapes",
+      "grips"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "thrilling",
+      "satisfying"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "commitment",
+    "tags": [
+      "revenge",
+      "prison",
+      "adventure",
+      "France",
+      "justice",
+      "classic"
+    ],
+    "reason": "A man is wrongly imprisoned, escapes, finds a treasure, and methodically destroys everyone who betrayed him. The greatest revenge story ever written. Long, and worth every page. The audiobook is perfect for this — it flies.",
+    "formatNote": "The Robin Buss translation. Audio is perfect for this — it's long and it flies."
+  },
+  {
+    "title": "Open Water",
+    "author": "Caleb Azumah Nelson",
+    "origin": "UK/Ghana",
+    "mood": [
+      "tender",
+      "aching",
+      "alive"
+    ],
+    "doesWhat": [
+      "slows down",
+      "connects"
+    ],
+    "pace": "gentle",
+    "density": "dense",
+    "register": [
+      "lyrical",
+      "intimate"
+    ],
+    "obscurity": "deep",
+    "format": "either",
+    "length": "one-sitting",
+    "tags": [
+      "Black British",
+      "love",
+      "art",
+      "London",
+      "music",
+      "photography"
+    ],
+    "reason": "Two young Black British artists fall in love in London. It's written in second person and it pulls you in like a current. Nelson writes about tenderness and art with the rhythm of a jazz record. A bit of a risk, but I keep thinking about it."
+  },
+  {
+    "title": "The Prophets",
+    "author": "Robert Jones Jr.",
+    "origin": "USA",
+    "mood": [
+      "aching",
+      "fierce",
+      "tender"
+    ],
+    "doesWhat": [
+      "confronts",
+      "cracks open"
+    ],
+    "pace": "deliberate",
+    "density": "dense",
+    "register": [
+      "biblical",
+      "beautiful"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "commitment",
+    "tags": [
+      "slavery",
+      "queer",
+      "love",
+      "plantation",
+      "biblical",
+      "male love"
+    ],
+    "reason": "Two enslaved men love each other on a Mississippi plantation. Jones writes their love like scripture — enormous, ancient, unashamed. It insists on its own sacredness, and it earns that insistence."
+  },
+  {
+    "title": "Memorial",
+    "author": "Bryan Washington",
+    "origin": "USA",
+    "mood": [
+      "restless",
+      "tender",
+      "complicated"
+    ],
+    "doesWhat": [
+      "connects",
+      "slows down"
+    ],
+    "pace": "medium",
+    "density": "lean",
+    "register": [
+      "warm",
+      "real"
+    ],
+    "obscurity": "mid",
+    "format": "either",
+    "length": "weekend",
+    "tags": [
+      "queer",
+      "interracial",
+      "Houston",
+      "food",
+      "family",
+      "Japan",
+      "male love"
+    ],
+    "reason": "A Black man and a Japanese-American man are falling apart. Then one flies to Japan to see his dying father, and the other is left with his partner's mother. It's about food and family and what we owe each other. Quietly great."
+  },
+  {
+    "title": "Shuggie Bain",
+    "author": "Douglas Stuart",
+    "origin": "Scotland",
+    "mood": [
+      "aching",
+      "fierce",
+      "tender"
+    ],
+    "doesWhat": [
+      "confronts",
+      "cracks open"
+    ],
+    "pace": "medium",
+    "density": "medium",
+    "register": [
+      "devastating",
+      "loving"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "commitment",
+    "tags": [
+      "Glasgow",
+      "poverty",
+      "mother",
+      "addiction",
+      "queer",
+      "childhood",
+      "Booker"
+    ],
+    "reason": "A boy in 1980s Glasgow loves his mother with everything he has. She's drowning in addiction. Stuart never looks away, and the tenderness is what makes it bearable. It won the Booker and earned it."
+  },
+  {
+    "title": "Housekeeping",
+    "author": "Marilynne Robinson",
+    "origin": "USA",
+    "mood": [
+      "still",
+      "wild",
+      "melancholy"
+    ],
+    "doesWhat": [
+      "slows down",
+      "haunts"
+    ],
+    "pace": "gentle",
+    "density": "dense",
+    "register": [
+      "strange",
+      "luminous"
+    ],
+    "obscurity": "mid",
+    "format": "print",
+    "length": "one-sitting",
+    "tags": [
+      "sisters",
+      "aunt",
+      "Idaho",
+      "water",
+      "wandering",
+      "American",
+      "nature"
+    ],
+    "reason": "Two orphaned sisters raised by an aunt who might be drifting beyond the edges of ordinary life. Robinson's first novel — about water, loss, and the women who refuse to stay put. Strange and luminous."
+  },
+  {
+    "title": "The Blade Itself",
+    "author": "Joe Abercrombie",
+    "origin": "UK",
+    "mood": [
+      "restless",
+      "darkly amused",
+      "fierce"
+    ],
+    "doesWhat": [
+      "escapes",
+      "energizes"
+    ],
+    "pace": "swift",
+    "density": "medium",
+    "register": [
+      "gritty",
+      "wickedly funny"
+    ],
+    "obscurity": "mid",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "fantasy",
+      "grimdark",
+      "war",
+      "anti-hero",
+      "humor",
+      "violence"
+    ],
+    "reason": "Fantasy for people who think fantasy takes itself too seriously. A crippled torturer, a vain barbarian, a cowardly nobleman. Brutal and funny and everyone in it is a magnificent bastard. Steven Pacey's narration is incredible.",
+    "formatNote": "Steven Pacey's narration is one of the best in all of fantasy."
+  },
+  {
+    "title": "Never Let Me Go",
+    "author": "Kazuo Ishiguro",
+    "origin": "UK",
+    "mood": [
+      "melancholy",
+      "tender",
+      "haunted"
+    ],
+    "doesWhat": [
+      "haunts",
+      "slows down"
+    ],
+    "pace": "gentle",
+    "density": "medium",
+    "register": [
+      "heartbreaking",
+      "restrained"
+    ],
+    "obscurity": "known",
+    "format": "audio",
+    "length": "weekend",
+    "tags": [
+      "sci-fi",
+      "boarding school",
+      "identity",
+      "love",
+      "mortality",
+      "English"
+    ],
+    "reason": "Students at an English boarding school slowly realize what they were made for. Ishiguro never raises his voice, and that restraint is everything. You'll finish it and just sit there for a while."
+  }
+]
