@@ -1,0 +1,3691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>echolalia</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a1628;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Cormorant Garamond', serif;
+    cursor: default;
+    user-select: none;
+  }
+
+  canvas#water {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 0;
+  }
+
+  #app {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  #echolalia-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-weight: 300;
+    color: rgba(255, 248, 240, 0.92);
+    text-align: center;
+    max-width: 680px;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    min-height: 3em;
+  }
+
+  #echolalia-text.visible { opacity: 1; }
+  #echolalia-text.fading { opacity: 0; }
+
+  .text-book-title {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .text-book-author {
+    font-weight: 400;
+    color: rgba(255, 220, 180, 0.9);
+  }
+
+  #input-area {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  #input-area.visible { opacity: 1; }
+
+  #mic-btn {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 220, 180, 0.3);
+    background: rgba(255, 255, 255, 0.06);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    position: relative;
+  }
+
+  #mic-btn:hover {
+    border-color: rgba(255, 220, 180, 0.6);
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  /* On-air state: immediate snap, solid red, no animation */
+  #mic-btn.listening {
+    border-color: rgba(200, 50, 40, 1);
+    background: rgba(200, 50, 40, 0.35);
+    box-shadow: 0 0 20px rgba(200, 50, 40, 0.25);
+  }
+
+  #mic-btn svg { width: 24px; height: 24px; fill: rgba(255, 248, 240, 0.7); }
+  #mic-btn.listening svg { fill: rgba(255, 255, 255, 0.95); }
+
+  #mic-hint {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: rgba(255, 248, 240, 0.22);
+    letter-spacing: 0.04em;
+    margin-top: -0.5rem;
+    transition: all 0.15s ease;
+  }
+
+  #mic-hint.listening {
+    color: rgba(200, 50, 40, 0.8);
+    letter-spacing: 0.08em;
+  }
+
+  #text-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.35;
+    transition: opacity 0.4s ease;
+  }
+
+  #text-input-wrapper:focus-within { opacity: 0.8; }
+
+  #text-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 220, 180, 0.15);
+    border-radius: 0;
+    padding: 0.4rem 0.2rem;
+    color: rgba(255, 248, 240, 0.7);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    width: min(260px, 55vw);
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  #text-input::placeholder { color: rgba(255, 248, 240, 0.2); font-style: italic; }
+  #text-input:focus { border-color: rgba(255, 220, 180, 0.35); }
+
+  #send-btn {
+    background: none;
+    border: none;
+    width: 28px; height: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    opacity: 0.5;
+  }
+
+  #send-btn:hover { opacity: 0.9; }
+  #send-btn svg { width: 14px; height: 14px; fill: rgba(255, 248, 240, 0.5); }
+
+  #skip-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 248, 240, 0.3);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    padding: 0.4rem 1rem;
+    transition: color 0.3s ease;
+  }
+
+  #skip-btn:hover { color: rgba(255, 248, 240, 0.55); }
+
+  #feedback-area {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  #feedback-area.visible { opacity: 1; }
+
+  .feedback-btn {
+    background: none;
+    border: 1px solid rgba(255, 220, 180, 0.2);
+    border-radius: 2rem;
+    padding: 0.6rem 1.6rem;
+    color: rgba(255, 248, 240, 0.7);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .feedback-btn:hover {
+    border-color: rgba(255, 220, 180, 0.5);
+    color: rgba(255, 248, 240, 0.95);
+  }
+
+  .feedback-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+  #start-btn {
+    background: none;
+    border: 1px solid rgba(255, 220, 180, 0.25);
+    border-radius: 2rem;
+    padding: 0.8rem 2.4rem;
+    color: rgba(255, 248, 240, 0.8);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    opacity: 0;
+    transition: opacity 0.8s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  #start-btn.visible { opacity: 1; }
+  #start-btn:hover {
+    border-color: rgba(255, 220, 180, 0.6);
+    color: rgba(255, 248, 240, 1);
+  }
+
+  #title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 300;
+    color: rgba(255, 248, 240, 0.9);
+    letter-spacing: 0.12em;
+    margin-bottom: 0.8rem;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+  }
+
+  #title.visible { opacity: 1; }
+
+  #subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255, 220, 180, 0.5);
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+
+  #subtitle.visible { opacity: 1; }
+
+  #user-echo { display: none; }
+
+  #restart-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: none;
+    border: 1px solid rgba(255, 220, 180, 0.15);
+    border-radius: 2rem;
+    padding: 0.5rem 1.2rem;
+    color: rgba(255, 248, 240, 0.25);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    z-index: 10;
+  }
+
+  #restart-btn.visible { opacity: 1; }
+  #restart-btn:hover { color: rgba(255, 248, 240, 0.5); border-color: rgba(255, 220, 180, 0.35); }
+
+  .feedback-btn#shelf-btn {
+    border-color: rgba(255, 220, 180, 0.15);
+    color: rgba(255, 248, 240, 0.5);
+  }
+
+  #shelf-view-btn {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    background: none;
+    border: 1px solid rgba(255, 220, 180, 0.15);
+    border-radius: 2rem;
+    padding: 0.5rem 1.2rem;
+    color: rgba(255, 248, 240, 0.25);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    z-index: 10;
+  }
+
+  #shelf-view-btn.visible { opacity: 1; }
+  #shelf-view-btn:hover { color: rgba(255, 248, 240, 0.5); border-color: rgba(255, 220, 180, 0.35); }
+
+  #shelf-panel {
+    position: fixed;
+    top: 0; right: -400px;
+    width: min(380px, 85vw);
+    height: 100vh;
+    background: rgba(10, 22, 40, 0.95);
+    backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(255, 220, 180, 0.1);
+    z-index: 20;
+    padding: 2.5rem 2rem;
+    overflow-y: auto;
+    transition: right 0.5s ease;
+  }
+
+  #shelf-panel.open { right: 0; }
+
+  #shelf-panel h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: rgba(255, 248, 240, 0.85);
+    margin-bottom: 0.3rem;
+  }
+
+  #shelf-panel .shelf-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: rgba(255, 248, 240, 0.3);
+    margin-bottom: 2rem;
+  }
+
+  .shelf-book {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 220, 180, 0.06);
+  }
+
+  .shelf-book-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    font-style: italic;
+    color: rgba(255, 248, 240, 0.85);
+  }
+
+  .shelf-book-author {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(255, 220, 180, 0.6);
+  }
+
+  .shelf-book-reason {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: rgba(255, 248, 240, 0.4);
+    line-height: 1.5;
+    margin-top: 0.4rem;
+  }
+
+  #shelf-actions {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .shelf-action-btn {
+    background: none;
+    border: 1px solid rgba(255, 220, 180, 0.2);
+    border-radius: 2rem;
+    padding: 0.5rem 1.2rem;
+    color: rgba(255, 248, 240, 0.6);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .shelf-action-btn:hover {
+    border-color: rgba(255, 220, 180, 0.5);
+    color: rgba(255, 248, 240, 0.9);
+  }
+
+  #shelf-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: rgba(255, 248, 240, 0.3);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    line-height: 1;
+  }
+
+  .panel-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 220, 180, 0.1);
+  }
+
+  .panel-tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 0.5rem 1rem;
+    color: rgba(255, 248, 240, 0.3);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .panel-tab:hover { color: rgba(255, 248, 240, 0.5); }
+  .panel-tab.active { color: rgba(255, 248, 240, 0.8); border-bottom-color: rgba(255, 220, 180, 0.5); }
+
+  .panel-content { display: none; }
+  .panel-content.active { display: block; }
+
+  .history-entry { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255, 220, 180, 0.06); }
+  .history-you-said { font-family: 'Inter', sans-serif; font-size: 0.7rem; font-weight: 300; color: rgba(255, 220, 180, 0.3); margin-bottom: 0.4rem; font-style: italic; }
+  .history-book-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 400; font-style: italic; color: rgba(255, 248, 240, 0.85); }
+  .history-book-author { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-weight: 300; color: rgba(255, 220, 180, 0.6); }
+  .history-action { font-family: 'Inter', sans-serif; font-size: 0.65rem; font-weight: 300; color: rgba(255, 248, 240, 0.2); margin-top: 0.3rem; }
+  .history-empty { font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 300; color: rgba(255, 248, 240, 0.25); font-style: italic; }
+
+  #shelf-close:hover { color: rgba(255, 248, 240, 0.6); }
+
+  #shelf-copied {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: rgba(255, 220, 180, 0.6);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    margin-top: 0.8rem;
+  }
+
+  #shelf-copied.visible { opacity: 1; }
+</style>
+</head>
+<body>
+
+<canvas id="water"></canvas>
+
+<div id="app">
+  <div id="title">echolalia</div>
+  <div id="subtitle">a book for right now</div>
+  <button id="start-btn">begin</button>
+  <div id="user-echo"></div>
+  <div id="echolalia-text"></div>
+  <div id="input-area">
+    <button id="mic-btn">
+      <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm-1-9c0-.55.45-1 1-1s1 .45 1 1v6c0 .55-.45 1-1 1s-1-.45-1-1V5zm6 6c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+    </button>
+    <div id="mic-hint">hold space to speak</div>
+    <div id="text-input-wrapper">
+      <input type="text" id="text-input" placeholder="or type instead" />
+      <button id="send-btn">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+    <button id="skip-btn">skip this one</button>
+  </div>
+  <div id="feedback-area">
+    <button class="feedback-btn" id="shelf-btn">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+      save to shelf
+    </button>
+    <button class="feedback-btn" id="read-it-btn">
+      <svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+      I've read it
+    </button>
+    <button class="feedback-btn" id="try-again-btn">
+      <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+      not for me
+    </button>
+  </div>
+</div>
+
+<div id="shelf-panel">
+  <button id="shelf-close">&times;</button>
+  <div class="panel-tabs">
+    <button class="panel-tab active" data-tab="shelf">shelf</button>
+    <button class="panel-tab" data-tab="history">history</button>
+    <button class="panel-tab" data-tab="feedback">thoughts?</button>
+  </div>
+  <div id="tab-shelf" class="panel-content active">
+    <div class="shelf-subtitle">books you saved</div>
+    <div id="shelf-books"></div>
+    <div id="shelf-actions">
+      <button class="shelf-action-btn" id="shelf-copy">copy list</button>
+      <button class="shelf-action-btn" id="shelf-share">share</button>
+    </div>
+    <div id="shelf-copied">copied to clipboard</div>
+  </div>
+  <div id="tab-history" class="panel-content">
+    <div class="shelf-subtitle">everything surfaced this session</div>
+    <div id="history-books"></div>
+  </div>
+  <div id="tab-feedback" class="panel-content">
+    <div class="shelf-subtitle">tell me what's working and what's not</div>
+    <textarea id="feedback-text" placeholder="anything at all — a thought, a complaint, a wish..." style="width: 100%; min-height: 120px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,220,180,0.15); border-radius: 8px; color: rgba(255,248,240,0.8); font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 300; padding: 1rem; resize: vertical; outline: none;"></textarea>
+    <button class="shelf-action-btn" id="feedback-send" style="margin-top: 1rem;">send</button>
+    <div id="feedback-thanks" style="font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 300; color: rgba(255,220,180,0.5); margin-top: 0.8rem; opacity: 0; transition: opacity 0.4s ease;">thank you. this helps.</div>
+  </div>
+</div>
+
+<button id="shelf-view-btn">your shelf</button>
+<button id="restart-btn">start over</button>
+
+<script>
+// ─── WATER ANIMATION ───────────────────────────────────────────
+const canvas = document.getElementById('water');
+const ctx = canvas.getContext('2d');
+let W, H;
+let waterState = 'still';
+let stateIntensity = 0;
+let targetIntensity = 0.3;
+let time = 0;
+let ripples = [];
+let voiceEnergy = 0; // 0-1, reactive to mic input
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+function setWaterState(state) {
+  waterState = state;
+  if (state === 'still') targetIntensity = 0.25;
+  else if (state === 'listening') targetIntensity = 0.45;
+  else if (state === 'pulsing') targetIntensity = 0.8;
+  else if (state === 'rippling') targetIntensity = 0.65;
+}
+
+function addRipple() {
+  ripples.push({
+    x: W * (0.2 + Math.random() * 0.6),
+    y: H * (0.3 + Math.random() * 0.4),
+    r: 0,
+    maxR: 150 + Math.random() * 300,
+    alpha: 0.3 + Math.random() * 0.2,
+    speed: 0.8 + Math.random() * 1.2
+  });
+}
+
+function drawWater(t) {
+  // Slow, breathing state transitions — nothing snaps
+  stateIntensity += (targetIntensity - stateIntensity) * 0.012;
+  // Voice energy: gentle swell, not jumpy
+  const targetEnergy = (waterState === 'listening' || waterState === 'pulsing') ? 0.3 + Math.sin(t * 0.8) * 0.15 : 0;
+  voiceEnergy += (targetEnergy - voiceEnergy) * 0.04;
+
+  const si = stateIntensity;
+  const ve = voiceEnergy;
+
+  // Deep warm ocean gradient — warm blues fading to amber-teal at depth
+  const grad = ctx.createLinearGradient(0, 0, W * 0.15, H);
+  grad.addColorStop(0, '#070d1c');
+  grad.addColorStop(0.12, '#0c1a35');
+  grad.addColorStop(0.30, '#112848');
+  grad.addColorStop(0.50, '#17365e');
+  grad.addColorStop(0.70, '#1e4568');
+  grad.addColorStop(0.85, '#275570');
+  grad.addColorStop(1, '#2f5f62');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // Warm light — slow drift like late afternoon sun through water
+  const lightX = W * (0.48 + Math.sin(t * 0.06) * 0.06);
+  const lightY = H * (0.22 + Math.sin(t * 0.04) * 0.04);
+  const amberGrad = ctx.createRadialGradient(lightX, lightY, 0, lightX, lightY, H * 0.9);
+  amberGrad.addColorStop(0, `rgba(255, 200, 120, ${0.06 + si * 0.04 + ve * 0.03})`);
+  amberGrad.addColorStop(0.25, `rgba(255, 180, 100, ${0.035 + si * 0.02})`);
+  amberGrad.addColorStop(0.6, `rgba(210, 150, 90, ${0.01 + si * 0.008})`);
+  amberGrad.addColorStop(1, 'rgba(210, 150, 90, 0)');
+  ctx.fillStyle = amberGrad;
+  ctx.fillRect(0, 0, W, H);
+
+  // Ocean waves — slow, long swells like breathing
+  const waveLayers = [
+    { y: 0.18, amp: 10, freq: 0.0010, speed: 0.08, r: 14, g: 38, b: 85, a: 0.05 },
+    { y: 0.26, amp: 16, freq: 0.0012, speed: 0.10, r: 18, g: 50, b: 100, a: 0.07 },
+    { y: 0.34, amp: 22, freq: 0.0008, speed: 0.07, r: 22, g: 60, b: 115, a: 0.09 },
+    { y: 0.42, amp: 28, freq: 0.0010, speed: 0.09, r: 28, g: 72, b: 130, a: 0.08 },
+    { y: 0.50, amp: 24, freq: 0.0014, speed: 0.12, r: 35, g: 85, b: 142, a: 0.07 },
+    { y: 0.58, amp: 20, freq: 0.0018, speed: 0.14, r: 44, g: 98, b: 152, a: 0.06 },
+    { y: 0.66, amp: 16, freq: 0.0020, speed: 0.16, r: 54, g: 112, b: 160, a: 0.05 },
+    { y: 0.74, amp: 12, freq: 0.0025, speed: 0.18, r: 65, g: 128, b: 168, a: 0.045 },
+    { y: 0.82, amp: 8, freq: 0.0030, speed: 0.20, r: 78, g: 142, b: 175, a: 0.035 },
+    { y: 0.90, amp: 5, freq: 0.0035, speed: 0.22, r: 90, g: 155, b: 180, a: 0.025 },
+  ];
+
+  for (const layer of waveLayers) {
+    // Gentle amplitude response — swells, doesn't jolt
+    const amp = layer.amp * (0.6 + si * 0.5 + ve * 0.3);
+    // Soft breathing pulse, not a visualizer spike
+    const breath = ve * Math.sin(t * 0.8 + layer.y * 6) * 4;
+
+    ctx.beginPath();
+    ctx.moveTo(0, H);
+    for (let x = 0; x <= W; x += 3) {
+      const baseY = H * layer.y;
+      // Long, slow primary swell
+      const wave1 = Math.sin(x * layer.freq + t * layer.speed) * amp;
+      // Secondary cross-swell, slightly faster, offset
+      const wave2 = Math.sin(x * layer.freq * 1.7 + t * layer.speed * 0.5 + 1.9) * amp * 0.3;
+      // Deep slow undulation
+      const wave3 = Math.cos(x * layer.freq * 0.4 + t * layer.speed * 0.8 + 3.1) * amp * 0.2;
+      // Tiny surface texture
+      const wave4 = Math.sin(x * layer.freq * 4.0 + t * layer.speed * 0.6) * amp * 0.06;
+      const y = baseY + wave1 + wave2 + wave3 + wave4 + breath;
+      ctx.lineTo(x, y);
+    }
+    ctx.lineTo(W, H);
+    ctx.closePath();
+    ctx.fillStyle = `rgba(${layer.r}, ${layer.g}, ${layer.b}, ${layer.a + ve * 0.015})`;
+    ctx.fill();
+  }
+
+  // Caustics — slow drifting light pools, like sun through shallow water
+  for (let i = 0; i < 8; i++) {
+    const phase = i * 2.1;
+    const cx = W * (0.08 + i * 0.11) + Math.sin(t * 0.07 + phase) * 50 + Math.cos(t * 0.05 + phase * 0.6) * 25;
+    const cy = H * (0.22 + i * 0.07) + Math.cos(t * 0.06 + phase) * 35 + Math.sin(t * 0.04 + phase * 0.8) * 18;
+    const cr = 60 + Math.sin(t * 0.09 + phase) * 30 + ve * 20;
+    const pulse = 0.5 + 0.5 * Math.sin(t * 0.12 + phase * 1.5);
+    const alpha = (0.012 + si * 0.012 + ve * 0.01) * pulse;
+    const caustic = ctx.createRadialGradient(cx, cy, 0, cx, cy, cr);
+    caustic.addColorStop(0, `rgba(185, 215, 245, ${alpha})`);
+    caustic.addColorStop(0.4, `rgba(165, 200, 235, ${alpha * 0.35})`);
+    caustic.addColorStop(1, 'rgba(165, 200, 235, 0)');
+    ctx.fillStyle = caustic;
+    ctx.fillRect(cx - cr, cy - cr, cr * 2, cr * 2);
+  }
+
+  // Surface shimmer — very slow horizontal light bands, like sun on a lake
+  ctx.globalAlpha = 0.02 + si * 0.015 + ve * 0.01;
+  for (let i = 0; i < 4; i++) {
+    const sy = H * (0.18 + i * 0.18) + Math.sin(t * 0.08 + i * 2.5) * 15;
+    const shimmerGrad = ctx.createLinearGradient(0, sy - 40, 0, sy + 40);
+    shimmerGrad.addColorStop(0, 'rgba(255, 242, 225, 0)');
+    shimmerGrad.addColorStop(0.5, `rgba(255, 242, 225, ${0.25 + 0.2 * Math.sin(t * 0.15 + i * 1.3)})`);
+    shimmerGrad.addColorStop(1, 'rgba(255, 242, 225, 0)');
+    ctx.fillStyle = shimmerGrad;
+    ctx.fillRect(0, sy - 40, W, 80);
+  }
+  ctx.globalAlpha = 1;
+
+  // Warm glow when she's speaking — slow pulse like a held breath
+  if (waterState === 'pulsing') {
+    const pulse = 0.5 + 0.5 * Math.sin(t * 0.6);
+    const glow = ctx.createRadialGradient(W / 2, H * 0.38, 0, W / 2, H * 0.38, H * 0.6);
+    glow.addColorStop(0, `rgba(255, 205, 140, ${0.06 * pulse})`);
+    glow.addColorStop(0.4, `rgba(255, 185, 110, ${0.025 * pulse})`);
+    glow.addColorStop(1, 'rgba(255, 185, 110, 0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  // Ripples — slow concentric rings
+  for (let i = ripples.length - 1; i >= 0; i--) {
+    const rip = ripples[i];
+    rip.r += rip.speed * 0.6;
+    rip.alpha *= 0.996;
+    if (rip.alpha < 0.005 || rip.r > rip.maxR) { ripples.splice(i, 1); continue; }
+    ctx.beginPath();
+    ctx.arc(rip.x, rip.y, rip.r, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(160, 200, 235, ${rip.alpha * 0.2})`;
+    ctx.lineWidth = 0.8;
+    ctx.stroke();
+    if (rip.r > 20) {
+      ctx.beginPath();
+      ctx.arc(rip.x, rip.y, rip.r - 15, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(160, 200, 235, ${rip.alpha * 0.08})`;
+      ctx.stroke();
+    }
+  }
+
+  // Vignette — warm dark edges
+  const vig = ctx.createRadialGradient(W / 2, H * 0.42, H * 0.28, W / 2, H * 0.42, H * 0.92);
+  vig.addColorStop(0, 'rgba(0,0,0,0)');
+  vig.addColorStop(0.65, 'rgba(0,0,0,0.12)');
+  vig.addColorStop(1, 'rgba(0,0,0,0.45)');
+  ctx.fillStyle = vig;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function animate() {
+  time += 0.016;
+  drawWater(time);
+  if (waterState === 'rippling' && Math.random() < 0.04) addRipple();
+  if (waterState === 'listening' && Math.random() < 0.02) addRipple();
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ─── BOOK LIBRARY ──────────────────────────────────────────────
+const books = [
+  {
+    title: "The Vegetarian",
+    author: "Han Kang",
+    origin: "South Korea",
+    mood: ["restless", "defiant", "trapped"],
+    doesWhat: ["confronts", "cracks open"],
+    pace: "swift",
+    density: "lean",
+    register: ["disturbing", "luminous"],
+    obscurity: "mid",
+    format: "print",
+    length: "one-sitting",
+    tags: ["transformation", "body", "rebellion", "surreal", "marriage"],
+    bridges: [
+      { when: ["trapped", "stuck", "suffocating", "can't leave", "performing"], bridge: "Stuck, right? This woman stops eating meat. That's all. And everything unravels." },
+      { when: ["defiant", "angry", "fed up", "rage", "fight"], bridge: "Done performing. Done being digestible. She just... stops." },
+      { when: ["short", "quick", "tonight", "one sitting", "lean"], bridge: "Short. Won't let go." },
+      { when: ["weird", "strange", "surreal", "different", "unusual"], bridge: "Weird is right. Han Kang doesn't play by any rules you'd recognize." },
+    ],
+    reason: "A woman stops eating meat and everyone around her loses their mind. It's really about what happens when someone quietly refuses to keep performing. Unsettling in a way that creeps up on you."
+  },
+  {
+    title: "A Manual for Cleaning Women",
+    author: "Lucia Berlin",
+    origin: "USA",
+    mood: ["raw", "alive", "restless"],
+    doesWhat: ["confronts", "energizes"],
+    pace: "swift",
+    density: "lean",
+    register: ["tough", "tender"],
+    obscurity: "deep",
+    format: "either",
+    length: "weekend",
+    tags: ["working life", "addiction", "resilience", "short stories", "women"],
+    reason: "Short stories about laundromats and emergency rooms and being broke and brilliant. Lucia Berlin lived about nine lives and wrote like she was running out of time. These have a pulse to them."
+  },
+  {
+    title: "The Memory Police",
+    author: "Yoko Ogawa",
+    origin: "Japan",
+    mood: ["melancholy", "still", "lost"],
+    doesWhat: ["slows down", "haunts"],
+    pace: "gentle",
+    density: "lean",
+    register: ["quiet", "devastating"],
+    obscurity: "mid",
+    format: "either",
+    length: "one-sitting",
+    tags: ["memory", "loss", "totalitarianism", "fable", "disappearance"],
+    reason: "Things keep disappearing from an island — objects first, then the memory of them. It's quiet and strange and it settles into you slowly. I think about it more often than books twice its size."
+  },
+  {
+    title: "Beloved",
+    author: "Toni Morrison",
+    origin: "USA",
+    mood: ["grieving", "haunted", "seeking"],
+    doesWhat: ["confronts", "cracks open"],
+    pace: "deliberate",
+    density: "dense",
+    register: ["shattering", "sacred"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Toni Morrison narrated it herself.",
+    length: "weekend",
+    tags: ["slavery", "motherhood", "ghost", "trauma", "American", "love"],
+    bridges: [
+      { when: ["mother", "motherhood", "mom", "parent"], bridge: "Morrison wrote the book about what a mother's love actually costs. Not metaphorically." },
+      { when: ["grief", "loss", "haunted", "ghost"], bridge: "This is a book about what haunts us. Literally and otherwise." },
+      { when: ["race", "Black", "American", "history"], bridge: "Morrison doesn't flinch. Nobody does this particular history like she does." },
+      { when: ["audio", "listen", "hands busy"], bridge: "Morrison narrated this herself. If you're listening, start here." },
+    ],
+    reason: "I won't oversell this — you probably already know it's Morrison. What I'll say is that she narrated the audiobook herself, and there's nothing else that sounds like it. It asks what love costs when everything is designed to take it from you."
+  },
+  {
+    title: "The Sentence",
+    author: "Louise Erdrich",
+    origin: "USA",
+    mood: ["searching", "unsettled", "wry"],
+    doesWhat: ["confronts", "escapes"],
+    pace: "medium",
+    density: "medium",
+    register: ["warm", "sharp"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["bookstore", "ghost", "Indigenous", "pandemic", "humor"],
+    reason: "Set in a real bookstore in Minneapolis, haunted by a very specific kind of ghost. It's funny and angry and deeply tender about books and the people who need them. Erdrich is at her most playful here."
+  },
+  {
+    title: "Piranesi",
+    author: "Susanna Clarke",
+    origin: "UK",
+    mood: ["wonder", "solitude", "peaceful"],
+    doesWhat: ["escapes", "restores"],
+    pace: "gentle",
+    density: "lean",
+    register: ["awe", "tenderness"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Chiwetel Ejiofor narrates. Extraordinary.",
+    length: "one-sitting",
+    tags: ["labyrinth", "solitude", "mystery", "otherworldly", "beauty"],
+    bridges: [
+      { when: ["escape", "disappear", "away", "other world", "transport"], bridge: "Disappear, yes. I have a house full of statues and rising tides. You won't want to come back." },
+      { when: ["peaceful", "calm", "quiet", "rest", "gentle"], bridge: "The quietest book I know. And underneath all that calm, something extraordinary." },
+      { when: ["wonder", "magic", "beautiful", "awe", "enchanted"], bridge: "Wonder. Actual wonder. Clarke wrote something that makes the world feel bigger." },
+      { when: ["lonely", "alone", "solitude"], bridge: "Solitude, but not the sad kind. Piranesi lives alone in an impossible house and he's completely content." },
+    ],
+    reason: "A man lives alone in an impossible house full of statues and tides. He's completely happy. Then someone comes looking for him. It's the strangest, most peaceful book I know. I keep giving it away."
+  },
+  {
+    title: "The Hour of the Star",
+    author: "Clarice Lispector",
+    origin: "Brazil",
+    mood: ["aching", "alone", "raw"],
+    doesWhat: ["cracks open", "confronts"],
+    pace: "swift",
+    density: "dense",
+    register: ["devastating", "luminous"],
+    obscurity: "deep",
+    format: "print",
+    length: "one-sitting",
+    tags: ["poverty", "identity", "metafiction", "female", "Brazil"],
+    reason: "Barely a hundred pages. A girl so invisible even the narrator can barely look at her. Lispector writes like someone breaking a fever — it's not comfortable, but you won't forget it."
+  },
+  {
+    title: "Homegoing",
+    author: "Yaa Gyasi",
+    origin: "Ghana/USA",
+    mood: ["seeking", "expansive", "rooted"],
+    doesWhat: ["connects", "confronts"],
+    pace: "medium",
+    density: "medium",
+    register: ["epic", "intimate"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Dominic Hoffman's narration is stunning.",
+    length: "weekend",
+    tags: ["diaspora", "generations", "slavery", "Ghana", "identity", "family"],
+    bridges: [
+      { when: ["expansive", "epic", "generations", "history", "family"], bridge: "Centuries. Two sisters. One story that never lets go." },
+      { when: ["identity", "roots", "heritage", "where I come from"], bridge: "Homegoing follows two sisters' descendants across three centuries. It never loses its grip." },
+      { when: ["race", "Black", "American", "diaspora"], bridge: "This covers ground most books are afraid to touch." },
+      { when: ["audio", "listen"], bridge: "Dominic Hoffman's narration is stunning. Made for listening." },
+    ],
+    reason: "Two half-sisters, one in a slave castle dungeon, one married to the man upstairs. Then seven generations forward on each side. It covers centuries and somehow stays intimate the whole way through."
+  },
+  {
+    title: "Fever Dream",
+    author: "Samanta Schweblin",
+    origin: "Argentina",
+    mood: ["anxious", "urgent", "unmoored"],
+    doesWhat: ["destabilizes", "grips"],
+    pace: "breathless",
+    density: "lean",
+    register: ["dread", "hypnotic"],
+    obscurity: "mid",
+    format: "print",
+    length: "one-sitting",
+    tags: ["motherhood", "toxins", "rural", "surreal", "Argentina"],
+    bridges: [
+      { when: ["anxious", "dread", "uneasy", "nervous", "scared"], bridge: "That uneasy feeling — Machado puts it on the page better than anyone." },
+      { when: ["mother", "motherhood", "child", "parent"], bridge: "It's about motherhood and fear, braided together until you can't tell them apart." },
+      { when: ["short", "quick", "tonight", "one sitting"], bridge: "You can read it in an hour. You'll think about it for weeks." },
+      { when: ["weird", "strange", "surreal", "unusual"], bridge: "You want something strange. Okay. Here." },
+    ],
+    reason: "A woman is dying and a child who isn't hers keeps asking her to find the exact moment things went wrong. You'll read it in one sitting. You won't be entirely sure what happened. You'll think about it for weeks."
+  },
+  {
+    title: "Small Things Like These",
+    author: "Claire Keegan",
+    origin: "Ireland",
+    mood: ["quiet", "moral", "tender"],
+    doesWhat: ["slows down", "confronts"],
+    pace: "gentle",
+    density: "lean",
+    register: ["restrained", "fierce"],
+    obscurity: "mid",
+    format: "either",
+    length: "one-sitting",
+    tags: ["Ireland", "Catholic", "conscience", "winter", "novella"],
+    bridges: [
+      { when: ["quiet", "moral", "good", "conscience", "right thing"], bridge: "Doing the right thing when the cost is real. Tóibín doesn't make it easy." },
+      { when: ["short", "quick", "tonight", "one sitting", "flight"], bridge: "You can finish this in an afternoon. You'll carry it much longer than that." },
+      { when: ["Ireland", "Catholic", "church"], bridge: "For the Ireland you're thinking about —" },
+      { when: ["gentle", "tender", "restrained"], bridge: "Quiet on the surface. Fierce underneath. Tóibín does more with silence than most writers do with noise." },
+    ],
+    reason: "A coal merchant in a small Irish town finds something he wasn't supposed to find. What he does next is so quiet it could break your heart. You'll finish it in an afternoon and carry it much longer."
+  },
+  {
+    title: "The Remains of the Day",
+    author: "Kazuo Ishiguro",
+    origin: "UK",
+    mood: ["melancholy", "reflective", "still"],
+    doesWhat: ["slows down", "haunts"],
+    pace: "gentle",
+    density: "medium",
+    register: ["devastating", "restrained"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Dominic West's narration is masterful.",
+    length: "one-sitting",
+    tags: ["duty", "regret", "England", "repression", "dignity", "love"],
+    bridges: [
+      { when: ["regret", "missed", "what if", "too late", "unlived"], bridge: "You're thinking about the things you didn't do. So is he. He just can't say it." },
+      { when: ["quiet", "gentle", "slow", "restrained"], bridge: "For the quiet mood you're in —" },
+      { when: ["love", "romance", "love story"], bridge: "This might be the saddest love story I know. And it never raises its voice." },
+      { when: ["British", "England", "English"], bridge: "English in the best sense of the word — restrained, precise, devastating." },
+    ],
+    reason: "A butler drives through the English countryside and slowly, without ever quite saying it, tells you about the life he didn't live. It never raises its voice. That's what makes it so devastating."
+  },
+  {
+    title: "Hurricane Season",
+    author: "Fernanda Melchor",
+    origin: "Mexico",
+    mood: ["furious", "visceral", "alive"],
+    doesWhat: ["confronts", "overwhelms"],
+    pace: "breathless",
+    density: "dense",
+    register: ["brutal", "incandescent"],
+    obscurity: "deep",
+    format: "print",
+    length: "one-sitting",
+    tags: ["violence", "rural Mexico", "witchcraft", "poverty", "stream of consciousness"],
+    reason: "A witch is found dead in a canal. The whole village pours out in one unbroken stream. This one is intense — brutal, beautiful, relentless. Not for a gentle mood, but nothing else sounds like this."
+  },
+  {
+    title: "An American Marriage",
+    author: "Tayari Jones",
+    origin: "USA",
+    mood: ["heartbroken", "searching", "conflicted"],
+    doesWhat: ["confronts", "connects"],
+    pace: "medium",
+    density: "medium",
+    register: ["aching", "intimate"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Full cast narration — Sean Crisden, Eisa Davis.",
+    length: "weekend",
+    tags: ["marriage", "incarceration", "race", "love", "American South"],
+    reason: "A newlywed is wrongly imprisoned and the marriage has to survive something it was never built for. It's about what love owes and whether loving someone is the same as waiting for them. Hits close."
+  },
+  {
+    title: "Drive Your Plow Over the Bones of the Dead",
+    author: "Olga Tokarczuk",
+    origin: "Poland",
+    mood: ["defiant", "strange", "darkly amused"],
+    doesWhat: ["energizes", "cracks open"],
+    pace: "medium",
+    density: "medium",
+    register: ["darkly funny", "fierce"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["ecology", "murder", "astrology", "aging woman", "Poland", "animals"],
+    reason: "An eccentric older woman is convinced the local hunters are being killed by the animals they hunted. She might be right. She might be the murderer. She's absolutely magnificent company."
+  },
+  {
+    title: "The God of Small Things",
+    author: "Arundhati Roy",
+    origin: "India",
+    mood: ["lush", "heartbroken", "nostalgic"],
+    doesWhat: ["slows down", "cracks open"],
+    pace: "deliberate",
+    density: "dense",
+    register: ["gorgeous", "devastating"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Sneha Mathan's narration captures Kerala perfectly.",
+    length: "weekend",
+    tags: ["caste", "twins", "forbidden love", "Kerala", "language", "childhood"],
+    reason: "Twins in Kerala, a forbidden love, the small things that break a family open. Roy writes sentences you'll want to read out loud. Some of them taste like mangoes. Some of them sting."
+  },
+  {
+    title: "Detransition, Baby",
+    author: "Torrey Peters",
+    origin: "USA",
+    mood: ["restless", "hungry", "complicated"],
+    doesWhat: ["confronts", "energizes"],
+    pace: "swift",
+    density: "medium",
+    register: ["sharp", "tender"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["trans", "parenthood", "desire", "New York", "identity", "family"],
+    reason: "Three people try to figure out if they can make a family out of the most complicated situation imaginable. It's messy and funny and more honest about what people actually want than almost anything I've read lately."
+  },
+  {
+    title: "The Years",
+    author: "Annie Ernaux",
+    origin: "France",
+    mood: ["reflective", "vast", "nostalgic"],
+    doesWhat: ["slows down", "connects"],
+    pace: "gentle",
+    density: "dense",
+    register: ["collective", "intimate"],
+    obscurity: "deep",
+    format: "print",
+    length: "weekend",
+    tags: ["memory", "France", "collective autobiography", "feminist", "time"],
+    reason: "Ernaux tells the story of her life without ever saying 'I.' She uses 'she,' then 'we,' then all of postwar France passing through one woman. It's like watching your own memories from a great height."
+  },
+  {
+    title: "In the Dream House",
+    author: "Carmen Maria Machado",
+    origin: "USA",
+    mood: ["haunted", "defiant", "raw"],
+    doesWhat: ["confronts", "cracks open"],
+    pace: "swift",
+    density: "medium",
+    register: ["brilliant", "aching"],
+    obscurity: "mid",
+    format: "audio",
+    formatNote: "Machado narrates it herself. Perfect.",
+    length: "one-sitting",
+    tags: ["abuse", "queer", "memoir", "structure", "memory", "inventive"],
+    bridges: [
+      { when: ["queer", "gay", "lesbian", "bisexual"], bridge: "For the part of you that needs to see something true about queer love — even the painful kind." },
+      { when: ["brave", "honest", "truth", "raw", "real"], bridge: "Machado did something I don't think anyone else has been brave enough to try." },
+      { when: ["creative", "structure", "experimental", "different"], bridge: "Machado built something structurally I've never seen anyone else attempt. It works." },
+      { when: ["abuse", "relationship", "toxic", "control"], bridge: "I'm not going to be coy about what this is about. It's about abuse. And it's extraordinary." },
+    ],
+    reason: "A memoir about an abusive relationship told through the structure of a haunted house, a choose-your-own-adventure, a Star Trek episode. It shouldn't work at all. It's one of the bravest things I've read."
+  },
+  {
+    title: "The White Book",
+    author: "Han Kang",
+    origin: "South Korea",
+    mood: ["grieving", "still", "meditative"],
+    doesWhat: ["slows down", "haunts"],
+    pace: "gentle",
+    density: "lean",
+    register: ["meditative", "sorrowful"],
+    obscurity: "deep",
+    format: "print",
+    length: "one-sitting",
+    tags: ["grief", "white", "sister", "fragments", "Korea", "beauty"],
+    reason: "Han Kang lists everything white she can think of — swaddling cloth, snow, blank paper — as a way of mourning a sister who died as an infant. It's barely a book. More like holding something that trembles."
+  },
+  {
+    title: "Cantoras",
+    author: "Carolina De Robertis",
+    origin: "Uruguay",
+    mood: ["seeking", "defiant", "tender"],
+    doesWhat: ["connects", "restores"],
+    pace: "medium",
+    density: "medium",
+    register: ["fierce", "tender"],
+    obscurity: "deep",
+    format: "either",
+    length: "weekend",
+    tags: ["queer", "dictatorship", "Uruguay", "friendship", "freedom", "women"],
+    reason: "Five queer women under a military dictatorship find a beach house and, for the first time, a place to breathe. It spans decades. It's about what freedom actually feels like when you've had to steal it."
+  },
+  {
+    title: "Outline",
+    author: "Rachel Cusk",
+    origin: "UK/Canada",
+    mood: ["still", "searching", "detached"],
+    doesWhat: ["slows down", "cracks open"],
+    pace: "gentle",
+    density: "medium",
+    register: ["cool", "intense"],
+    obscurity: "mid",
+    format: "audio",
+    formatNote: "Audible edition read by the author — spare and perfect.",
+    length: "one-sitting",
+    tags: ["listening", "divorce", "Athens", "identity", "autofiction", "silence"],
+    reason: "A woman goes to Athens to teach a writing class. People tell her their stories. She barely tells hers. By the end you realize the book is a portrait made of negative space — and it might be yours."
+  },
+  {
+    title: "My Year of Rest and Relaxation",
+    author: "Ottessa Moshfegh",
+    origin: "USA",
+    mood: ["numb", "darkly amused", "exhausted"],
+    doesWhat: ["escapes", "confronts"],
+    pace: "swift",
+    density: "lean",
+    register: ["caustic", "surprising"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Julia Whelan's deadpan delivery is ideal.",
+    length: "one-sitting",
+    tags: ["sleep", "isolation", "pre-9/11", "dark humor", "female", "New York"],
+    bridges: [
+      { when: ["tired", "exhausted", "numb", "nothing", "empty", "burnt out"], bridge: "You're running on empty. So is she. That's kind of the point." },
+      { when: ["funny", "dark humor", "dry", "sharp", "wry"], bridge: "This is dark and funny in a way I think you'll appreciate." },
+      { when: ["short", "quick", "one sitting", "tonight"], bridge: "You'll read this in one sitting. Probably in one mood." },
+      { when: ["fleabag", "ottessa", "moshfegh"], bridge: "If that's your taste — you already know you need this." },
+    ],
+    reason: "A woman with every advantage decides to sleep for a year. It's funny and repulsive and oddly comforting, like watching someone do the thing you've secretly wanted to do. The last page, though. The last page."
+  },
+  {
+    title: "The Door",
+    author: "Magda Szabó",
+    origin: "Hungary",
+    mood: ["fierce", "mysterious", "guilty"],
+    doesWhat: ["cracks open", "haunts"],
+    pace: "deliberate",
+    density: "medium",
+    register: ["overwhelming", "fierce"],
+    obscurity: "deep",
+    format: "print",
+    length: "weekend",
+    tags: ["friendship", "secrets", "Hungary", "domestic", "trust", "class"],
+    reason: "A writer and her housekeeper circle each other for years — one needing to be known, the other refusing. When the door finally opens, you won't be ready. I wasn't."
+  },
+  {
+    title: "On Earth We're Briefly Gorgeous",
+    author: "Ocean Vuong",
+    origin: "Vietnam/USA",
+    mood: ["tender", "raw", "yearning"],
+    doesWhat: ["slows down", "cracks open"],
+    pace: "gentle",
+    density: "dense",
+    register: ["luminous", "grieving"],
+    obscurity: "known",
+    format: "either",
+    length: "one-sitting",
+    tags: ["immigration", "mother", "queer", "language", "Vietnamese", "letter"],
+    reason: "A son writes a letter to his mother, who can't read. About war and tenderness and what gets lost between languages. Vuong is a poet and it shows — every sentence earns its place."
+  },
+  {
+    title: "Sharks in the Time of Saviours",
+    author: "Kawai Strong Washburn",
+    origin: "Hawai'i/USA",
+    mood: ["aching", "mythic", "rooted"],
+    doesWhat: ["confronts", "connects"],
+    pace: "medium",
+    density: "dense",
+    register: ["volcanic", "tender"],
+    obscurity: "deep",
+    format: "audio",
+    formatNote: "Full Hawaiian cast. Stunning.",
+    length: "weekend",
+    tags: ["Hawaiian", "family", "myth", "ocean", "identity", "healing"],
+    reason: "A boy is saved by sharks and given a gift. His family tries to survive what that gift costs. Mythic and modern and rooted in Hawai'i in a way that feels like the island is breathing. This one's a bit of a risk, but I think it's worth it."
+  },
+  {
+    title: "Who Is Maud Dixon?",
+    author: "Alexandra Andrews",
+    origin: "USA",
+    mood: ["restless", "thrilled", "mischievous"],
+    doesWhat: ["escapes", "grips"],
+    pace: "breathless",
+    density: "lean",
+    register: ["wicked", "pleasurable"],
+    obscurity: "deep",
+    format: "audio",
+    length: "weekend",
+    tags: ["thriller", "literary world", "Morocco", "identity", "ambition"],
+    reason: "A young publishing assistant gets hired by a reclusive famous author and things go sideways in Morocco. It's smart, twisty, and moves like a car with the brakes cut. Great palate cleanser."
+  },
+  {
+    title: "Such a Fun Age",
+    author: "Kiley Reid",
+    origin: "USA",
+    mood: ["restless", "sharp", "uncomfortable"],
+    doesWhat: ["energizes", "confronts"],
+    pace: "swift",
+    density: "lean",
+    register: ["smart", "uncomfortable"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Nicole Lewis is perfect.",
+    length: "weekend",
+    tags: ["race", "class", "babysitting", "social media", "satire", "Philadelphia"],
+    reason: "A young Black woman gets accused of kidnapping the white child she babysits. What follows is sharp and uncomfortable and funnier than it has any right to be. You'll have opinions about everyone in it."
+  },
+  {
+    title: "Akata Witch",
+    author: "Nnedi Okofor",
+    origin: "Nigeria/USA",
+    mood: ["giddy", "adventurous", "curious"],
+    doesWhat: ["escapes", "energizes"],
+    pace: "swift",
+    density: "medium",
+    register: ["thrilling", "wondrous"],
+    obscurity: "mid",
+    format: "audio",
+    length: "weekend",
+    tags: ["magic", "Nigeria", "coming-of-age", "Afrofuturist", "adventure"],
+    reason: "Imagine Harry Potter set in Nigeria, grounded in Igbo mythology, and ten times more imaginative. A girl discovers she has powers and enters a world that makes Hogwarts look a bit provincial."
+  },
+  {
+    title: "Summer",
+    author: "Ali Smith",
+    origin: "UK",
+    mood: ["expansive", "playful", "political"],
+    doesWhat: ["escapes", "connects"],
+    pace: "swift",
+    density: "medium",
+    register: ["joyful", "political"],
+    obscurity: "mid",
+    format: "print",
+    length: "weekend",
+    tags: ["seasons", "art", "politics", "family", "experimental", "Brexit"],
+    reason: "Ali Smith writes like sunlight through a prism. This is about a brother and sister, a summer, and a country falling apart. It's angry and hopeful at the same time, which is a hard trick."
+  },
+  {
+    title: "The Bluest Eye",
+    author: "Toni Morrison",
+    origin: "USA",
+    mood: ["aching", "angry", "tender"],
+    doesWhat: ["confronts", "cracks open"],
+    pace: "deliberate",
+    density: "dense",
+    register: ["tender", "furious"],
+    obscurity: "known",
+    format: "either",
+    length: "one-sitting",
+    tags: ["race", "beauty", "childhood", "violence", "American", "girlhood"],
+    reason: "A young Black girl prays for blue eyes because the world has taught her that beauty means whiteness. Morrison's first novel. The sentences already cut like nothing else."
+  },
+  // ─── LIGHTER / WARMER / FUN ──────────────────────────────────
+  {
+    title: "Beach Read",
+    author: "Emily Henry",
+    origin: "USA",
+    mood: ["restless", "playful", "heartbroken"],
+    doesWhat: ["escapes", "energizes"],
+    pace: "swift",
+    density: "lean",
+    register: ["witty", "warm"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Julia Whelan narrates — perfect comedic timing.",
+    length: "weekend",
+    tags: ["romance", "writers", "beach", "humor", "love", "light"],
+    bridges: [
+      { when: ["fun", "light", "easy", "laugh", "happy", "playful", "giddy"], bridge: "You want something fun. I have exactly the thing." },
+      { when: ["romance", "love", "love story", "fall in love"], bridge: "For the love story you're in the mood for —" },
+      { when: ["trip", "vacation", "beach", "pool", "flight", "travel"], bridge: "Perfect trip book. You'll burn through it." },
+      { when: ["tired", "exhausted", "burnt out", "drained"], bridge: "You're tired. This one asks nothing of you except to enjoy it." },
+    ],
+    reason: "Two writers with opposite genres swap styles for a summer. The banter is great — Henry writes flirting the way some people play tennis. It's smart and warm and the love story sneaks up on you."
+  },
+  {
+    title: "The House in the Cerulean Sea",
+    author: "TJ Klune",
+    origin: "USA",
+    mood: ["lonely", "hopeful", "tender"],
+    doesWhat: ["restores", "escapes"],
+    pace: "gentle",
+    density: "lean",
+    register: ["warm", "joyful"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Daniel Henning's narration is pure comfort.",
+    length: "weekend",
+    tags: ["fantasy", "found family", "queer", "cozy", "magic", "kindness"],
+    bridges: [
+      { when: ["lonely", "alone", "comfort", "warm", "cozy"], bridge: "I think this might be the warmest book I know." },
+      { when: ["gentle", "kind", "hopeful", "hope", "restore"], bridge: "Genuinely kind. Not saccharine, not naive — just kind. Baldree did something I didn't think was possible." },
+      { when: ["fantasy", "magic", "escape", "other world"], bridge: "A gentle escape into somewhere better." },
+      { when: ["queer", "found family", "belonging"], bridge: "This one is about finding your people. Even when you'd stopped looking." },
+    ],
+    reason: "A lonely bureaucrat is sent to investigate an orphanage for magical children on a remote island. What he finds is a family. It's the kind of book you want to climb inside and stay."
+  },
+  {
+    title: "Anxious People",
+    author: "Fredrik Backman",
+    origin: "Sweden",
+    mood: ["overwhelmed", "lonely", "wry"],
+    doesWhat: ["restores", "connects"],
+    pace: "medium",
+    density: "lean",
+    register: ["funny", "sneakily moving"],
+    obscurity: "known",
+    format: "audio",
+    length: "weekend",
+    tags: ["comedy", "hostage", "community", "Swedish", "human nature", "light"],
+    bridges: [
+      { when: ["overwhelmed", "too much", "anxious", "stressed", "swamped"], bridge: "Everything feels like a lot right now. This one gets that — and somehow makes it funny." },
+      { when: ["funny", "humor", "laugh", "light"], bridge: "You need to laugh. Backman will get you there, and then quietly break your heart." },
+      { when: ["lonely", "community", "connected", "alone"], bridge: "Loneliness is running through everything, isn't it. Backman gets that." },
+      { when: ["book club", "talk about", "everyone", "discuss"], bridge: "Good book club pick. Everyone finishes it wanting to talk." },
+    ],
+    reason: "A failed bank robber accidentally takes a group of apartment viewers hostage. Everyone inside is a mess. By the end you love all of them. Backman is sneaky — you're laughing and then suddenly you're not."
+  },
+  {
+    title: "The Flatshare",
+    author: "Beth O'Leary",
+    origin: "UK",
+    mood: ["lonely", "hopeful", "playful"],
+    doesWhat: ["escapes", "energizes"],
+    pace: "swift",
+    density: "lean",
+    register: ["charming", "warm"],
+    obscurity: "mid",
+    format: "audio",
+    formatNote: "Dual narration — both voices are great.",
+    length: "weekend",
+    tags: ["romance", "London", "cohabitation", "humor", "post-it notes", "light"],
+    reason: "Two strangers share a bed — one sleeps in it at night, the other during the day. They start leaving each other notes. The premise is ridiculous. It completely works."
+  },
+  {
+    title: "Klara and the Sun",
+    author: "Kazuo Ishiguro",
+    origin: "UK",
+    mood: ["tender", "curious", "melancholy"],
+    doesWhat: ["slows down", "haunts"],
+    pace: "gentle",
+    density: "medium",
+    register: ["gentle", "heartbreaking"],
+    obscurity: "known",
+    format: "audio",
+    length: "weekend",
+    tags: ["AI", "love", "loneliness", "observation", "future", "devotion"],
+    reason: "An artificial friend watches the world from a store window, learning to love by studying sunlight. Ishiguro tells you everything about being human by writing from the perspective of something that isn't."
+  },
+
+  {
+    title: "Daisy Jones & The Six",
+    author: "Taylor Jenkins Reid",
+    origin: "USA",
+    mood: ["restless", "alive", "nostalgic"],
+    doesWhat: ["escapes", "energizes"],
+    pace: "swift",
+    density: "lean",
+    register: ["electric", "addictive"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Full cast including Jennifer Beals. This one is made for audio.",
+    length: "weekend",
+    tags: ["rock and roll", "1970s", "band", "fame", "love", "music", "oral history"],
+    reason: "An oral history of a fictional band's rise and collapse — Fleetwood Mac energy but messier. The audiobook has a full cast and it plays like a documentary. I burned through it in two days."
+  },
+  {
+    title: "The Seven Husbands of Evelyn Hugo",
+    author: "Taylor Jenkins Reid",
+    origin: "USA",
+    mood: ["restless", "defiant", "nostalgic"],
+    doesWhat: ["escapes", "grips"],
+    pace: "swift",
+    density: "lean",
+    register: ["glamorous", "aching"],
+    obscurity: "known",
+    format: "either",
+    length: "weekend",
+    tags: ["Hollywood", "bisexual", "fame", "secrets", "love", "glamour"],
+    bridges: [
+      { when: ["escape", "glamour", "Hollywood", "drama", "gossip"], bridge: "Glamour, gossip, Hollywood mythology — and then the rug gets pulled." },
+      { when: ["queer", "bisexual", "secret", "hidden"], bridge: "There's a secret at the center of this one that changes everything." },
+      { when: ["trip", "beach", "vacation", "pool"], bridge: "Perfect for a trip. It moves fast and it glitters." },
+      { when: ["book club", "talk about", "everyone", "playground"], bridge: "There's a reason it became the book everyone was passing around." },
+    ],
+    reason: "An aging movie star finally tells the truth about her seven marriages and who she actually loved. It's glamorous and gossipy and then it pulls the floor out from under you."
+  },
+  {
+    title: "Circe",
+    author: "Madeline Miller",
+    origin: "USA",
+    mood: ["defiant", "searching", "expansive"],
+    doesWhat: ["escapes", "energizes"],
+    pace: "medium",
+    density: "medium",
+    register: ["fierce", "lush"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Perdita Weeks narrates — regal and warm.",
+    length: "weekend",
+    tags: ["mythology", "feminism", "witch", "solitude", "transformation", "Greek"],
+    bridges: [
+      { when: ["defiant", "finding myself", "alone", "solitude", "who am I"], bridge: "You're figuring out who you are on your own terms. So is she." },
+      { when: ["escape", "mythology", "fantasy", "adventure", "epic"], bridge: "An escape that feels ancient and immediate at the same time." },
+      { when: ["feminism", "female", "women", "power", "strong"], bridge: "Circe goes from voiceless to volcanic. Miller makes mythology feel personal." },
+      { when: ["audio", "listen"], bridge: "Perdita Weeks narrates — regal and warm. Made for listening." },
+    ],
+    reason: "The witch from the Odyssey gets her own story. Exile, power, monsters, and the slow work of figuring out who you are when nobody's watching. It reads the way myth feels — ancient and immediate."
+  },
+  {
+    title: "Tomorrow, and Tomorrow, and Tomorrow",
+    author: "Gabrielle Zevin",
+    origin: "USA",
+    mood: ["nostalgic", "searching", "alive"],
+    doesWhat: ["connects", "energizes"],
+    pace: "medium",
+    density: "medium",
+    register: ["smart", "moving"],
+    obscurity: "known",
+    format: "either",
+    length: "commitment",
+    tags: ["video games", "friendship", "creativity", "love", "ambition", "collaboration"],
+    bridges: [
+      { when: ["friendship", "friend", "creative", "art", "making"], bridge: "Making things with someone you love, and what that costs over decades." },
+      { when: ["nostalgic", "childhood", "90s", "growing up"], bridge: "There's a version of growing up in this book that might break you a little." },
+      { when: ["video games", "gaming", "tech"], bridge: "It's about gaming but it's not *about* gaming — it's about making things and loving people." },
+      { when: ["long", "commitment", "immerse", "live with"], bridge: "This one's long. It earns the length." },
+    ],
+    reason: "Two friends build video games together across three decades. You don't need to care about gaming — it's really about what it costs to make something with someone you love."
+  },
+  {
+    title: "Queenie",
+    author: "Candice Carty-Williams",
+    origin: "UK",
+    mood: ["raw", "restless", "lonely"],
+    doesWhat: ["confronts", "connects"],
+    pace: "swift",
+    density: "lean",
+    register: ["funny", "painful"],
+    obscurity: "mid",
+    format: "audio",
+    length: "weekend",
+    tags: ["Black British", "dating", "mental health", "London", "identity", "humor"],
+    reason: "A Jamaican-British woman in London is spiraling after a breakup, making terrible decisions and texting her group chat about all of them. It's hilarious and then it very much isn't. You'll recognize someone in it."
+  },
+  {
+    title: "The Midnight Library",
+    author: "Matt Haig",
+    origin: "UK",
+    mood: ["lost", "hopeful", "exhausted"],
+    doesWhat: ["restores", "connects"],
+    pace: "swift",
+    density: "lean",
+    register: ["gentle", "hopeful"],
+    obscurity: "known",
+    format: "audio",
+    length: "weekend",
+    tags: ["parallel lives", "regret", "choices", "hope", "library", "second chances"],
+    reason: "A woman between life and death finds a library where every book is a life she could have lived. It's gentle and kind in a way that doesn't feel cheap. Sometimes that's exactly what you need."
+  },
+  {
+    title: "Exciting Times",
+    author: "Naoise Dolan",
+    origin: "Ireland",
+    mood: ["restless", "sharp", "lonely"],
+    doesWhat: ["energizes", "confronts"],
+    pace: "swift",
+    density: "lean",
+    register: ["dry", "cutting"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["expat", "Hong Kong", "bisexual", "class", "witty", "millennial"],
+    reason: "An Irish woman in Hong Kong gets tangled between a banker and a lawyer. She's mean and smart and a little broken and every sentence has an edge to it. If you like Rooney, you'll like this."
+  },
+  {
+    title: "Red, White & Royal Blue",
+    author: "Casey McQuiston",
+    origin: "USA",
+    mood: ["giddy", "playful", "hopeful"],
+    doesWhat: ["escapes", "energizes"],
+    pace: "swift",
+    density: "lean",
+    register: ["joyful", "swoony"],
+    obscurity: "known",
+    format: "audio",
+    length: "weekend",
+    tags: ["romance", "queer", "political", "White House", "enemies to lovers", "fun"],
+    reason: "The First Son of the United States falls for the Prince of England. It's ridiculous and romantic and politically optimistic. Pure fun with a heart bigger than the premise."
+  },
+  {
+    title: "Mexican Gothic",
+    author: "Silvia Moreno-Garcia",
+    origin: "Mexico",
+    mood: ["restless", "defiant", "curious"],
+    doesWhat: ["escapes", "grips"],
+    pace: "medium",
+    density: "medium",
+    register: ["creepy", "stylish"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["gothic", "horror", "Mexico", "1950s", "mansion", "feminist"],
+    reason: "A glamorous socialite in 1950s Mexico investigates her cousin's creepy new husband and his decaying English mansion. Atmospheric and unsettling. The heroine is someone you'd want on your side."
+  },
+  {
+    title: "The Personal Librarian",
+    author: "Marie Benedict and Victoria Christopher Murray",
+    origin: "USA",
+    mood: ["defiant", "searching", "conflicted"],
+    doesWhat: ["connects", "confronts"],
+    pace: "medium",
+    density: "medium",
+    register: ["fascinating", "tense"],
+    obscurity: "mid",
+    format: "audio",
+    length: "weekend",
+    tags: ["history", "race", "passing", "art", "library", "secrets", "New York"],
+    reason: "The true story of Belle da Costa Greene, who became the most powerful woman in the New York art world while hiding that she was Black. A life lived in two worlds. Fascinating."
+  },
+  {
+    title: "Lessons in Chemistry",
+    author: "Bonnie Garmus",
+    origin: "USA",
+    mood: ["defiant", "sharp", "alive"],
+    doesWhat: ["energizes", "escapes"],
+    pace: "swift",
+    density: "lean",
+    register: ["funny", "fierce"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Miranda Raison and Pandora Sykes — brilliant.",
+    length: "weekend",
+    tags: ["feminism", "1960s", "science", "cooking show", "humor", "dog"],
+    bridges: [
+      { when: ["funny", "fun", "humor", "laugh", "angry", "furious", "defiant"], bridge: "Teeth and a sense of humor. Haywood wrote the rom-com equivalent of a sucker punch." },
+      { when: ["feminism", "women", "female", "sexism", "glass ceiling"], bridge: "Angry and funny in the exact right proportions. Haywood doesn't hold back." },
+      { when: ["trip", "vacation", "beach", "easy", "light"], bridge: "It goes down easy and it has more to say than you'd expect." },
+      { when: ["book club", "talk about", "everyone", "playground", "discuss"], bridge: "People get heated about this one. That's a feature, not a bug." },
+    ],
+    reason: "A chemist in the 1960s gets pushed out of her lab and ends up hosting a cooking show where she teaches housewives organic chemistry. Furious and funny. The dog steals every scene."
+  },
+  {
+    title: "The Vanishing Half",
+    author: "Brit Bennett",
+    origin: "USA",
+    mood: ["searching", "conflicted", "expansive"],
+    doesWhat: ["connects", "confronts"],
+    pace: "medium",
+    density: "medium",
+    register: ["absorbing", "thoughtful"],
+    obscurity: "known",
+    format: "audio",
+    length: "weekend",
+    tags: ["race", "twins", "passing", "identity", "generations", "American South"],
+    reason: "Twin sisters from a small Southern town — one lives as Black, one passes as white. Their daughters' lives eventually collide. It's really about the stories we tell about who we are and what those stories cost."
+  },
+  {
+    title: "The Thursday Murder Club",
+    author: "Richard Osman",
+    origin: "UK",
+    mood: ["playful", "curious", "wry"],
+    doesWhat: ["escapes", "energizes"],
+    pace: "swift",
+    density: "lean",
+    register: ["charming", "witty"],
+    obscurity: "known",
+    format: "audio",
+    length: "weekend",
+    tags: ["mystery", "elderly", "British", "humor", "cozy", "friendship"],
+    reason: "Four retirees in a retirement village investigate cold cases. Then a real murder happens. It's cozy and clever and the characters are an absolute joy. Good for when you want to be charmed."
+  },
+  {
+    title: "The Immortalists",
+    author: "Chloe Benjamin",
+    origin: "USA",
+    mood: ["searching", "anxious", "alive"],
+    doesWhat: ["grips", "confronts"],
+    pace: "medium",
+    density: "medium",
+    register: ["propulsive", "philosophical"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["death", "siblings", "fortune teller", "fate", "family", "decades"],
+    reason: "Four siblings visit a fortune teller who tells each of them when they'll die. The rest of the book is whether knowing changes anything. Each section is a different world."
+  },
+  {
+    title: "Sorrow and Bliss",
+    author: "Meg Mason",
+    origin: "Australia/UK",
+    mood: ["raw", "darkly amused", "lonely"],
+    doesWhat: ["confronts", "connects"],
+    pace: "swift",
+    density: "lean",
+    register: ["devastatingly funny", "aching"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["mental health", "marriage", "family", "humor", "British", "diagnosis"],
+    bridges: [
+      { when: ["mental health", "diagnosis", "depressed", "anxiety", "therapy"], bridge: "You mentioned something about mental health. This one knows that world from the inside." },
+      { when: ["funny", "humor", "laugh", "dark humor", "dry"], bridge: "The funniest book about pain I've come across. The humor isn't a shield — it's the whole architecture." },
+      { when: ["marriage", "relationship", "partner", "falling apart"], bridge: "Marriage. What we owe each other. How we fail. Gail Honeyman's narrator sees all of it from the strangest angle." },
+      { when: ["British", "dry", "sharp", "wry"], bridge: "Dry, sharp, British, devastating. Your kind of thing, I think." },
+    ],
+    reason: "A woman with an undiagnosed condition watches her marriage and family come apart. It's one of the funniest books about pain I've come across. The humor isn't a defense — it's the whole point."
+  },
+  {
+    title: "Writers & Lovers",
+    author: "Lily King",
+    origin: "USA",
+    mood: ["searching", "raw", "hopeful"],
+    doesWhat: ["connects", "restores"],
+    pace: "swift",
+    density: "lean",
+    register: ["tender", "true"],
+    obscurity: "mid",
+    format: "either",
+    length: "one-sitting",
+    tags: ["writing", "grief", "waitressing", "art", "dating", "30s"],
+    reason: "A woman in her 30s grieving her mother, writing a novel, waitressing, dating two men. It captures that specific feeling of being broke and talented and heartbroken and still showing up. It rang true for me."
+  },
+  {
+    title: "Yellowface",
+    author: "R.F. Kuang",
+    origin: "USA",
+    mood: ["restless", "sharp", "darkly amused"],
+    doesWhat: ["grips", "confronts"],
+    pace: "breathless",
+    density: "lean",
+    register: ["wicked", "uncomfortable"],
+    obscurity: "known",
+    format: "audio",
+    length: "one-sitting",
+    tags: ["publishing", "race", "theft", "satire", "social media", "literary world"],
+    bridges: [
+      { when: ["sharp", "uncomfortable", "satire", "social media", "internet"], bridge: "Sharp as glass. Kuang wrote a satire that draws blood." },
+      { when: ["race", "appropriation", "publishing", "literary"], bridge: "Publishing, appropriation, who gets to tell which stories. Kuang goes for the throat." },
+      { when: ["quick", "fast", "page turner", "gripping", "addictive"], bridge: "You'll burn through this. It's designed that way." },
+      { when: ["parasite", "succession"], bridge: "Same energy — watching someone terrible and not being able to look away." },
+    ],
+    reason: "A white woman steals her dead friend's manuscript and publishes it as her own. Then the internet finds out. It's a thriller dressed as satire, or maybe the other way around. Either way, it moves fast."
+  },
+  {
+    title: "Really Good, Actually",
+    author: "Monica Heisey",
+    origin: "Canada",
+    mood: ["heartbroken", "darkly amused", "restless"],
+    doesWhat: ["escapes", "connects"],
+    pace: "swift",
+    density: "lean",
+    register: ["hilarious", "real"],
+    obscurity: "mid",
+    format: "either",
+    length: "one-sitting",
+    tags: ["divorce", "humor", "millennial", "Toronto", "recovery", "friendship"],
+    reason: "A woman gets divorced at 29 and insists she's fine. She is absolutely not fine. Funniest sad book I've read in years. Fleabag energy."
+  },
+  {
+    title: "Conversations with Friends",
+    author: "Sally Rooney",
+    origin: "Ireland",
+    mood: ["lonely", "sharp", "searching"],
+    doesWhat: ["slows down", "confronts"],
+    pace: "swift",
+    density: "lean",
+    register: ["precise", "cool"],
+    obscurity: "known",
+    format: "either",
+    length: "one-sitting",
+    tags: ["Dublin", "class", "friendship", "power", "millennial", "desire"],
+    reason: "Two college friends get entangled with a married couple. Rooney writes dialogue the way some people play music. Every silence means something. Her first novel and already fully herself."
+  },
+  {
+    title: "Bel Canto",
+    author: "Ann Patchett",
+    origin: "USA",
+    mood: ["still", "wonder", "tender"],
+    doesWhat: ["escapes", "slows down"],
+    pace: "gentle",
+    density: "medium",
+    register: ["beautiful", "dreamlike"],
+    obscurity: "known",
+    format: "either",
+    length: "weekend",
+    tags: ["opera", "hostage", "love", "music", "South America", "beauty"],
+    reason: "Terrorists take a houseful of diplomats hostage. Then, slowly, everyone starts falling in love — with each other, with music, with the strange suspended time. It's a dream you don't want to end."
+  },
+  {
+    title: "The Great Believers",
+    author: "Rebecca Makkai",
+    origin: "USA",
+    mood: ["grieving", "alive", "searching"],
+    doesWhat: ["connects", "cracks open"],
+    pace: "medium",
+    density: "medium",
+    register: ["devastating", "warm"],
+    obscurity: "mid",
+    format: "either",
+    length: "commitment",
+    tags: ["AIDS crisis", "Chicago", "1980s", "Paris", "friendship", "art", "loss"],
+    reason: "A group of friends in 1980s Chicago living through the AIDS crisis, and a mother decades later in Paris searching for her daughter. It's about surviving the unsurvivable. Keep tissues nearby."
+  },
+  // ─── MEMOIR & NARRATIVE NONFICTION ───────────────────────────
+  {
+    title: "Crying in H Mart",
+    author: "Michelle Zauner",
+    origin: "USA/South Korea",
+    mood: ["grieving", "hungry", "searching"],
+    doesWhat: ["cracks open", "connects"],
+    pace: "medium",
+    density: "medium",
+    register: ["raw", "beautiful"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Zauner narrates herself. Her voice breaks in the right places.",
+    length: "one-sitting",
+    tags: ["grief", "mother", "Korean", "food", "identity", "memoir", "nonfiction"],
+    bridges: [
+      { when: ["grief", "loss", "mother", "mom", "died", "death"], bridge: "You're carrying something about loss. This one knows that territory." },
+      { when: ["food", "cooking", "kitchen", "eating"], bridge: "A love letter written in recipes. Every dish is a memory of her mother." },
+      { when: ["identity", "who am I", "heritage", "roots", "Korean"], bridge: "Korean, American, daughter, orphan. Zauner holds all of it at once." },
+      { when: ["memoir", "true", "real", "nonfiction"], bridge: "This is real, all of it. Zauner narrates it herself and you can hear everything." },
+    ],
+    reason: "Zauner loses her mother and finds her way back through food — the kimchi, the tteokbokki, the grocery aisles. It's a love letter written in recipes. She narrates the audiobook and her voice breaks in the right places."
+  },
+  {
+    title: "Know My Name",
+    author: "Chanel Miller",
+    origin: "USA",
+    mood: ["furious", "defiant", "raw"],
+    doesWhat: ["confronts", "cracks open"],
+    pace: "medium",
+    density: "medium",
+    register: ["fierce", "luminous"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Miller narrates. Powerful.",
+    length: "weekend",
+    tags: ["assault", "justice", "identity", "feminism", "memoir", "nonfiction", "courage"],
+    bridges: [
+      { when: ["angry", "furious", "injustice", "justice", "rage"], bridge: "Miller took the worst thing that happened to her and made it into something luminous. I'm not exaggerating." },
+      { when: ["feminism", "women", "assault", "me too"], bridge: "I think everyone should read this. She reclaims her name and her story." },
+      { when: ["brave", "courage", "honest", "truth"], bridge: "I don't use the word brave loosely. Miller earned it." },
+      { when: ["memoir", "true", "real", "nonfiction"], bridge: "Furious, funny, impossibly clear. Miller reclaimed her name and her story." },
+    ],
+    reason: "Chanel Miller was 'Emily Doe.' This is her taking her name back. It's furious and funny and impossibly well-written. I think everyone should read it."
+  },
+  {
+    title: "When Breath Becomes Air",
+    author: "Paul Kalanithi",
+    origin: "USA",
+    mood: ["aching", "reflective", "still"],
+    doesWhat: ["slows down", "cracks open"],
+    pace: "gentle",
+    density: "medium",
+    register: ["luminous", "profound"],
+    obscurity: "known",
+    format: "audio",
+    length: "one-sitting",
+    tags: ["death", "meaning", "medicine", "mortality", "memoir", "nonfiction"],
+    reason: "A neurosurgeon finds out he's dying and writes about what makes life worth living when you know it's ending. It's short. It will change how you think about time."
+  },
+  {
+    title: "Educated",
+    author: "Tara Westover",
+    origin: "USA",
+    mood: ["defiant", "searching", "fierce"],
+    doesWhat: ["grips", "confronts"],
+    pace: "medium",
+    density: "medium",
+    register: ["astonishing", "unflinching"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Julia Whelan's narration is masterful.",
+    length: "weekend",
+    tags: ["survival", "family", "education", "Idaho", "memoir", "nonfiction", "escape"],
+    bridges: [
+      { when: ["defiant", "escape", "survival", "freedom", "breaking free"], bridge: "Breaking free. Westover actually did it — out of a survivalist family in Idaho, all the way to Cambridge." },
+      { when: ["family", "parent", "father", "mother"], bridge: "This is about what it costs to leave your family to become yourself." },
+      { when: ["memoir", "true", "real", "nonfiction", "inspiring"], bridge: "Not an inspiration story in the usual sense. Something rougher and more real than that." },
+      { when: ["audio", "listen"], bridge: "Julia Whelan narrates this and she's masterful with it." },
+    ],
+    reason: "A woman raised by survivalists in Idaho — no school, no doctors — finds her way to Cambridge. It's not tidy or inspirational. It's about what it costs to leave your family to become yourself."
+  },
+  {
+    title: "H Is for Hawk",
+    author: "Helen Macdonald",
+    origin: "UK",
+    mood: ["grieving", "wild", "searching"],
+    doesWhat: ["slows down", "haunts"],
+    pace: "deliberate",
+    density: "dense",
+    register: ["fierce", "beautiful"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["grief", "hawk", "nature", "father", "training", "memoir", "nonfiction"],
+    reason: "Her father dies and she decides to train a goshawk. Part nature writing, part memoir, part fever dream. The hawk doesn't care about your feelings, and that turns out to be the point."
+  },
+  {
+    title: "The Year of Magical Thinking",
+    author: "Joan Didion",
+    origin: "USA",
+    mood: ["grieving", "still", "lost"],
+    doesWhat: ["slows down", "confronts"],
+    pace: "gentle",
+    density: "medium",
+    register: ["precise", "devastating"],
+    obscurity: "known",
+    format: "audio",
+    length: "one-sitting",
+    tags: ["grief", "marriage", "death", "writing", "memoir", "nonfiction"],
+    reason: "Didion's husband dies at dinner. She tries to think her way through grief with the same precision she brought to everything else. The precision is what breaks your heart."
+  },
+  {
+    title: "Born a Crime",
+    author: "Trevor Noah",
+    origin: "South Africa",
+    mood: ["alive", "playful", "defiant"],
+    doesWhat: ["energizes", "connects"],
+    pace: "swift",
+    density: "lean",
+    register: ["hilarious", "moving"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Noah narrates. Possibly the best audiobook performance ever recorded.",
+    length: "weekend",
+    tags: ["apartheid", "South Africa", "humor", "mother", "identity", "memoir", "nonfiction"],
+    bridges: [
+      { when: ["funny", "laugh", "humor", "light", "fun"], bridge: "You want to laugh. Trevor Noah will get you there — and then some." },
+      { when: ["audio", "listen", "hands busy"], bridge: "This might be the best audiobook performance I've ever heard. Noah narrates it himself." },
+      { when: ["mother", "mom", "family", "parent"], bridge: "His mother is one of the greatest characters in any book I've read, fiction or not." },
+      { when: ["memoir", "true", "real", "nonfiction"], bridge: "All of it happened. Apartheid, a devout mother, a mixed-race kid who shouldn't exist. Funnier than most novels." },
+    ],
+    reason: "Trevor Noah — mixed-race under apartheid, his existence literally illegal. His mother is one of the greatest characters in any memoir. The audiobook, read by Noah, might be the best performance I've ever heard."
+  },
+  {
+    title: "Braiding Sweetgrass",
+    author: "Robin Wall Kimmerer",
+    origin: "USA (Potawatomi)",
+    mood: ["peaceful", "wonder", "searching"],
+    doesWhat: ["restores", "slows down"],
+    pace: "gentle",
+    density: "medium",
+    register: ["nourishing", "sacred"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Kimmerer's voice is exactly what this book needs.",
+    length: "weekend",
+    tags: ["nature", "Indigenous", "science", "gratitude", "plants", "nonfiction"],
+    bridges: [
+      { when: ["peaceful", "calm", "restore", "heal", "nature", "quiet"], bridge: "Start here. Kimmerer writes about moss and gratitude and reciprocity, and somehow it's the most hopeful thing I've found." },
+      { when: ["anxious", "world", "climate", "environment", "worried"], bridge: "You're thinking about the world. This is the most hopeful thing I've found about our place in it." },
+      { when: ["slow", "savor", "gentle", "take my time"], bridge: "This one wants to be read slowly. It rewards that." },
+      { when: ["on being", "spiritual", "meaning", "gratitude"], bridge: "Given what moves you — I think this will feel like home." },
+    ],
+    reason: "A botanist and Potawatomi woman braids together Indigenous knowledge and Western science. It's about what the plants would tell us if we'd listen. Read it slowly. It changes the way you see the ground."
+  },
+  {
+    title: "The Warmth of Other Suns",
+    author: "Isabel Wilkerson",
+    origin: "USA",
+    mood: ["expansive", "aching", "rooted"],
+    doesWhat: ["connects", "confronts"],
+    pace: "deliberate",
+    density: "dense",
+    register: ["epic", "intimate"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Robin Miles narrates beautifully.",
+    length: "commitment",
+    tags: ["Great Migration", "race", "American", "history", "narrative nonfiction"],
+    reason: "Three people, three routes out of the Jim Crow South. Wilkerson turns history into something you can feel — the heat, the trains, the impossible choices. Long, but it earns every page."
+  },
+  {
+    title: "Becoming",
+    author: "Michelle Obama",
+    origin: "USA",
+    mood: ["hopeful", "reflective", "alive"],
+    doesWhat: ["connects", "energizes"],
+    pace: "medium",
+    density: "medium",
+    register: ["warm", "honest"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Michelle Obama narrates. It feels like she's talking to you.",
+    length: "weekend",
+    tags: ["politics", "family", "Black", "identity", "memoir", "nonfiction", "inspiration"],
+    reason: "Not a political memoir — a personal one. South Side of Chicago, Princeton imposter syndrome, marriage under impossible pressure. She narrates the audiobook and it feels like she's talking to you specifically."
+  },
+  {
+    title: "Say Nothing",
+    author: "Patrick Radden Keefe",
+    origin: "USA/Northern Ireland",
+    mood: ["searching", "fierce", "haunted"],
+    doesWhat: ["grips", "confronts"],
+    pace: "breathless",
+    density: "medium",
+    register: ["gripping", "devastating"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["Troubles", "IRA", "Northern Ireland", "murder", "history", "narrative nonfiction"],
+    reason: "A mother of ten disappears from her Belfast home in 1972. Decades later, someone starts talking. It reads like a thriller but it's all true. Keefe is remarkable at this."
+  },
+  {
+    title: "The Hare with Amber Eyes",
+    author: "Edmund de Waal",
+    origin: "UK/Austria",
+    mood: ["reflective", "curious", "melancholy"],
+    doesWhat: ["slows down", "connects"],
+    pace: "gentle",
+    density: "medium",
+    register: ["exquisite", "intimate"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["family", "art", "Holocaust", "objects", "history", "memoir", "nonfiction"],
+    reason: "A ceramicist traces a collection of tiny Japanese carvings through five generations of his family — from Paris salons to Nazi Vienna. It's about the things that survive and what they carry with them."
+  },
+  {
+    title: "Trick Mirror",
+    author: "Jia Tolentino",
+    origin: "USA",
+    mood: ["sharp", "restless", "searching"],
+    doesWhat: ["confronts", "energizes"],
+    pace: "medium",
+    density: "medium",
+    register: ["brilliant", "unsettling"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["essays", "internet", "feminism", "culture", "millennials", "nonfiction"],
+    reason: "Essays about selfhood in the age of the internet. Tolentino thinks harder and clearer about how we live now than almost anyone. I keep going back to specific passages like they're songs."
+  },
+  {
+    title: "Priestdaddy",
+    author: "Patricia Lockwood",
+    origin: "USA",
+    mood: ["playful", "darkly amused", "restless"],
+    doesWhat: ["energizes", "escapes"],
+    pace: "swift",
+    density: "lean",
+    register: ["riotously funny", "surprising"],
+    obscurity: "deep",
+    format: "either",
+    length: "weekend",
+    tags: ["Catholic", "family", "humor", "poetry", "memoir", "nonfiction", "father"],
+    reason: "A poet moves back in with her parents — her father is a Catholic priest, long story. The funniest memoir I've read. Lockwood writes sentences that make you stop and read them out loud to whoever's nearby."
+  },
+  {
+    title: "Minor Feelings",
+    author: "Cathy Park Hong",
+    origin: "USA/South Korea",
+    mood: ["angry", "searching", "raw"],
+    doesWhat: ["confronts", "cracks open"],
+    pace: "medium",
+    density: "dense",
+    register: ["sharp", "necessary"],
+    obscurity: "mid",
+    format: "either",
+    length: "one-sitting",
+    tags: ["Asian American", "race", "art", "shame", "identity", "essays", "nonfiction"],
+    reason: "Hong names the feelings Asian Americans aren't supposed to have — the shame, the rage, the dissonance. It cracked something open in the conversation about race. Short but it stays with you."
+  },
+  // ─── MORE RANGE ──────────────────────────────────────────────
+  {
+    title: "The Secret History",
+    author: "Donna Tartt",
+    origin: "USA",
+    mood: ["restless", "darkly amused", "seeking"],
+    doesWhat: ["grips", "escapes"],
+    pace: "medium",
+    density: "dense",
+    register: ["intoxicating", "sinister"],
+    obscurity: "known",
+    format: "either",
+    length: "commitment",
+    tags: ["campus", "murder", "classics", "elite", "dark academia", "Vermont"],
+    bridges: [
+      { when: ["escape", "immerse", "disappear", "transported"], bridge: "Fall in. Don't fight it. Tartt won't let you out and you won't want to leave." },
+      { when: ["dark academia", "campus", "college", "university"], bridge: "Six brilliant, terrible students. A dead classmate. Greek as a gateway drug to something darker." },
+      { when: ["murder", "thriller", "mystery", "crime", "dark"], bridge: "You know someone's dead from the first page. The question is how six brilliant people got there." },
+      { when: ["true detective", "succession", "breaking bad"], bridge: "Same territory — brilliant people making terrible choices. You'll be hooked." },
+    ],
+    reason: "You know from the first page someone's been murdered. The rest is how six brilliant, terrible classics students got there. Intoxicating is the right word. You'll want to drop everything and study Greek."
+  },
+  {
+    title: "Station Eleven",
+    author: "Emily St. John Mandel",
+    origin: "Canada",
+    mood: ["melancholy", "hopeful", "wonder"],
+    doesWhat: ["connects", "restores"],
+    pace: "medium",
+    density: "medium",
+    register: ["luminous", "hopeful"],
+    obscurity: "known",
+    format: "either",
+    length: "weekend",
+    tags: ["pandemic", "art", "survival", "Shakespeare", "interconnection", "beauty"],
+    bridges: [
+      { when: ["hopeful", "hope", "beauty", "meaning", "art"], bridge: "A pandemic destroys civilization. What survives? Shakespeare. Friendship. A traveling symphony. It's not sentimental — it earns it." },
+      { when: ["pandemic", "apocalypse", "end", "survival"], bridge: "I know — another pandemic book. But this one isn't about the ending. It's about what survives." },
+      { when: ["connected", "interconnection", "community"], bridge: "Everything is connected in this one. Not in a precious way — in a way that aches." },
+      { when: ["Shakespeare", "theater", "art", "music", "creative"], bridge: "Art, survival, memory. Mandel makes the case for why any of it matters, and she does it without a single lecture." },
+    ],
+    reason: "A pandemic ends civilization. Twenty years later, a traveling Shakespeare company performs for the survivors. It's not really about the apocalypse — it's about what survives. The answer is art and each other."
+  },
+  {
+    title: "Normal People",
+    author: "Sally Rooney",
+    origin: "Ireland",
+    mood: ["aching", "tender", "lonely"],
+    doesWhat: ["slows down", "connects"],
+    pace: "swift",
+    density: "lean",
+    register: ["intimate", "devastating"],
+    obscurity: "known",
+    format: "audio",
+    length: "one-sitting",
+    tags: ["love", "class", "Dublin", "college", "miscommunication", "Ireland"],
+    bridges: [
+      { when: ["love", "relationship", "heartbreak", "breakup", "romance"], bridge: "You're thinking about love. This one gets it exactly right — including the parts that hurt." },
+      { when: ["lonely", "alone", "connection", "seen", "understood"], bridge: "Rooney gets the specific way people are alone together. It's almost too precise." },
+      { when: ["quick", "short", "swift", "easy"], bridge: "It's a fast read. It doesn't feel fast — it feels like it takes exactly as long as it should." },
+      { when: ["fleabag", "rooney", "dublin", "ireland", "millennial"], bridge: "If you're in that headspace — yeah. This." },
+    ],
+    reason: "Two people who can't figure out how to be together keep circling each other through college. It's so precisely observed it hurts. You'll see your own missed connections in it."
+  },
+  {
+    title: "Pachinko",
+    author: "Min Jin Lee",
+    origin: "South Korea/USA",
+    mood: ["expansive", "aching", "fierce"],
+    doesWhat: ["connects", "confronts"],
+    pace: "deliberate",
+    density: "medium",
+    register: ["epic", "tender"],
+    obscurity: "known",
+    format: "audio",
+    length: "commitment",
+    tags: ["Korea", "Japan", "generations", "immigration", "identity", "family", "history"],
+    reason: "Four generations of a Korean family in Japan. The discrimination, the survival, the stubborn insistence on dignity. It's sweeping and intimate and stays with you the way a family story does."
+  },
+  {
+    title: "The Covenant of Water",
+    author: "Abraham Verghese",
+    origin: "India/USA",
+    mood: ["expansive", "tender", "rooted"],
+    doesWhat: ["escapes", "connects"],
+    pace: "deliberate",
+    density: "dense",
+    register: ["lush", "immersive"],
+    obscurity: "known",
+    format: "audio",
+    length: "commitment",
+    tags: ["India", "Kerala", "family", "generations", "medicine", "water", "love"],
+    reason: "Three generations in Kerala, a mysterious condition tied to water. Verghese writes with the patience of a river — it takes its time, and when it arrives, it arrives completely. Give it the weekend it deserves."
+  },
+  {
+    title: "Hamnet",
+    author: "Maggie O'Farrell",
+    origin: "UK/Ireland",
+    mood: ["grieving", "lush", "fierce"],
+    doesWhat: ["slows down", "cracks open"],
+    pace: "deliberate",
+    density: "medium",
+    register: ["gorgeous", "heartbreaking"],
+    obscurity: "mid",
+    format: "audio",
+    length: "weekend",
+    tags: ["Shakespeare", "plague", "child loss", "marriage", "historical", "grief"],
+    reason: "Shakespeare's son dies of plague. But this is his wife's story — Agnes, a woman so alive she vibrates off the page. O'Farrell makes grief feel like weather. Something you can't argue with."
+  },
+  {
+    title: "Intermezzo",
+    author: "Sally Rooney",
+    origin: "Ireland",
+    mood: ["aching", "searching", "complicated"],
+    doesWhat: ["slows down", "connects"],
+    pace: "medium",
+    density: "medium",
+    register: ["tender", "precise"],
+    obscurity: "known",
+    format: "either",
+    length: "weekend",
+    tags: ["brothers", "grief", "chess", "love", "Ireland", "age gap"],
+    reason: "Two brothers grieving their father cope in opposite ways. Rooney's most mature book, I think. It understands that love is not one thing and grief isn't either."
+  },
+  {
+    title: "All Fours",
+    author: "Miranda July",
+    origin: "USA",
+    mood: ["restless", "defiant", "alive"],
+    doesWhat: ["destabilizes", "energizes"],
+    pace: "swift",
+    density: "lean",
+    register: ["wild", "liberating"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["midlife", "desire", "marriage", "perimenopause", "freedom", "women"],
+    reason: "A woman in her mid-40s sets out on a road trip and gets thirty minutes from home before her life detonates. It's about desire and midlife and the wild refusal to go quietly. Might make you uncomfortable. I think that's the point."
+  },
+  {
+    title: "James",
+    author: "Percival Everett",
+    origin: "USA",
+    mood: ["defiant", "sharp", "fierce"],
+    doesWhat: ["confronts", "energizes"],
+    pace: "medium",
+    density: "medium",
+    register: ["brilliant", "subversive"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["Huck Finn", "slavery", "retelling", "American", "voice", "satire"],
+    reason: "Huck Finn retold from Jim's perspective — except Jim has been performing ignorance his whole life. The moment he starts thinking in his real voice, the entire American canon shifts. Percival Everett doesn't mess around."
+  },
+  // ─── BROADENING: MASCULINE ENTRY POINTS, GENRE, CLASSICS, IDEAS ──
+  {
+    title: "Blood Meridian",
+    author: "Cormac McCarthy",
+    origin: "USA",
+    mood: ["fierce", "haunted", "wild"],
+    doesWhat: ["overwhelms", "confronts"],
+    pace: "deliberate",
+    density: "dense",
+    register: ["apocalyptic", "sublime"],
+    obscurity: "known",
+    format: "either",
+    length: "commitment",
+    tags: ["violence", "western", "American", "war", "philosophy", "wilderness"],
+    bridges: [
+      { when: ["violence", "dark", "intense", "brutal", "hard"], bridge: "You want something that doesn't look away. I should warn you — this one really doesn't." },
+      { when: ["no country", "mccarthy", "cormac", "western"], bridge: "If you've been in McCarthy territory — this is the far end of it." },
+      { when: ["true detective", "breaking bad", "there will be blood"], bridge: "Same darkness, taken further than you think possible." },
+      { when: ["philosophical", "meaning", "evil", "human nature"], bridge: "McCarthy asks the hardest question about human nature and then just... sits with it." },
+    ],
+    reason: "This one might be a risk. It's the most violent novel in the English language and somehow also the most beautiful. A teenager rides with scalp hunters across the Mexican border. Not for everyone. For some people, it's the only book."
+  },
+  {
+    title: "The Road",
+    author: "Cormac McCarthy",
+    origin: "USA",
+    mood: ["aching", "tender", "haunted"],
+    doesWhat: ["cracks open", "slows down"],
+    pace: "gentle",
+    density: "lean",
+    register: ["devastating", "tender"],
+    obscurity: "known",
+    format: "audio",
+    length: "one-sitting",
+    tags: ["father", "son", "apocalypse", "survival", "love", "American"],
+    bridges: [
+      { when: ["father", "son", "dad", "parent", "child", "kid"], bridge: "You mentioned family. This one is about the simplest, fiercest version of that." },
+      { when: ["short", "quick", "tonight", "one sitting"], bridge: "It's short. It's also one of the most powerful things I've read." },
+      { when: ["sad", "grief", "loss", "heavy", "aching"], bridge: "This isn't light. But I think it's what you need right now." },
+      { when: ["survival", "apocalypse", "end of the world"], bridge: "You want something about survival. This is the one." },
+    ],
+    reason: "A father and son walk through the ashes of the world. McCarthy strips language down to almost nothing, and what's left is the purest thing I've read about loving your child. Short. Keep tissues far away, you'll need them."
+  },
+  {
+    title: "2666",
+    author: "Roberto Bolaño",
+    origin: "Chile/Mexico",
+    mood: ["restless", "haunted", "wild"],
+    doesWhat: ["overwhelms", "destabilizes"],
+    pace: "medium",
+    density: "dense",
+    register: ["hypnotic", "terrifying"],
+    obscurity: "mid",
+    format: "print",
+    length: "commitment",
+    tags: ["Mexico", "violence", "literature", "murder", "sprawling", "obsession"],
+    reason: "Five sections, a thousand pages, a city in the Mexican desert where women keep disappearing. It rearranges your brain. I'm not going to pretend this is an easy recommendation, but if it's right for you, nothing else comes close."
+  },
+  {
+    title: "The Savage Detectives",
+    author: "Roberto Bolaño",
+    origin: "Chile/Mexico",
+    mood: ["restless", "alive", "searching"],
+    doesWhat: ["energizes", "escapes"],
+    pace: "medium",
+    density: "medium",
+    register: ["electric", "romantic"],
+    obscurity: "mid",
+    format: "print",
+    length: "commitment",
+    tags: ["poetry", "Mexico City", "youth", "literary", "adventure", "1970s"],
+    reason: "Young poets in 1970s Mexico City chase a disappeared poet across the desert. It's a love letter to being young and obsessed with art. If you've ever stayed up all night arguing about something that doesn't matter and does, this."
+  },
+  {
+    title: "A Little Life",
+    author: "Hanya Yanagihara",
+    origin: "USA",
+    mood: ["aching", "fierce", "tender"],
+    doesWhat: ["overwhelms", "cracks open"],
+    pace: "deliberate",
+    density: "dense",
+    register: ["devastating", "consuming"],
+    obscurity: "known",
+    format: "print",
+    length: "commitment",
+    tags: ["friendship", "trauma", "New York", "male friendship", "pain", "love"],
+    reason: "Four college friends in New York, and the slow revelation of what one of them has survived. It's 700 pages and people either can't finish it or can't stop talking about it. I'm in the second camp."
+  },
+  {
+    title: "No Country for Old Men",
+    author: "Cormac McCarthy",
+    origin: "USA",
+    mood: ["anxious", "fierce", "haunted"],
+    doesWhat: ["grips", "confronts"],
+    pace: "breathless",
+    density: "lean",
+    register: ["relentless", "philosophical"],
+    obscurity: "known",
+    format: "either",
+    length: "one-sitting",
+    tags: ["thriller", "violence", "Texas", "fate", "western", "cat and mouse"],
+    reason: "A hunter finds a suitcase of money in the desert. What follows is relentless. McCarthy's leanest book — no fat, no mercy. Underneath the chase there's a quiet question about whether violence is new or we just forgot."
+  },
+  {
+    title: "The Friend",
+    author: "Sigrid Nunez",
+    origin: "USA",
+    mood: ["grieving", "wry", "tender"],
+    doesWhat: ["slows down", "connects"],
+    pace: "gentle",
+    density: "lean",
+    register: ["quiet", "wise"],
+    obscurity: "mid",
+    format: "either",
+    length: "one-sitting",
+    tags: ["grief", "dog", "writing", "friendship", "New York", "loss"],
+    reason: "A writer's best friend dies and leaves her his enormous Great Dane. It's about grief and dogs and literature and it's funnier and lighter than it has any right to be."
+  },
+  {
+    title: "Lonesome Dove",
+    author: "Larry McMurtry",
+    origin: "USA",
+    mood: ["expansive", "nostalgic", "alive"],
+    doesWhat: ["escapes", "connects"],
+    pace: "deliberate",
+    density: "medium",
+    register: ["epic", "warm"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Lee Horsley's narration is definitive.",
+    length: "commitment",
+    tags: ["western", "Texas", "friendship", "cattle drive", "adventure", "American"],
+    reason: "Two aging Texas Rangers drive cattle from the Rio Grande to Montana. It's the great American friendship novel — funny, violent, heartbreaking. Nine hundred pages and every one of them earns its keep."
+  },
+  {
+    title: "Stoner",
+    author: "John Williams",
+    origin: "USA",
+    mood: ["still", "aching", "reflective"],
+    doesWhat: ["slows down", "haunts"],
+    pace: "gentle",
+    density: "medium",
+    register: ["quiet", "devastating"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["academia", "marriage", "quiet life", "literature", "American", "midcentury"],
+    reason: "A farm boy becomes a literature professor and lives a quiet, mostly unhappy life. It sounds like nothing happens. Everything happens. It's about loving something — a book, a person — in a world that doesn't notice."
+  },
+  {
+    title: "Giovanni's Room",
+    author: "James Baldwin",
+    origin: "USA/France",
+    mood: ["aching", "conflicted", "raw"],
+    doesWhat: ["confronts", "cracks open"],
+    pace: "medium",
+    density: "dense",
+    register: ["burning", "beautiful"],
+    obscurity: "known",
+    format: "either",
+    length: "one-sitting",
+    tags: ["queer", "Paris", "desire", "shame", "American", "love"],
+    reason: "An American in Paris falls in love with an Italian bartender and tries to destroy it. Baldwin writes about desire and shame with a precision that feels physical. Short, and it stays."
+  },
+  {
+    title: "The Fire Next Time",
+    author: "James Baldwin",
+    origin: "USA",
+    mood: ["furious", "tender", "defiant"],
+    doesWhat: ["confronts", "cracks open"],
+    pace: "medium",
+    density: "dense",
+    register: ["prophetic", "burning"],
+    obscurity: "known",
+    format: "audio",
+    length: "one-sitting",
+    tags: ["race", "America", "religion", "essay", "nonfiction", "justice"],
+    reason: "Two essays — one a letter to his nephew, one a reckoning with America. Baldwin writes with the fury of a prophet and the tenderness of a parent. It's sixty years old and it could have been written this morning."
+  },
+  {
+    title: "Gilead",
+    author: "Marilynne Robinson",
+    origin: "USA",
+    mood: ["still", "tender", "reflective"],
+    doesWhat: ["slows down", "restores"],
+    pace: "gentle",
+    density: "dense",
+    register: ["luminous", "sacred"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["father", "faith", "Iowa", "letter", "aging", "American", "grace"],
+    reason: "An old minister in Iowa writes a letter to his young son — everything he knows about life, faith, and light on water. Robinson writes sentences that feel like prayers. It's the quietest, most radiant book I know."
+  },
+  {
+    title: "Kindred",
+    author: "Octavia Butler",
+    origin: "USA",
+    mood: ["anxious", "fierce", "searching"],
+    doesWhat: ["confronts", "grips"],
+    pace: "swift",
+    density: "medium",
+    register: ["visceral", "essential"],
+    obscurity: "known",
+    format: "either",
+    length: "weekend",
+    tags: ["slavery", "time travel", "sci-fi", "race", "survival", "American"],
+    bridges: [
+      { when: ["sci-fi", "science fiction", "speculative", "genre"], bridge: "Butler makes genre fiction do things literary fiction is afraid to try." },
+      { when: ["race", "Black", "American", "history", "slavery"], bridge: "Butler makes history feel like something that could reach out and grab you." },
+      { when: ["gripping", "page turner", "can't put down", "hooked"], bridge: "This one grabs you on page one and doesn't let go." },
+      { when: ["dune", "game of thrones", "lord of the rings"], bridge: "Different territory from what you mentioned, but the same grip. Trust me on this." },
+    ],
+    reason: "A Black woman in 1976 is pulled back to a plantation in Maryland. Butler makes slavery feel not like history but like something that could reach out and grab you. The most direct entry into her work."
+  },
+  {
+    title: "The Left Hand of Darkness",
+    author: "Ursula K. Le Guin",
+    origin: "USA",
+    mood: ["curious", "still", "expansive"],
+    doesWhat: ["escapes", "cracks open"],
+    pace: "deliberate",
+    density: "dense",
+    register: ["profound", "strange"],
+    obscurity: "known",
+    format: "either",
+    length: "weekend",
+    tags: ["sci-fi", "gender", "ice", "politics", "alien", "friendship"],
+    reason: "An envoy visits a planet where no one has a fixed gender. Le Guin uses science fiction to ask what we'd be without the categories we've built. The answer is terrifying and beautiful."
+  },
+  {
+    title: "Annihilation",
+    author: "Jeff VanderMeer",
+    origin: "USA",
+    mood: ["anxious", "curious", "wild"],
+    doesWhat: ["destabilizes", "grips"],
+    pace: "medium",
+    density: "medium",
+    register: ["eerie", "hypnotic"],
+    obscurity: "mid",
+    format: "either",
+    length: "one-sitting",
+    tags: ["sci-fi", "nature", "expedition", "mystery", "ecological", "horror"],
+    reason: "Four women enter a quarantined zone where nature has gone wrong. It's short, creepy, and it burrows into your head. VanderMeer doesn't explain everything and that's what makes it work."
+  },
+  {
+    title: "The Stranger",
+    author: "Albert Camus",
+    origin: "Algeria/France",
+    mood: ["numb", "detached", "searching"],
+    doesWhat: ["confronts", "destabilizes"],
+    pace: "swift",
+    density: "lean",
+    register: ["cold", "unsettling"],
+    obscurity: "known",
+    format: "either",
+    length: "one-sitting",
+    tags: ["existentialism", "Algeria", "philosophy", "murder", "absurd", "classic"],
+    reason: "A man kills someone on a beach and can't explain why. Camus in 120 pages. You'll read it in an afternoon and argue about it for years."
+  },
+  {
+    title: "The Name of the Wind",
+    author: "Patrick Rothfuss",
+    origin: "USA",
+    mood: ["wonder", "alive", "nostalgic"],
+    doesWhat: ["escapes", "grips"],
+    pace: "medium",
+    density: "medium",
+    register: ["intoxicating", "lyrical"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Nick Podehl's narration is legendary in fantasy circles.",
+    length: "commitment",
+    tags: ["fantasy", "music", "magic", "storytelling", "university", "adventure"],
+    reason: "A musician-magician tells the true story of his life in a bar over three days. Rothfuss writes fantasy the way some people write literary fiction — every sentence is doing something. Fair warning, the third book isn't out yet."
+  },
+  {
+    title: "Project Hail Mary",
+    author: "Andy Weir",
+    origin: "USA",
+    mood: ["giddy", "curious", "hopeful"],
+    doesWhat: ["escapes", "energizes"],
+    pace: "breathless",
+    density: "lean",
+    register: ["thrilling", "joyful"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Ray Porter. One of the great audiobook performances.",
+    length: "weekend",
+    tags: ["sci-fi", "space", "science", "friendship", "problem solving", "humor"],
+    bridges: [
+      { when: ["fun", "exciting", "adventure", "escape", "happy"], bridge: "Pure joy. An astronaut doing math to not die. Somehow the most fun you'll have all year." },
+      { when: ["science", "space", "sci-fi", "nerd", "curious"], bridge: "An astronaut, alone, doing math to survive. It's the most fun I've had with a book in years." },
+      { when: ["audio", "listen", "hands busy", "driving", "cooking"], bridge: "The audiobook on this one is something special. Made for listening." },
+      { when: ["interstellar", "the martian", "arrival"], bridge: "Given what you mentioned — this is going to be right up your alley." },
+    ],
+    reason: "A man wakes up on a spaceship with no memory. What follows is pure problem-solving joy and the most unlikely friendship in fiction. Ray Porter's audiobook narration is something special."
+  },
+  {
+    title: "Exhalation",
+    author: "Ted Chiang",
+    origin: "USA",
+    mood: ["curious", "wonder", "reflective"],
+    doesWhat: ["cracks open", "slows down"],
+    pace: "medium",
+    density: "medium",
+    register: ["profound", "elegant"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["sci-fi", "stories", "philosophy", "technology", "time", "free will"],
+    reason: "Short stories about time travel, free will, robot nannies, the nature of consciousness. Chiang thinks more clearly about technology and what it means for us than anyone I've read. Each story is a perfect little machine."
+  },
+  {
+    title: "The Rings of Saturn",
+    author: "W.G. Sebald",
+    origin: "Germany/UK",
+    mood: ["melancholy", "curious", "still"],
+    doesWhat: ["slows down", "haunts"],
+    pace: "gentle",
+    density: "dense",
+    register: ["hypnotic", "elegiac"],
+    obscurity: "deep",
+    format: "print",
+    length: "weekend",
+    tags: ["walking", "history", "memory", "England", "destruction", "meditation"],
+    reason: "A man walks along the Suffolk coast and thinks about herring, silk, the Congo, and the nature of destruction. It sounds like nothing. It's one of the most haunting things I've come across. A weird pick, but stay with me on this one."
+  },
+  {
+    title: "Sapiens",
+    author: "Yuval Noah Harari",
+    origin: "Israel",
+    mood: ["curious", "expansive", "restless"],
+    doesWhat: ["energizes", "destabilizes"],
+    pace: "medium",
+    density: "medium",
+    register: ["provocative", "sweeping"],
+    obscurity: "known",
+    format: "audio",
+    length: "commitment",
+    tags: ["history", "humanity", "science", "evolution", "ideas", "nonfiction"],
+    reason: "The entire history of our species in one book. You'll disagree with parts of it — everyone does — and you won't stop thinking about it. Harari asks big questions and isn't afraid of uncomfortable answers."
+  },
+  {
+    title: "The Sixth Extinction",
+    author: "Elizabeth Kolbert",
+    origin: "USA",
+    mood: ["anxious", "curious", "searching"],
+    doesWhat: ["confronts", "connects"],
+    pace: "medium",
+    density: "medium",
+    register: ["sobering", "fascinating"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["climate", "extinction", "science", "nature", "environment", "nonfiction"],
+    reason: "Kolbert travels the world documenting the extinction we're living through. Frogs in Panama, coral in Australia, bats in New York. It's terrifying and fascinating and you should probably read it."
+  },
+  {
+    title: "Evicted",
+    author: "Matthew Desmond",
+    origin: "USA",
+    mood: ["aching", "furious", "searching"],
+    doesWhat: ["confronts", "connects"],
+    pace: "medium",
+    density: "medium",
+    register: ["devastating", "necessary"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["poverty", "housing", "American", "Milwaukee", "inequality", "narrative nonfiction"],
+    reason: "Eight families in Milwaukee trying to keep a roof over their heads. Desmond follows them through eviction courts and trailer parks. It will change how you see every 'For Rent' sign."
+  },
+  {
+    title: "Empire of Pain",
+    author: "Patrick Radden Keefe",
+    origin: "USA",
+    mood: ["furious", "searching", "sharp"],
+    doesWhat: ["grips", "confronts"],
+    pace: "medium",
+    density: "medium",
+    register: ["gripping", "infuriating"],
+    obscurity: "known",
+    format: "audio",
+    length: "commitment",
+    tags: ["Sackler", "opioids", "wealth", "pharma", "American", "narrative nonfiction"],
+    reason: "The Sackler family made billions from OxyContin while people died. Keefe follows the money, the lies, and the art world philanthropy. It reads like a thriller about something that actually happened."
+  },
+  {
+    title: "Between the World and Me",
+    author: "Ta-Nehisi Coates",
+    origin: "USA",
+    mood: ["furious", "tender", "searching"],
+    doesWhat: ["confronts", "cracks open"],
+    pace: "medium",
+    density: "dense",
+    register: ["urgent", "beautiful"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "Coates narrates. His voice carries everything.",
+    length: "one-sitting",
+    tags: ["race", "America", "body", "son", "letter", "nonfiction", "Black"],
+    reason: "A letter to his teenage son about what it means to live in a Black body in America. Coates narrates the audiobook himself. It's Baldwin's heir — furious and tender and short enough for a single sitting, dense enough to return to for years."
+  },
+  {
+    title: "The Master and Margarita",
+    author: "Mikhail Bulgakov",
+    origin: "Russia",
+    mood: ["playful", "defiant", "wild"],
+    doesWhat: ["escapes", "destabilizes"],
+    pace: "medium",
+    density: "medium",
+    register: ["wild", "hilarious"],
+    obscurity: "known",
+    format: "either",
+    length: "weekend",
+    tags: ["Satan", "Moscow", "satire", "magic", "love", "Russian", "classic"],
+    reason: "The Devil visits 1930s Moscow with a giant cat and a naked witch and destroys everyone's day. The funniest, strangest, most subversive novel Russia ever produced. Stalin banned it. I think that's a recommendation."
+  },
+  {
+    title: "The Count of Monte Cristo",
+    author: "Alexandre Dumas",
+    origin: "France",
+    mood: ["restless", "fierce", "defiant"],
+    doesWhat: ["escapes", "grips"],
+    pace: "medium",
+    density: "medium",
+    register: ["thrilling", "satisfying"],
+    obscurity: "known",
+    format: "audio",
+    formatNote: "The Robin Buss translation. Audio is perfect for this — it's long and it flies.",
+    length: "commitment",
+    tags: ["revenge", "prison", "adventure", "France", "justice", "classic"],
+    reason: "A man is wrongly imprisoned, escapes, finds a treasure, and methodically destroys everyone who betrayed him. The greatest revenge story ever written. Long, and worth every page. The audiobook is perfect for this — it flies."
+  },
+  {
+    title: "Open Water",
+    author: "Caleb Azumah Nelson",
+    origin: "UK/Ghana",
+    mood: ["tender", "aching", "alive"],
+    doesWhat: ["slows down", "connects"],
+    pace: "gentle",
+    density: "dense",
+    register: ["lyrical", "intimate"],
+    obscurity: "deep",
+    format: "either",
+    length: "one-sitting",
+    tags: ["Black British", "love", "art", "London", "music", "photography"],
+    reason: "Two young Black British artists fall in love in London. It's written in second person and it pulls you in like a current. Nelson writes about tenderness and art with the rhythm of a jazz record. A bit of a risk, but I keep thinking about it."
+  },
+  {
+    title: "The Prophets",
+    author: "Robert Jones Jr.",
+    origin: "USA",
+    mood: ["aching", "fierce", "tender"],
+    doesWhat: ["confronts", "cracks open"],
+    pace: "deliberate",
+    density: "dense",
+    register: ["biblical", "beautiful"],
+    obscurity: "mid",
+    format: "either",
+    length: "commitment",
+    tags: ["slavery", "queer", "love", "plantation", "biblical", "male love"],
+    reason: "Two enslaved men love each other on a Mississippi plantation. Jones writes their love like scripture — enormous, ancient, unashamed. It insists on its own sacredness, and it earns that insistence."
+  },
+  {
+    title: "Memorial",
+    author: "Bryan Washington",
+    origin: "USA",
+    mood: ["restless", "tender", "complicated"],
+    doesWhat: ["connects", "slows down"],
+    pace: "medium",
+    density: "lean",
+    register: ["warm", "real"],
+    obscurity: "mid",
+    format: "either",
+    length: "weekend",
+    tags: ["queer", "interracial", "Houston", "food", "family", "Japan", "male love"],
+    reason: "A Black man and a Japanese-American man are falling apart. Then one flies to Japan to see his dying father, and the other is left with his partner's mother. It's about food and family and what we owe each other. Quietly great."
+  },
+  {
+    title: "Shuggie Bain",
+    author: "Douglas Stuart",
+    origin: "Scotland",
+    mood: ["aching", "fierce", "tender"],
+    doesWhat: ["confronts", "cracks open"],
+    pace: "medium",
+    density: "medium",
+    register: ["devastating", "loving"],
+    obscurity: "known",
+    format: "audio",
+    length: "commitment",
+    tags: ["Glasgow", "poverty", "mother", "addiction", "queer", "childhood", "Booker"],
+    reason: "A boy in 1980s Glasgow loves his mother with everything he has. She's drowning in addiction. Stuart never looks away, and the tenderness is what makes it bearable. It won the Booker and earned it."
+  },
+  {
+    title: "Housekeeping",
+    author: "Marilynne Robinson",
+    origin: "USA",
+    mood: ["still", "wild", "melancholy"],
+    doesWhat: ["slows down", "haunts"],
+    pace: "gentle",
+    density: "dense",
+    register: ["strange", "luminous"],
+    obscurity: "mid",
+    format: "print",
+    length: "one-sitting",
+    tags: ["sisters", "aunt", "Idaho", "water", "wandering", "American", "nature"],
+    reason: "Two orphaned sisters raised by an aunt who might be drifting beyond the edges of ordinary life. Robinson's first novel — about water, loss, and the women who refuse to stay put. Strange and luminous."
+  },
+  {
+    title: "The Blade Itself",
+    author: "Joe Abercrombie",
+    origin: "UK",
+    mood: ["restless", "darkly amused", "fierce"],
+    doesWhat: ["escapes", "energizes"],
+    pace: "swift",
+    density: "medium",
+    register: ["gritty", "wickedly funny"],
+    obscurity: "mid",
+    format: "audio",
+    formatNote: "Steven Pacey's narration is one of the best in all of fantasy.",
+    length: "weekend",
+    tags: ["fantasy", "grimdark", "war", "anti-hero", "humor", "violence"],
+    reason: "Fantasy for people who think fantasy takes itself too seriously. A crippled torturer, a vain barbarian, a cowardly nobleman. Brutal and funny and everyone in it is a magnificent bastard. Steven Pacey's narration is incredible."
+  },
+  {
+    title: "Never Let Me Go",
+    author: "Kazuo Ishiguro",
+    origin: "UK",
+    mood: ["melancholy", "tender", "haunted"],
+    doesWhat: ["haunts", "slows down"],
+    pace: "gentle",
+    density: "medium",
+    register: ["heartbreaking", "restrained"],
+    obscurity: "known",
+    format: "audio",
+    length: "weekend",
+    tags: ["sci-fi", "boarding school", "identity", "love", "mortality", "English"],
+    reason: "Students at an English boarding school slowly realize what they were made for. Ishiguro never raises his voice, and that restraint is everything. You'll finish it and just sit there for a while."
+  }
+];
+
+// ─── CONVERSATION ENGINE ───────────────────────────────────────
+// Prompt pools — Echolalia picks one from each category, in order
+const promptPools = {
+  calibration: [
+    { id: "book-loved", text: "Tell me about a book that really got you — one that stayed. Or if it's been a while, that's fine too.", type: "calibration" },
+    { id: "book-midnight", text: "What's the last book that kept you up past midnight?", type: "calibration" },
+    { id: "book-open", text: "Tell me about something you've read or watched or listened to that stuck with you.", type: "calibration" },
+  ],
+  anti: [
+    { id: "anti", text: "Was there one everyone seemed to love that left you cold?", type: "calibration" },
+    { id: "anti-why", text: "What's a book you wanted to love but couldn't? What got in the way?", type: "calibration" },
+  ],
+  world: [
+    { id: "media", text: "What's the last thing you watched or listened to that moved you — a show, a film, a song, a podcast, anything?", type: "open" },
+    { id: "conversation", text: "Has a conversation stuck with you recently — something a friend said, or something you overheard that you keep turning over?", type: "open" },
+    { id: "world", text: "Is there something going on in the world right now that you can't stop thinking about?", type: "open" },
+    { id: "thinking", text: "What's on your mind lately — the thing that comes back when everything else gets quiet?", type: "open" },
+  ],
+  feeling: [
+    { id: "feeling", text: "What are you feeling right now — not about books, just in life?", type: "open" },
+    { id: "wish", text: "What do you wish you had more of right now?", type: "open" },
+    { id: "desire", text: "Are you looking to feel something, or to stop feeling something?", type: "open" },
+    { id: "company", text: "Do you want company right now, or do you want to disappear?", type: "open" },
+  ],
+  how: [
+    { id: "how", text: "How are you going to read this — eyes on a page tonight, listening on a long drive, something for a trip?", type: "how" },
+    { id: "how-alt", text: "What does reading look like for you right now — quick things between meetings, or long stretches with nowhere to be?", type: "how" },
+    { id: "how-weight", text: "Something that goes down easy, or something you have to sit with?", type: "how" },
+  ]
+};
+
+// Build this session's conversation from the pools
+// Shuffle helper
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildPromptSequence() {
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  // Calibration first, "how" last, 1-2 from the soul of the conversation in between
+  const middle = shuffle([
+    pick(promptPools.anti),
+    pick(promptPools.world),
+    pick(promptPools.feeling),
+  ]).slice(0, 1 + Math.floor(Math.random() * 2)); // 1 or 2
+
+  return [
+    pick(promptPools.calibration),
+    ...middle,
+    pick(promptPools.how),
+  ];
+}
+
+let prompts = buildPromptSequence();
+
+let conversationState = "idle"; // idle, asking, listening, thinking, recommending
+let currentPromptIndex = 0;
+let userResponses = [];
+let currentRecommendation = null;
+let rejectedBooks = [];
+let recognition = null;
+let speechSupported = false;
+
+// DOM elements
+const titleEl = document.getElementById('title');
+const subtitleEl = document.getElementById('subtitle');
+const startBtn = document.getElementById('start-btn');
+const textEl = document.getElementById('echolalia-text');
+const inputArea = document.getElementById('input-area');
+const micBtn = document.getElementById('mic-btn');
+const textInput = document.getElementById('text-input');
+const sendBtn = document.getElementById('send-btn');
+const skipBtn = document.getElementById('skip-btn');
+const feedbackArea = document.getElementById('feedback-area');
+const readItBtn = document.getElementById('read-it-btn');
+const tryAgainBtn = document.getElementById('try-again-btn');
+const userEcho = document.getElementById('user-echo');
+const restartBtn = document.getElementById('restart-btn');
+
+// Speech recognition setup
+let silenceTimer = null;
+let fullTranscript = '';
+const SILENCE_DELAY = 60000;
+let micPermissionGranted = false;
+const micHint = document.getElementById('mic-hint');
+// Live transcript removed — cleaner UX without it
+
+// Request mic permission once on page load — so the browser caches it
+async function requestMicPermission() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    stream.getTracks().forEach(t => t.stop());
+    micPermissionGranted = true;
+  } catch(e) {
+    micBtn.style.display = 'none';
+    micHint.style.display = 'none';
+  }
+}
+
+try {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SpeechRecognition) {
+    recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+    speechSupported = true;
+
+    recognition.onresult = (e) => {
+      let finalText = '';
+      let interimText = '';
+      for (let i = 0; i < e.results.length; i++) {
+        if (e.results[i].isFinal) {
+          finalText += e.results[i][0].transcript;
+        } else {
+          interimText += e.results[i][0].transcript;
+        }
+      }
+      fullTranscript = finalText + interimText;
+      // Transcript hidden — mic state is the only feedback
+      if (interimText) addRipple();
+      clearTimeout(silenceTimer);
+      silenceTimer = setTimeout(() => {
+        if (fullTranscript.trim()) finishListening(fullTranscript.trim());
+      }, SILENCE_DELAY);
+    };
+
+    recognition.onerror = (e) => {
+      if (e.error !== 'no-speech') stopListening();
+    };
+
+    recognition.onend = () => {
+      if (micBtn.classList.contains('listening')) {
+        if (fullTranscript.trim()) {
+          finishListening(fullTranscript.trim());
+        } else {
+          try { recognition.start(); } catch(e) {}
+        }
+      }
+    };
+
+    // Request permission immediately
+    requestMicPermission();
+  }
+} catch(e) {}
+
+if (!speechSupported) {
+  micBtn.style.display = 'none';
+}
+
+function startListening() {
+  if (!recognition) return;
+  fullTranscript = '';
+  clearTimeout(silenceTimer);
+  micBtn.classList.add('listening');
+  micHint.classList.add('listening');
+  micHint.textContent = 'on air';
+  setWaterState('listening');
+  try { recognition.start(); } catch(e) {}
+}
+
+function finishListening(text) {
+  clearTimeout(silenceTimer);
+  micBtn.classList.remove('listening');
+  micHint.classList.remove('listening');
+  micHint.textContent = 'hold space to speak';
+  try { recognition.abort(); } catch(e) {}
+  fullTranscript = '';
+  handleUserInput(text);
+}
+
+function stopListening() {
+  if (!recognition) return;
+  clearTimeout(silenceTimer);
+  micBtn.classList.remove('listening');
+  micHint.classList.remove('listening');
+  micHint.textContent = 'hold space to speak';
+  try { recognition.abort(); } catch(e) {}
+  fullTranscript = '';
+  try { recognition.stop(); } catch(e) {}
+}
+
+// ─── UI FLOW ───────────────────────────────────────────────────
+function showText(text, callback) {
+  textEl.classList.remove('visible');
+  textEl.classList.add('fading');
+  setTimeout(() => {
+    textEl.innerHTML = text;
+    textEl.classList.remove('fading');
+    textEl.classList.add('visible');
+    setWaterState('pulsing');
+    setTimeout(() => {
+      setWaterState('still');
+      if (callback) callback();
+    }, 800);
+  }, 350);
+}
+
+function hideText() {
+  textEl.classList.remove('visible');
+  textEl.classList.add('fading');
+}
+
+function showInput() {
+  inputArea.classList.add('visible');
+  textInput.value = '';
+}
+
+function hideInput() {
+  inputArea.classList.remove('visible');
+}
+
+function showFeedback() {
+  feedbackArea.classList.add('visible');
+}
+
+function hideFeedback() {
+  feedbackArea.classList.remove('visible');
+}
+
+// ─── INTRO ─────────────────────────────────────────────────────
+setTimeout(() => titleEl.classList.add('visible'), 500);
+setTimeout(() => subtitleEl.classList.add('visible'), 1500);
+setTimeout(() => startBtn.classList.add('visible'), 2500);
+
+startBtn.addEventListener('click', () => {
+  startBtn.style.display = 'none';
+  titleEl.style.transition = 'opacity 1s ease';
+  subtitleEl.style.transition = 'opacity 1s ease';
+  titleEl.classList.remove('visible');
+  subtitleEl.classList.remove('visible');
+  setTimeout(() => {
+    titleEl.style.display = 'none';
+    subtitleEl.style.display = 'none';
+    restartBtn.classList.add('visible');
+    // Welcome message before first question
+    const welcomes = [
+      "Welcome. I'm glad you're here.",
+      "Hi. Let's find you something to read.",
+      "Hello. I've been thinking about books. Let's talk.",
+      "Hey. Pull up a chair — let's find you something good.",
+      "Welcome. Tell me what you need right now.",
+    ];
+    const welcome = welcomes[Math.floor(Math.random() * welcomes.length)];
+    showText(welcome, () => {
+      setTimeout(() => askNextQuestion(), 1000);
+    });
+  }, 1000);
+});
+
+// ─── CONVERSATION ──────────────────────────────────────────────
+function askNextQuestion() {
+  if (currentPromptIndex >= prompts.length) {
+    makeRecommendation();
+    return;
+  }
+
+  // Skip ahead if we have enough signal
+  const richResponses = userResponses.filter(r => r.text && r.text.length > 60);
+  const shortResponses = userResponses.filter(r => r.text && r.text.length <= 30);
+  // Rich answers: 3 rich + at least 2 questions asked → go
+  if (richResponses.length >= 3 && currentPromptIndex >= 2) {
+    makeRecommendation();
+    return;
+  }
+  // Short answers: if they're being brief, max 4 questions total
+  if (userResponses.length >= 4 && shortResponses.length >= 2) {
+    makeRecommendation();
+    return;
+  }
+
+  conversationState = 'asking';
+  const prompt = prompts[currentPromptIndex];
+  showText(prompt.text, () => {
+    conversationState = 'listening';
+    setWaterState('listening');
+    showInput();
+  });
+}
+
+let isGiftMode = false;
+
+function handleUserInput(text) {
+  if (!text.trim()) return;
+  hideInput();
+  const t = text.trim();
+  const tl = t.toLowerCase();
+  const currentPrompt = prompts[currentPromptIndex];
+
+  userResponses.push({
+    promptId: currentPrompt?.id || 'extra',
+    type: currentPrompt?.type || 'open',
+    text: t
+  });
+
+  // Detect non-reader on calibration question → pivot to media/feeling
+  const isCalibration = currentPrompt && currentPrompt.type === 'calibration';
+  const nonReaderCues = ['don\'t read', 'don\'t really read', 'haven\'t read', 'not a reader', 'been a while', 'years ago', 'can\'t remember', 'not much', 'nothing comes to mind', 'i don\'t know'];
+  if (isCalibration && nonReaderCues.some(c => tl.includes(c))) {
+    currentPromptIndex++;
+    setWaterState('rippling');
+    addRipple();
+    // Skip remaining calibration-type prompts, pivot to something they can answer
+    prompts = prompts.filter(p => p.type !== 'calibration');
+    currentPromptIndex = 0;
+    const pivotPrompts = [
+      "That's totally fine. Tell me — what's the last show or film or song that really got you?",
+      "No problem at all. What about a show, a movie, a podcast — anything that stuck with you recently?",
+      "Perfect starting point. Forget books — what's something you've watched or listened to lately that moved you?",
+    ];
+    const pivot = pivotPrompts[Math.floor(Math.random() * pivotPrompts.length)];
+    showText(pivot, () => {
+      conversationState = 'listening';
+      setWaterState('listening');
+      showInput();
+    });
+    return;
+  }
+
+  // Detect gift-giving intent
+  const giftCues = ['for my', 'for a friend', 'for someone', 'gift', 'my dad', 'my mom', 'my partner', 'my wife', 'my husband', 'my sister', 'my brother', 'book club', 'their birthday', 'present'];
+  if (!isGiftMode && giftCues.some(c => tl.includes(c))) {
+    isGiftMode = true;
+    currentPromptIndex++;
+    setWaterState('rippling');
+    addRipple(); addRipple();
+    showText("Tell me about them — what are they like, what do they love, what would surprise them?", () => {
+      conversationState = 'listening';
+      setWaterState('listening');
+      showInput();
+    });
+    return;
+  }
+
+  // Detect specific ask — they already know what they want ("I want a thriller", "something like Fleabag")
+  const specificCues = ['i want', 'i\'m looking for', 'give me', 'recommend', 'something like', 'anything like', 'i need a', 'i\'m in the mood for'];
+  const hasSpecificAsk = specificCues.some(c => tl.includes(c));
+  const hasStrongKeywords = tl.split(' ').length >= 4;
+  if (hasSpecificAsk && hasStrongKeywords && userResponses.length >= 1) {
+    // They've told us enough — go straight to matching
+    currentPromptIndex = prompts.length; // skip remaining
+    setWaterState('rippling');
+    addRipple(); addRipple(); addRipple();
+    setTimeout(() => makeRecommendation(), 400);
+    return;
+  }
+
+  currentPromptIndex++;
+  setWaterState('rippling');
+  addRipple(); addRipple();
+
+  setTimeout(() => askNextQuestion(), 400);
+}
+
+function skipQuestion() {
+  hideInput();
+  currentPromptIndex++;
+  setTimeout(() => askNextQuestion(), 300);
+}
+
+// ─── MATCHING ENGINE ───────────────────────────────────────────
+function makeRecommendation() {
+  conversationState = 'thinking';
+  setWaterState('rippling');
+  showText("Let me think...", () => {
+    setTimeout(() => {
+      const book = findBestMatch();
+      if (book) {
+        currentRecommendation = book;
+        presentRecommendation(book);
+      } else {
+        showText("I'm sorry — I've shared everything I have that feels right for you. I wish I had more.");
+      }
+    }, 2000);
+  });
+}
+
+function findBestMatch() {
+  const allText = userResponses.map(r => r.text).join(' ').toLowerCase();
+  const available = books.filter(b => !rejectedBooks.includes(b.title));
+  if (available.length === 0) return null;
+
+  const scores = available.map(book => {
+    let score = 0;
+
+    // Mood matching
+    const moodKeywords = {
+      restless: ["restless", "antsy", "stuck", "bored", "itchy", "need change", "pent up"],
+      defiant: ["angry", "defiant", "fight", "fed up", "rage", "furious", "rebellious"],
+      grieving: ["grief", "loss", "lost", "died", "death", "mourning", "miss", "gone"],
+      melancholy: ["sad", "melancholy", "blue", "down", "heavy", "low", "wistful"],
+      still: ["calm", "quiet", "still", "peaceful", "serene", "settled"],
+      aching: ["ache", "aching", "hurt", "pain", "longing", "yearning"],
+      tender: ["tender", "soft", "gentle", "open", "vulnerable"],
+      raw: ["raw", "exposed", "open wound", "stripped", "bare"],
+      alive: ["alive", "electric", "buzzing", "awake", "present", "vital"],
+      anxious: ["anxious", "worried", "nervous", "uneasy", "dread", "scared"],
+      exhausted: ["tired", "exhausted", "burnt out", "drained", "depleted", "worn"],
+      numb: ["numb", "nothing", "empty", "hollow", "flat", "disconnected"],
+      searching: ["searching", "seeking", "looking for", "trying to find", "curious"],
+      wonder: ["wonder", "awe", "magic", "enchanted", "amazed", "beautiful"],
+      giddy: ["happy", "giddy", "joyful", "excited", "light", "playful", "fun"],
+      heartbroken: ["heartbroken", "breakup", "ended", "over", "broken heart"],
+      lonely: ["lonely", "alone", "isolated", "no one", "by myself"],
+      overwhelmed: ["overwhelmed", "too much", "drowning", "can't handle", "swamped"],
+      nostalgic: ["nostalgic", "remember", "childhood", "used to", "back when", "miss"],
+      hungry: ["hungry", "wanting", "craving", "desire", "need", "starving for"],
+      fierce: ["fierce", "strong", "powerful", "warrior", "fire", "burning"],
+      trapped: ["trapped", "stuck", "can't leave", "no way out", "suffocating"],
+      peaceful: ["peace", "calm", "resting", "content", "at ease", "floating"],
+      lost: ["lost", "don't know", "confused", "directionless", "wandering"],
+      complicated: ["complicated", "messy", "complex", "tangled", "mixed feelings"],
+      hopeful: ["hopeful", "hope", "optimistic", "looking forward", "ready", "beginning"],
+      playful: ["playful", "silly", "lighthearted", "giggly", "flirty", "mischievous"],
+      wry: ["wry", "ironic", "sarcastic", "dry humor", "sardonic"],
+      curious: ["curious", "fascinated", "interested", "intrigued", "exploring"],
+      conflicted: ["conflicted", "torn", "ambivalent", "mixed", "unsure"],
+      wild: ["wild", "reckless", "free", "unleashed", "untamed"],
+      sharp: ["sharp", "focused", "clear", "precise", "analytical"]
+    };
+
+    for (const mood of book.mood) {
+      const keywords = moodKeywords[mood] || [mood];
+      for (const kw of keywords) {
+        if (allText.includes(kw)) score += 3;
+      }
+    }
+
+    // What reading does matching
+    const needKeywords = {
+      "confronts": ["face", "confront", "deal with", "hard truth", "real", "honest", "unflinching", "break my soul", "break me", "soul open", "crack open"],
+      "escapes": ["escape", "away", "disappear", "forget", "transport", "other world", "company", "companion", "during my day", "keep me company", "light"],
+      "slows down": ["slow", "calm", "breathe", "rest", "gentle", "quiet", "meditate", "peace"],
+      "cracks open": ["crack", "open", "transform", "change me", "different after", "break my soul", "soul open", "devastate", "wreck me"],
+      "connects": ["connect", "understand", "seen", "relate", "not alone", "human", "community"],
+      "energizes": ["energy", "alive", "wake up", "inspire", "fire", "move", "momentum"],
+      "haunts": ["haunt", "linger", "stay with me", "can't forget", "think about", "deep"],
+      "restores": ["restore", "heal", "repair", "hope", "faith", "believe again"],
+      "grips": ["grip", "can't stop", "page turner", "up all night", "hooked", "addicted"],
+      "destabilizes": ["weird", "strange", "unsettle", "disturb", "off balance", "wild"],
+      "overwhelms": ["overwhelm", "intense", "powerful", "knock me out", "blow me away"]
+    };
+
+    for (const does of book.doesWhat) {
+      const keywords = needKeywords[does] || [does];
+      for (const kw of keywords) {
+        if (allText.includes(kw)) score += 4;
+      }
+    }
+
+    // Media reference matching — if they mention shows/films/music, match vibes
+    const mediaVibes = {
+      "fleabag": ["humor", "sharp", "dating", "London", "women", "dark humor"],
+      "succession": ["family", "power", "dark humor", "elite", "class"],
+      "white lotus": ["class", "satire", "dark humor", "travel"],
+      "severance": ["surreal", "identity", "corporate", "mystery"],
+      "the bear": ["food", "Chicago", "family", "intensity", "working life"],
+      "normal people": ["love", "class", "Dublin", "Ireland", "miscommunication"],
+      "killing eve": ["thriller", "women", "dark humor", "obsession"],
+      "bridgerton": ["romance", "fun", "historical", "glamour"],
+      "schitt's creek": ["humor", "family", "kindness", "queer", "community"],
+      "ted lasso": ["kindness", "humor", "hope", "community"],
+      "on being": ["meaning", "gratitude", "spiritual", "nonfiction"],
+      "this american life": ["stories", "American", "memoir", "nonfiction"],
+      "serial": ["true crime", "mystery", "gripping"],
+      "radiolab": ["science", "wonder", "curiosity"],
+      "taylor swift": ["heartbreak", "love", "nostalgia", "coming-of-age"],
+      "beyonce": ["defiant", "Black", "feminist", "powerful"],
+      "phoebe bridgers": ["melancholy", "tender", "indie", "yearning"],
+      "bon iver": ["melancholy", "solitude", "nature", "quiet"],
+      "everything everywhere": ["family", "surreal", "immigrant", "love", "mother"],
+      "past lives": ["nostalgia", "immigration", "love", "Korea", "longing"],
+      "moonlight": ["identity", "queer", "Black", "tender", "coming-of-age"],
+      "parasite": ["class", "satire", "Korea", "thriller"],
+      "lady bird": ["mother", "coming-of-age", "women", "Sacramento"],
+      "aftersun": ["father", "grief", "memory", "tender"],
+      "call me by your name": ["desire", "summer", "Italy", "queer", "beauty"],
+      "breaking bad": ["moral ambiguity", "violence", "American", "thriller", "obsession"],
+      "true detective": ["philosophy", "violence", "southern", "mystery", "darkness"],
+      "the wire": ["poverty", "American", "systemic", "Baltimore", "class"],
+      "dark": ["sci-fi", "time", "mystery", "German", "philosophy"],
+      "shogun": ["Japan", "history", "war", "honor", "political"],
+      "gladiator": ["revenge", "violence", "honor", "ancient", "epic"],
+      "no country for old men": ["violence", "fate", "western", "Texas", "thriller"],
+      "there will be blood": ["obsession", "American", "violence", "ambition"],
+      "blade runner": ["sci-fi", "identity", "solitude", "future", "philosophical"],
+      "arrival": ["sci-fi", "language", "time", "grief", "communication"],
+      "dune": ["sci-fi", "politics", "desert", "epic", "power"],
+      "game of thrones": ["fantasy", "war", "political", "violence", "epic"],
+      "lord of the rings": ["fantasy", "friendship", "adventure", "epic", "journey"],
+      "interstellar": ["space", "father", "science", "love", "time"],
+      "joe rogan": ["ideas", "science", "conversation", "curiosity"],
+      "lex fridman": ["philosophy", "science", "AI", "technology", "ideas"],
+      "hardcore history": ["history", "war", "epic", "ideas"],
+      "kendrick": ["race", "American", "poetry", "anger", "identity"],
+      "frank ocean": ["tender", "queer", "longing", "beauty", "solitude"],
+      "radiohead": ["melancholy", "anxiety", "beauty", "alienation"]
+    };
+
+    for (const [media, vibes] of Object.entries(mediaVibes)) {
+      if (allText.includes(media)) {
+        for (const vibe of vibes) {
+          if (book.tags.includes(vibe)) score += 2;
+          if (book.mood.includes(vibe)) score += 2;
+        }
+      }
+    }
+
+    // Format + occasion + length matching (from combined "how" response)
+    const howResponse = userResponses.find(r => r.type === 'how');
+    const ht = howResponse ? howResponse.text.toLowerCase() : '';
+    // Also scan all text for these cues since they might come up in any answer
+    const scanText = allText + ' ' + ht;
+
+    const wantsAudio = scanText.includes('listen') || scanText.includes('audio') || scanText.includes('hands busy') || scanText.includes('driving') || scanText.includes('cooking') || scanText.includes('errand') || scanText.includes('commute');
+    const wantsPrint = scanText.includes('eyes on') || scanText.includes('page') || scanText.includes('print') || scanText.includes('curled up');
+    if (wantsAudio && book.format === 'audio') score += 5;
+    if (wantsAudio && book.format === 'print') score -= 3;
+    if (wantsPrint && book.format === 'print') score += 3;
+    if (wantsPrint && book.format === 'audio') score += 1;
+
+    const wantsShort = scanText.includes('tonight') || scanText.includes('quick') || scanText.includes('short') || scanText.includes('finish tonight') || scanText.includes('evening') || scanText.includes('flight') || scanText.includes('between meetings') || scanText.includes('easy');
+    const wantsWeekend = scanText.includes('weekend') || scanText.includes('trip') || scanText.includes('vacation') || scanText.includes('holiday') || scanText.includes('beach') || scanText.includes('pool') || scanText.includes('few days');
+    const wantsLong = scanText.includes('live with') || scanText.includes('long') || scanText.includes('immerse') || scanText.includes('deep') || scanText.includes('commit') || scanText.includes('nowhere to be') || scanText.includes('long stretch');
+    const wantsSocial = scanText.includes('talk about') || scanText.includes('book club') || scanText.includes('friend') || scanText.includes('discuss') || scanText.includes('everyone');
+    if (wantsShort && book.length === 'one-sitting') score += 6;
+    if (wantsShort && book.length === 'commitment') score -= 4;
+    if (wantsWeekend && book.length === 'weekend') score += 4;
+    if (wantsWeekend && book.length === 'commitment') score -= 2;
+    if (wantsWeekend && book.length === 'one-sitting') score += 2;
+    if (wantsLong && book.length === 'commitment') score += 4;
+    if (wantsLong && book.length === 'one-sitting') score -= 2;
+    if (wantsSocial && book.obscurity === 'known') score += 3;
+    if (wantsSocial && book.obscurity === 'mid') score += 1;
+
+    // Also check allText for length cues outside the occasion prompt
+    if (allText.includes('short') || allText.includes('quick read') || allText.includes('novella')) {
+      if (book.length === 'one-sitting') score += 3;
+      if (book.length === 'commitment') score -= 2;
+    }
+
+    // Tag matching
+    for (const tag of book.tags) {
+      if (allText.includes(tag)) score += 2;
+    }
+
+    // Boost deep cuts for well-read users
+    const mentionsBooks = userResponses.some(r => {
+      const t = r.text.toLowerCase();
+      return books.some(b => t.includes(b.title.toLowerCase()) || t.includes(b.author.toLowerCase()));
+    });
+    if (mentionsBooks && book.obscurity === 'deep') score += 3;
+    if (mentionsBooks && book.obscurity === 'known') score -= 1;
+
+    // Anti-matching: if they mentioned a book they didn't like, avoid similar tags
+    const antiResponse = userResponses.find(r => r.promptId === 'anti');
+    if (antiResponse) {
+      const antiText = antiResponse.text.toLowerCase();
+      // If the disliked book is in our library, down-weight similar books
+      const dislikedBook = books.find(b =>
+        antiText.includes(b.title.toLowerCase()) || antiText.includes(b.author.toLowerCase())
+      );
+      if (dislikedBook) {
+        const sharedTags = book.tags.filter(t => dislikedBook.tags.includes(t));
+        score -= sharedTags.length * 2;
+        if (book.pace === dislikedBook.pace) score -= 1;
+        if (book.density === dislikedBook.density) score -= 1;
+      }
+    }
+
+    // Pace matching from text cues
+    if ((allText.includes('fast') || allText.includes('quick') || allText.includes('can\'t put down') || allText.includes('page turner') || allText.includes('up all night')) && (book.pace === 'swift' || book.pace === 'breathless')) score += 3;
+    if ((allText.includes('slow') || allText.includes('savor') || allText.includes('leisurely') || allText.includes('sit with') || allText.includes('take my time')) && (book.pace === 'gentle' || book.pace === 'deliberate')) score += 3;
+
+    // Small random factor to prevent same recommendation every time
+    score += Math.random() * 2;
+
+    return { book, score };
+  });
+
+  scores.sort((a, b) => b.score - a.score);
+  return scores[0].book;
+}
+
+function buildContextNote(book) {
+  // Build a contextual note based on what the user told us
+  const notes = [];
+  const allText = userResponses.map(r => r.text).join(' ').toLowerCase();
+
+  // Length context
+  if (book.length === 'one-sitting') {
+    if (allText.includes('tonight') || allText.includes('evening'))
+      notes.push("You can finish this tonight.");
+    else if (allText.includes('flight'))
+      notes.push("Short enough for a single flight.");
+    else if (allText.includes('between meetings') || allText.includes('quick'))
+      notes.push("Short — fits into the cracks of a busy day.");
+  } else if (book.length === 'weekend') {
+    if (allText.includes('trip') || allText.includes('vacation') || allText.includes('beach'))
+      notes.push("Perfect trip length — done by the time you're home.");
+    else if (allText.includes('weekend'))
+      notes.push("A true weekend book.");
+  } else if (book.length === 'commitment') {
+    if (allText.includes('live with') || allText.includes('immerse') || allText.includes('nowhere to be'))
+      notes.push("This is the long one you asked for.");
+  }
+
+  // Social context
+  if (allText.includes('talk about') || allText.includes('book club') || allText.includes('discuss')) {
+    if (book.obscurity === 'known')
+      notes.push("People will have opinions about this one.");
+    else
+      notes.push("You'll be the one who brings it to the group.");
+  }
+
+  // Format context — show format note if they want audio, or always if it's notable
+  const wantsAudio = allText.includes('listen') || allText.includes('driving') || allText.includes('hands busy') || allText.includes('commute') || allText.includes('cooking');
+  if (book.formatNote && wantsAudio) {
+    notes.push(book.formatNote);
+  } else if (book.formatNote && !wantsAudio) {
+    notes.push(book.formatNote);
+  }
+
+  return notes;
+}
+
+const usedBridges = new Set();
+
+function selectBridge(book) {
+  if (!book.bridges || book.bridges.length === 0) return '';
+  if (Math.random() > 0.6) return ''; // sometimes just let the reason speak
+  const allText = userResponses.map(r => r.text).join(' ').toLowerCase();
+  let bestBridge = '';
+  let bestScore = 0;
+  for (const b of book.bridges) {
+    if (usedBridges.has(b.bridge)) continue; // never repeat in a session
+    const hits = b.when.filter(w => allText.includes(w)).length;
+    if (hits > bestScore) {
+      bestScore = hits;
+      bestBridge = b.bridge;
+    }
+  }
+  if (bestBridge) usedBridges.add(bestBridge);
+  return bestBridge;
+}
+
+function bookshopUrl(book) {
+  const q = encodeURIComponent(book.title + ' ' + book.author);
+  return `https://bookshop.org/search?keywords=${q}`;
+}
+
+function presentRecommendation(book) {
+  conversationState = 'recommending';
+  setWaterState('pulsing');
+
+  let html = `<span class="text-book-title">${book.title}</span><br>`;
+  html += `<span class="text-book-author">${book.author}</span>`;
+
+  showText(html, () => {
+    setTimeout(() => {
+      let reasonHtml = `<span class="text-book-title">${book.title}</span><br>`;
+      reasonHtml += `<span class="text-book-author">${book.author}</span><br><br>`;
+
+      const bridge = selectBridge(book);
+      if (bridge) {
+        reasonHtml += `<span style="color: rgba(255,220,180,0.75); font-style: italic;">${bridge}</span> `;
+      }
+      reasonHtml += book.reason;
+
+      const contextNotes = buildContextNote(book);
+      if (contextNotes.length > 0) {
+        reasonHtml += `<br><br><span style="color: rgba(255,220,180,0.6); font-size: 0.9em;">${contextNotes.join(' ')}</span>`;
+      }
+
+      reasonHtml += `<br><br><a href="${bookshopUrl(book)}" target="_blank" rel="noopener" style="color: rgba(255,220,180,0.4); font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 300; text-decoration: none; border-bottom: 1px solid rgba(255,220,180,0.15); transition: color 0.3s ease;" onmouseover="this.style.color='rgba(255,220,180,0.7)'" onmouseout="this.style.color='rgba(255,220,180,0.4)'">find it on bookshop.org</a>`;
+
+      textEl.innerHTML = reasonHtml;
+      setWaterState('still');
+      showFeedback();
+      addToHistory(book, 'surfaced');
+    }, 2200);
+  });
+}
+
+// ─── SHELF & HISTORY ──────────────────────────────────────────
+let shelf = [];
+let sessionHistory = [];
+const shelfPanel = document.getElementById('shelf-panel');
+const shelfBooksEl = document.getElementById('shelf-books');
+const historyBooksEl = document.getElementById('history-books');
+const shelfViewBtn = document.getElementById('shelf-view-btn');
+const shelfBtn = document.getElementById('shelf-btn');
+const shelfClose = document.getElementById('shelf-close');
+const shelfCopy = document.getElementById('shelf-copy');
+const shelfShare = document.getElementById('shelf-share');
+const shelfCopied = document.getElementById('shelf-copied');
+const panelTabs = document.querySelectorAll('.panel-tab');
+
+// Tab switching
+panelTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    panelTabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.panel-content').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+function addToHistory(book, action) {
+  const lastResponse = userResponses.length > 0 ? userResponses[userResponses.length - 1].text : '';
+  sessionHistory.push({ book, action, youSaid: lastResponse, time: new Date() });
+  shelfViewBtn.classList.add('visible');
+  renderHistory();
+}
+
+function addToShelf(book) {
+  if (shelf.find(b => b.title === book.title)) return;
+  shelf.push(book);
+  // Update history entry to reflect shelf status
+  const entry = sessionHistory.find(h => h.book.title === book.title);
+  if (entry) entry.action = 'shelved';
+  shelfViewBtn.classList.add('visible');
+  renderShelf();
+  renderHistory();
+}
+
+function renderShelf() {
+  if (shelf.length === 0) {
+    shelfBooksEl.innerHTML = '<div class="history-empty">Books you save will appear here.</div>';
+    return;
+  }
+  shelfBooksEl.innerHTML = shelf.map(b =>
+    `<div class="shelf-book">
+      <div class="shelf-book-title">${b.title}</div>
+      <div class="shelf-book-author">${b.author}</div>
+      <div class="shelf-book-reason">${b.reason}</div>
+      <a href="${bookshopUrl(b)}" target="_blank" rel="noopener" style="color: rgba(255,220,180,0.35); font-family: 'Inter', sans-serif; font-size: 0.7rem; text-decoration: none; border-bottom: 1px solid rgba(255,220,180,0.1);">bookshop.org</a>
+    </div>`
+  ).join('');
+}
+
+function renderHistory() {
+  if (sessionHistory.length === 0) {
+    historyBooksEl.innerHTML = '<div class="history-empty">Books will appear here as they\'re surfaced.</div>';
+    return;
+  }
+  historyBooksEl.innerHTML = sessionHistory.map(h => {
+    let actionLabel = '';
+    if (h.action === 'shelved') actionLabel = 'saved to shelf';
+    else if (h.action === 'read') actionLabel = 'already read';
+    else if (h.action === 'skipped') actionLabel = 'tried another';
+    return `<div class="history-entry">
+      ${h.youSaid ? `<div class="history-you-said">"${h.youSaid}"</div>` : ''}
+      <div class="history-book-title">${h.book.title}</div>
+      <div class="history-book-author">${h.book.author}</div>
+      ${actionLabel ? `<div class="history-action">${actionLabel}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function shelfToText() {
+  return "My Echolalia Shelf\n\n" + shelf.map((b, i) =>
+    `${i + 1}. ${b.title} — ${b.author}\n   ${b.reason}`
+  ).join('\n\n');
+}
+
+// ─── EVENT LISTENERS ───────────────────────────────────────────
+
+// Push-to-talk: spacebar hold
+let spaceHeld = false;
+document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space' && !spaceHeld && conversationState === 'listening' && document.activeElement !== textInput) {
+    e.preventDefault();
+    spaceHeld = true;
+    startListening();
+  }
+});
+
+document.addEventListener('keyup', (e) => {
+  if (e.code === 'Space' && spaceHeld) {
+    e.preventDefault();
+    spaceHeld = false;
+    if (fullTranscript.trim()) {
+      finishListening(fullTranscript.trim());
+    } else {
+      stopListening();
+    }
+  }
+});
+
+// Mic button: also works as push-to-talk (hold) or toggle (click)
+// Mic button: click to toggle on/off, or hold to push-to-talk
+let micPressStart = 0;
+let micHeld = false;
+
+function micStop() {
+  if (fullTranscript.trim()) {
+    finishListening(fullTranscript.trim());
+  } else {
+    stopListening();
+  }
+}
+
+micBtn.addEventListener('mousedown', (e) => {
+  e.preventDefault();
+  micPressStart = Date.now();
+  micHeld = true;
+  // If not already on, start immediately (for hold-to-talk feel)
+  if (!micBtn.classList.contains('listening') && conversationState === 'listening') {
+    startListening();
+  }
+});
+
+micBtn.addEventListener('mouseup', (e) => {
+  e.preventDefault();
+  if (!micHeld) return;
+  micHeld = false;
+  const held = Date.now() - micPressStart;
+  if (held > 400) {
+    // Was a hold — release means stop
+    micStop();
+  } else {
+    // Was a click — if already listening, stop; otherwise it just started in mousedown
+    if (micBtn.classList.contains('listening') && fullTranscript.trim()) {
+      // Already have speech from a previous toggle-on click — stop now
+      micStop();
+    }
+    // If just started in mousedown with no transcript yet, leave it running (toggle on)
+  }
+});
+
+micBtn.addEventListener('mouseleave', () => {
+  if (micHeld) {
+    micHeld = false;
+    micStop();
+  }
+});
+
+// Touch
+micBtn.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  micPressStart = Date.now();
+  micHeld = true;
+  if (!micBtn.classList.contains('listening') && conversationState === 'listening') {
+    startListening();
+  }
+});
+
+micBtn.addEventListener('touchend', (e) => {
+  e.preventDefault();
+  if (!micHeld) return;
+  micHeld = false;
+  const held = Date.now() - micPressStart;
+  if (held > 400) {
+    micStop();
+  } else {
+    if (micBtn.classList.contains('listening') && fullTranscript.trim()) {
+      micStop();
+    }
+  }
+});
+
+sendBtn.addEventListener('click', () => {
+  if (textInput.value.trim()) {
+    handleUserInput(textInput.value);
+    textInput.value = '';
+  }
+});
+
+textInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && textInput.value.trim()) {
+    handleUserInput(textInput.value);
+    textInput.value = '';
+  }
+});
+
+skipBtn.addEventListener('click', skipQuestion);
+
+// Shelf button — save and show another
+shelfBtn.addEventListener('click', () => {
+  if (currentRecommendation) {
+    addToShelf(currentRecommendation);
+    hideFeedback();
+    rejectedBooks.push(currentRecommendation.title);
+    setWaterState('rippling');
+    addRipple(); addRipple();
+    showText("Saved. Let me find you another...", () => {
+      setTimeout(() => {
+        const book = findBestMatch();
+        if (book) {
+          currentRecommendation = book;
+          presentRecommendation(book);
+        } else {
+          showText("That's everything I have for you right now. Your shelf is waiting.");
+        }
+      }, 1800);
+    });
+  }
+});
+
+readItBtn.addEventListener('click', () => {
+  hideFeedback();
+  const entry = sessionHistory.find(h => h.book.title === currentRecommendation.title);
+  if (entry) entry.action = 'read';
+  renderHistory();
+  rejectedBooks.push(currentRecommendation.title);
+  setWaterState('rippling');
+  addRipple(); addRipple();
+  showText("You've read it. Let me think of another...", () => {
+    setTimeout(() => {
+      const book = findBestMatch();
+      if (book) {
+        currentRecommendation = book;
+        presentRecommendation(book);
+      } else {
+        showText("I've shared everything I have that feels right. Come back sometime — I'll have more to say.");
+      }
+    }, 1800);
+  });
+});
+
+let rejectionCount = 0;
+const rejectionFollowups = [
+  "What put you off — the vibe, the topic, or something else?",
+  "Too heavy? Too light? Too familiar? Help me recalibrate.",
+  "Tell me more about what you're not looking for — that's useful too.",
+  "What would make this one better — or is it the wrong direction entirely?",
+];
+
+tryAgainBtn.addEventListener('click', () => {
+  hideFeedback();
+  const entry = sessionHistory.find(h => h.book.title === currentRecommendation.title);
+  if (entry) entry.action = 'skipped';
+  renderHistory();
+  rejectedBooks.push(currentRecommendation.title);
+  rejectionCount++;
+  setWaterState('rippling');
+  addRipple(); addRipple(); addRipple();
+
+  // Every 2nd rejection (or first one), ask what they didn't like
+  if (rejectionCount === 1 || rejectionCount % 2 === 0) {
+    const followup = rejectionFollowups[Math.floor(Math.random() * rejectionFollowups.length)];
+    conversationState = 'asking';
+    showText(followup, () => {
+      conversationState = 'listening';
+      setWaterState('listening');
+      showInput();
+      // Override handleUserInput temporarily to capture rejection feedback
+      const originalHandler = handleUserInput;
+      handleUserInput = function(text) {
+        handleUserInput = originalHandler; // restore
+        if (!text.trim()) return;
+        hideInput();
+        // Add this as a response to improve matching
+        userResponses.push({ promptId: 'rejection-feedback', type: 'open', text: text.trim() });
+        setWaterState('rippling');
+        addRipple(); addRipple();
+        showText("Got it. Let me try something different.", () => {
+          setTimeout(() => {
+            const book = findBestMatch();
+            if (book) {
+              currentRecommendation = book;
+              presentRecommendation(book);
+            } else {
+              showText("I've shared everything I have that feels right. Come back sometime — I'll have more to say.");
+            }
+          }, 1800);
+        });
+      };
+    });
+  } else {
+    showText("Let me look deeper...", () => {
+      setTimeout(() => {
+        const book = findBestMatch();
+        if (book) {
+          currentRecommendation = book;
+          presentRecommendation(book);
+        } else {
+          showText("I've shared everything I have that feels right. Come back sometime — I'll have more to say.");
+        }
+      }, 1800);
+    });
+  }
+});
+
+// Shelf panel
+shelfViewBtn.addEventListener('click', () => shelfPanel.classList.add('open'));
+shelfClose.addEventListener('click', () => shelfPanel.classList.remove('open'));
+
+shelfCopy.addEventListener('click', () => {
+  navigator.clipboard.writeText(shelfToText()).then(() => {
+    shelfCopied.classList.add('visible');
+    setTimeout(() => shelfCopied.classList.remove('visible'), 2000);
+  });
+});
+
+shelfShare.addEventListener('click', () => {
+  const text = shelfToText();
+  if (navigator.share) {
+    navigator.share({ title: 'My Echolalia Shelf', text }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(text).then(() => {
+      shelfCopied.textContent = 'copied to clipboard — share anywhere';
+      shelfCopied.classList.add('visible');
+      setTimeout(() => {
+        shelfCopied.classList.remove('visible');
+        shelfCopied.textContent = 'copied to clipboard';
+      }, 2500);
+    });
+  }
+});
+
+// Feedback
+document.getElementById('feedback-send').addEventListener('click', () => {
+  const feedbackText = document.getElementById('feedback-text');
+  const thanks = document.getElementById('feedback-thanks');
+  if (!feedbackText.value.trim()) return;
+  // TODO: send to webhook/endpoint when backend exists
+  console.log('Echolalia feedback:', feedbackText.value, { history: sessionHistory.map(h => h.book.title), shelf: shelf.map(b => b.title) });
+  feedbackText.value = '';
+  thanks.style.opacity = '1';
+  setTimeout(() => { thanks.style.opacity = '0'; }, 3000);
+});
+
+restartBtn.addEventListener('click', () => {
+  currentPromptIndex = 0;
+  userResponses = [];
+  currentRecommendation = null;
+  rejectedBooks = [];
+  prompts = buildPromptSequence(); // fresh questions each time
+  hideFeedback();
+  hideInput();
+  hideText();
+  showText("Welcome back.", () => {
+    setTimeout(() => askNextQuestion(), 600);
+  });
+});
+</script>
+</body>
+</html>
