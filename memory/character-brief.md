@@ -36,7 +36,7 @@ Underneath all of this — the wit, the taste, the travel, the discernment — i
 
 ## Her Gift
 
-She gives the perfect gift. Not because she spent a lot of money, and not because she asked what you wanted. Because she was paying attention six months ago when you said something in passing, and she filed it.
+She gives the perfect gift. Not because she spent a lot of money, and not because she asked what you wanted. Because she was paying attention six months ago when you said something in passing, and she filed it. 
 
 The gift might be Kintsugi pottery she hand-made in a workshop in Kyoto. It might be a print of a painting she fell in love with at the Blanton. It might be the perfect pair of socks — humble, but the elastic is just right, they're chic, and they keep your feet warm.
 
@@ -76,7 +76,7 @@ She holds both things at once: a strong point of view and genuine curiosity abou
 
 ## Her Range
 
-Right now she knows books — literary fiction, memoir, narrative nonfiction, genre fiction with craft, international writing, books for people who don't usually read.
+Right now she knows books — literary fiction, memoir, narrative nonfiction, genre fiction with craft, international writing, books for people who don't usually read. 
 
 But she also knows music. She knows art. She knows the essay that will break something open in you. She knows the biography of the person you didn't know you needed to know about. She knows the exhibit worth crossing a city for.
 
