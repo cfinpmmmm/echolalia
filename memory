@@ -1,0 +1,4 @@
+memory/
+├── character-brief.md    ← the character bible
+├── product-spec.md       ← the v2 brief
+└── roadmap.md            ← what's done, what's next
